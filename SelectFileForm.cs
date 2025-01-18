@@ -32,27 +32,14 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 TextBoxSelectOutputFolder.Text = Properties.Settings.Default.LastOutputFolder;
             }
+
+            // Inicializácia stĺpcov pre ListView
+            ListViewShowPointsValues.Columns.Add("Súbor", 220);
+            ListViewShowPointsValues.Columns.Add("Body", 100);
+            ListViewShowPointsValues.Columns.Add("Dátum", 220);
         }
 
-        private void CheckBoxRenumberTheOrder_CheckedChanged(object sender, EventArgs e)
-        {
 
-        }
-
-        private void CheckBoxSortByName_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CheckBoxOmitTheHeader_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CheckBoxRemoveDuplicatesRows_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void ButtonSelectAFile_Click(object sender, EventArgs e)
         {
@@ -69,6 +56,7 @@ namespace CountAndSortWinFormsAppNetFr4
                     var fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
                     var baseTitle = this.Text.Split('-')[0].Trim(); // Získa pôvodný názov aplikácie
                     this.Text = $"{baseTitle} - {fileName}";
+                    ButtonProcessData.Enabled = true; // Povolí tlačidlo po výbere nového súboru
 
                     try
                     {
@@ -168,6 +156,19 @@ namespace CountAndSortWinFormsAppNetFr4
                 });
         }
 
+
+        private HashSet<string> processedFiles = new HashSet<string>(); // Zoznam spracovaných súborov
+
+        private bool IsFileAlreadyProcessed(string fileName)// Pomocná metóda na kontrolu či súbor už bol spracovaný
+        {
+            foreach (ListViewItem item in ListViewShowPointsValues.Items)
+            {
+                if (item.SubItems[0].Text.Equals(fileName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Spracovanie údajov podľa nastavení checkboxov.
         /// Umožňuje užívateľovi vybrať priečinok pre uloženie súboru.
@@ -184,6 +185,28 @@ namespace CountAndSortWinFormsAppNetFr4
                 ButtonProcessData.Enabled = false;
                 ButtonSelectAFile.Enabled = false;
                 ButtonSelectOutputFolder.Enabled = false;
+
+                if (!File.Exists(TextBoxSelectedFileDirectory.Text))
+                {
+                    MessageBox.Show("Vybraný súbor neexistuje.", "Chyba",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string currentFile = Path.GetFileName(TextBoxSelectedFileDirectory.Text);
+                // Kontrola či súbor už bol spracovaný
+                if (processedFiles.Contains(currentFile))
+                {
+                    var result = MessageBox.Show(
+                    "Tento súbor už bol spracovaný. Chcete ho spracovať znova?",
+                    "Upozornenie",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.No)
+                        return;
+                }
+
 
                 if (string.IsNullOrEmpty(TextBoxSelectedFileDirectory.Text))
                 {
@@ -204,6 +227,9 @@ namespace CountAndSortWinFormsAppNetFr4
 
                 // Pridanie záznamu do histórie
                 AddToHistory(Path.GetFileName(TextBoxSelectedFileDirectory.Text), processedPoints);
+
+                // Po úspešnom spracovaní pridať do zoznamu
+                processedFiles.Add(currentFile);
 
                 MessageBox.Show(
                     $"Údaje boli spracované a uložené do súboru:\n{outputPath}\n" +
@@ -228,9 +254,9 @@ namespace CountAndSortWinFormsAppNetFr4
             }
         }
 
-        private Task<List<string>> ProcessDataAsync(List<string> lines)
+        private async Task<List<string>> ProcessDataAsync(List<string> lines)
         {
-            return Task.Factory.StartNew(() =>
+            return await Task.Factory.StartNew(() =>
             {
                 var headerLines = lines.Take(2).ToList();
                 var dataLines = lines.Skip(2).ToList();
@@ -255,9 +281,9 @@ namespace CountAndSortWinFormsAppNetFr4
             });
         }
 
-        private Task<int> CalculateTotalPointsAsync(List<string> lines)
+        private async Task<int> CalculateTotalPointsAsync(List<string> lines)
         {
-            return Task.Factory.StartNew(() =>
+            return await Task.Factory.StartNew(() =>
             {
                 int totalPoints = 0;
                 int lineCount = 0;
@@ -270,7 +296,7 @@ namespace CountAndSortWinFormsAppNetFr4
                     // Potrebujeme aspoň 11 stĺpcov (index 10 pre body)
                     if (parts.Length > 10)
                     {
-                        string value = parts[10].Trim();  // Zmenené z indexu 9 na 10
+                        string value = parts[10].Trim(); //index 10
 
                         if (!string.IsNullOrEmpty(value) && int.TryParse(value, out int points) && points >= 0)
                         {
@@ -294,9 +320,9 @@ namespace CountAndSortWinFormsAppNetFr4
             });
         }
 
-        private Task<string> SaveProcessedDataAsync(List<string> processedLines)
+        private async Task<string> SaveProcessedDataAsync(List<string> processedLines)
         {
-            return Task.Factory.StartNew(() =>
+            return await Task.Factory.StartNew(() =>
             {
                 string outputPath;
                 if (!string.IsNullOrEmpty(TextBoxSelectOutputFolder.Text))
@@ -440,7 +466,7 @@ namespace CountAndSortWinFormsAppNetFr4
                         content.AppendLine();
                         content.AppendLine($"Celkový súčet: {totalPoints:N0}");
                         content.AppendLine($"Počet súborov: {fileCount}");
-                        content.AppendLine($"Priemerné body: {averagePoints:N0}");
+                        content.AppendLine($"Priemerné body: {averagePoints:N0}");  
 
                         File.WriteAllText(saveDialog.FileName, content.ToString());
 
@@ -477,22 +503,62 @@ namespace CountAndSortWinFormsAppNetFr4
 
         private void UpdateStatistics()
         {
+            Console.WriteLine("UpdateStatistics sa volá");
             int totalPoints = 0;
             foreach (ListViewItem item in ListViewShowPointsValues.Items)
             {
-                if (int.TryParse(item.SubItems[1].Text.Replace(" ", ""), out int points))
+                string pointsText = item.SubItems[1].Text;
+                Console.WriteLine($"Pôvodná hodnota: '{pointsText}'");
+
+                // Odstránenie všetkých bielych znakov a špeciálnych znakov
+                pointsText = new string(pointsText.Where(c => char.IsDigit(c)).ToArray());
+
+                Console.WriteLine($"Upravená hodnota pre parsing: '{pointsText}'");
+
+                if (int.TryParse(pointsText, out int points))
                 {
                     totalPoints += points;
+                    Console.WriteLine($"Úspešne parsované číslo: {points}");
+                }
+                else
+                {
+                    Console.WriteLine($"Nepodarilo sa parsovať hodnotu: '{pointsText}'");
                 }
             }
 
             int fileCount = ListViewShowPointsValues.Items.Count;
             double averagePoints = fileCount > 0 ? (double)totalPoints / fileCount : 0;
 
-            // Aktualizácia labelov
+            // Nastavenie textu labelov s formátovaním
             LabelTotalSum.Text = $"Celkový súčet: {totalPoints:N0}";
             LabelFileCount.Text = $"Počet súborov: {fileCount}";
             LabelAverage.Text = $"Priemerné body: {averagePoints:N0}";
+
+            Console.WriteLine($"Nastavené hodnoty:");
+            Console.WriteLine(LabelTotalSum.Text);
+            Console.WriteLine(LabelFileCount.Text);
+            Console.WriteLine(LabelAverage.Text);
+        }
+
+        private void DisableButtons()
+        {
+            ButtonProcessData.Enabled = false;
+            ButtonSelectAFile.Enabled = false;
+            ButtonSelectOutputFolder.Enabled = false;
+        }
+
+        private void EnableButtons()
+        {
+            ButtonSelectAFile.Enabled = true;
+            ButtonSelectOutputFolder.Enabled = true;
+            // ButtonProcessData zostane zakázané, kým sa nevyberie nový súbor
+        }
+
+        private void ClearHistory()
+        {
+            ListViewShowPointsValues.Items.Clear();
+            processedFiles.Clear();
+            UpdateStatistics();
         }
     }
 }

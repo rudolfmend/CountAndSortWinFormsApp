@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CountAndSortWinFormsAppNetFr4")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Count & Sort app")]
+[assembly: AssemblyDescription("Count & Sort app")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("CountAndSortWinFormsAppNetFr4")]
-[assembly: AssemblyCopyright("Copyright ©  2025")]
+[assembly: AssemblyCopyright("Copyright Rudolf Mendzezof©  2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -3,17 +3,33 @@ using System.Windows.Forms;
 
 namespace CountAndSortWinFormsAppNetFr4
 {
-    internal static class Program
+    static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
+            if (!CheckDotNetVersion())
+            {
+                MessageBox.Show("Táto aplikácia vyžaduje .NET Framework 4.0 alebo novší.",
+                    "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SelectFileForm());
+        }
+
+        private static bool CheckDotNetVersion()
+        {
+            try
+            {
+                return Environment.Version.Major >= 4;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

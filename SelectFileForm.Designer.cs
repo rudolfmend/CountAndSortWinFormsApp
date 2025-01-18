@@ -43,13 +43,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.TextBoxSelectOutputFolder = new System.Windows.Forms.TextBox();
             this.ButtonSaveHistory = new System.Windows.Forms.Button();
             this.ListViewShowPointsValues = new System.Windows.Forms.ListView();
-            // Inicializácia ListViewShowPointsValues
-            this.ListViewShowPointsValues.View = View.Details;
-            this.ListViewShowPointsValues.FullRowSelect = true;
-            this.ListViewShowPointsValues.GridLines = true;
-            this.ListViewShowPointsValues.Columns.Add("Súbor", 150);
-            this.ListViewShowPointsValues.Columns.Add("Body", 100);
-            this.ListViewShowPointsValues.Columns.Add("Dátum", 150);
             this.LabelTotalSum = new System.Windows.Forms.Label();
             this.LabelFileCount = new System.Windows.Forms.Label();
             this.LabelAverage = new System.Windows.Forms.Label();
@@ -61,7 +54,7 @@ namespace CountAndSortWinFormsAppNetFr4
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSelectedFileDirectory.Location = new System.Drawing.Point(12, 12);
             this.TextBoxSelectedFileDirectory.Name = "TextBoxSelectedFileDirectory";
-            this.TextBoxSelectedFileDirectory.Size = new System.Drawing.Size(1310, 27);
+            this.TextBoxSelectedFileDirectory.Size = new System.Drawing.Size(1733, 27);
             this.TextBoxSelectedFileDirectory.TabIndex = 0;
             // 
             // ButtonSelectAFile
@@ -86,12 +79,11 @@ namespace CountAndSortWinFormsAppNetFr4
             // 
             // RichTextBoxDataPreview
             // 
-            this.RichTextBoxDataPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RichTextBoxDataPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.RichTextBoxDataPreview.Location = new System.Drawing.Point(12, 219);
             this.RichTextBoxDataPreview.Name = "RichTextBoxDataPreview";
-            this.RichTextBoxDataPreview.Size = new System.Drawing.Size(1039, 675);
+            this.RichTextBoxDataPreview.Size = new System.Drawing.Size(1180, 675);
             this.RichTextBoxDataPreview.TabIndex = 3;
             this.RichTextBoxDataPreview.Text = "";
             // 
@@ -106,7 +98,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxRenumberTheOrder.TabIndex = 4;
             this.CheckBoxRenumberTheOrder.Text = "prečíslovať poradie";
             this.CheckBoxRenumberTheOrder.UseVisualStyleBackColor = true;
-            this.CheckBoxRenumberTheOrder.CheckedChanged += new System.EventHandler(this.CheckBoxRenumberTheOrder_CheckedChanged);
             // 
             // CheckBoxSortByName
             // 
@@ -119,7 +110,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSortByName.TabIndex = 5;
             this.CheckBoxSortByName.Text = "zoradiť podľa mena";
             this.CheckBoxSortByName.UseVisualStyleBackColor = true;
-            this.CheckBoxSortByName.CheckedChanged += new System.EventHandler(this.CheckBoxSortByName_CheckedChanged);
             // 
             // CheckBoxOmitTheHeader
             // 
@@ -132,7 +122,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxOmitTheHeader.TabIndex = 6;
             this.CheckBoxOmitTheHeader.Text = "vynechať hlavičku";
             this.CheckBoxOmitTheHeader.UseVisualStyleBackColor = true;
-            this.CheckBoxOmitTheHeader.CheckedChanged += new System.EventHandler(this.CheckBoxOmitTheHeader_CheckedChanged);
             // 
             // CheckBoxRemoveDuplicatesRows
             // 
@@ -145,7 +134,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxRemoveDuplicatesRows.TabIndex = 7;
             this.CheckBoxRemoveDuplicatesRows.Text = "odstrániť duplicitné riadky";
             this.CheckBoxRemoveDuplicatesRows.UseVisualStyleBackColor = true;
-            this.CheckBoxRemoveDuplicatesRows.CheckedChanged += new System.EventHandler(this.CheckBoxRemoveDuplicatesRows_CheckedChanged);
             // 
             // ButtonSelectOutputFolder
             // 
@@ -164,7 +152,7 @@ namespace CountAndSortWinFormsAppNetFr4
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSelectOutputFolder.Location = new System.Drawing.Point(788, 56);
             this.TextBoxSelectOutputFolder.Name = "TextBoxSelectOutputFolder";
-            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(534, 27);
+            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(957, 27);
             this.TextBoxSelectOutputFolder.TabIndex = 9;
             this.TextBoxSelectOutputFolder.Text = " ";
             // 
@@ -183,12 +171,17 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ListViewShowPointsValues.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ListViewShowPointsValues.FullRowSelect = true;
+            this.ListViewShowPointsValues.GridLines = true;
             this.ListViewShowPointsValues.HideSelection = false;
-            this.ListViewShowPointsValues.Location = new System.Drawing.Point(1057, 219);
+            this.ListViewShowPointsValues.Location = new System.Drawing.Point(1211, 219);
+            this.ListViewShowPointsValues.Margin = new System.Windows.Forms.Padding(5);
             this.ListViewShowPointsValues.Name = "ListViewShowPointsValues";
-            this.ListViewShowPointsValues.Size = new System.Drawing.Size(265, 675);
+            this.ListViewShowPointsValues.Size = new System.Drawing.Size(534, 675);
             this.ListViewShowPointsValues.TabIndex = 12;
+            this.ListViewShowPointsValues.TileSize = new System.Drawing.Size(250, 44);
             this.ListViewShowPointsValues.UseCompatibleStateImageBehavior = false;
+            this.ListViewShowPointsValues.View = System.Windows.Forms.View.Details;
             // 
             // LabelTotalSum
             // 
@@ -209,7 +202,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // LabelAverage
             // 
             this.LabelAverage.AutoSize = true;
-            this.LabelAverage.Location = new System.Drawing.Point(609, 177);
+            this.LabelAverage.Location = new System.Drawing.Point(609, 191);
             this.LabelAverage.Name = "LabelAverage";
             this.LabelAverage.Size = new System.Drawing.Size(0, 22);
             this.LabelAverage.TabIndex = 15;
@@ -219,9 +212,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1334, 906);
+            this.ClientSize = new System.Drawing.Size(1757, 906);
             this.Controls.Add(this.LabelAverage);
             this.Controls.Add(this.LabelFileCount);
             this.Controls.Add(this.LabelTotalSum);
