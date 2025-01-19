@@ -7,8 +7,8 @@ title: CS Data App Privacy Policies
 
 ## Choose your language / Vyberte si jazyk:
 
-- [Privacy Policy (English)](privacy-policy-en)
-- [Zásady ochrany osobných údajov (Slovensky)](privacy-policy-sk)
+- [Privacy Policy (English)](privacy-policy-en.md)
+- [Zásady ochrany osobných údajov (Slovensky)](privacy-policy-sk.md)
 
 ---
 
@@ -21,4 +21,4 @@ Táto aplikácia je určená na spracovanie dávok pre zdravotné poisťovne, od
 ## Links / Odkazy
 
 - [GitHub Repository](https://github.com/rudolfmend/CountAndSortWinFormsApp)
-- [Microsoft Store] (odkaz bude pridaný po publikovaní v Microsoft Store)
+- [Microsoft Store] *(odkaz bude pridaný po publikovaní v Microsoft Store)*
