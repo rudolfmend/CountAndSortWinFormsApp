@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
+using System.Diagnostics;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,6 +14,25 @@ namespace CountAndSortWinFormsAppNetFr4
 {
     public partial class SelectFileForm : Form
     {
+        // Konštanty pre štruktúru dávkového súboru
+        private const int HEADER_LINES = 2;
+        private const int COLUMN_NAME_INDEX = 3;        // Index stĺpca s menom
+        private const int COLUMN_ID_INDEX = 1;          // Index pre sekundárne triedenie
+        private const int COLUMN_POINTS_INDEX = 10;     // Index stĺpca s bodmi
+        private const int MIN_COLUMNS_REQUIRED = 11;    // Minimálny počet stĺpcov
+        private const string COLUMN_SEPARATOR = "|";    // Oddeľovač stĺpcov
+
+        // Konštanty pre formátovanie výstupu
+        private const string DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm:ss";
+        private const string NUMBER_FORMAT = "N0";
+        private const string PROCESSED_PREFIX = "processed_";
+
+        // Konštanty pre ListView
+        private const int COLUMN_WIDTH_FILENAME = 220;
+        private const int COLUMN_WIDTH_POINTS = 100;
+        private const int COLUMN_WIDTH_DATE = 220;
+        
+
         public SelectFileForm()
         {
             InitializeComponent();
@@ -34,12 +53,11 @@ namespace CountAndSortWinFormsAppNetFr4
             }
 
             // Inicializácia stĺpcov pre ListView
-            ListViewShowPointsValues.Columns.Add("Súbor", 220);
-            ListViewShowPointsValues.Columns.Add("Body", 100);
-            ListViewShowPointsValues.Columns.Add("Dátum", 220);
+            ListViewShowPointsValues.Columns.Add("Súbor", COLUMN_WIDTH_FILENAME);
+            ListViewShowPointsValues.Columns.Add("Body", COLUMN_WIDTH_POINTS);
+            ListViewShowPointsValues.Columns.Add("Dátum", COLUMN_WIDTH_DATE);
+
         }
-
-
 
         private void ButtonSelectAFile_Click(object sender, EventArgs e)
         {
@@ -53,20 +71,102 @@ namespace CountAndSortWinFormsAppNetFr4
                     TextBoxSelectedFileDirectory.Text = openFileDialog.FileName;
 
                     // Aktualizácia titulku formulára
-                    var fileName = System.IO.Path.GetFileName(openFileDialog.FileName);
-                    var baseTitle = this.Text.Split('-')[0].Trim(); // Získa pôvodný názov aplikácie
+                    var fileName = Path.GetFileName(openFileDialog.FileName);
+                    var baseTitle = this.Text.Split('-')[0].Trim();
                     this.Text = $"{baseTitle} - {fileName}";
-                    ButtonProcessData.Enabled = true; // Povolí tlačidlo po výbere nového súboru
+                    ButtonProcessData.Enabled = true;
 
                     try
                     {
-                        string[] lines = System.IO.File.ReadAllLines(openFileDialog.FileName);
-                        RichTextBoxDataPreview.Lines = lines;
+                        // Načítanie a spracovanie súboru
+                        string[] lines = File.ReadAllLines(openFileDialog.FileName);
+
+                        // Vyčistenie existujúcich dát
+                        DataGridPreview.Rows.Clear();
+                        DataGridPreview.Columns.Clear();
+
+                        // Nastavenie stĺpcov
+                        DataGridPreview.AutoGenerateColumns = false;
+
+                        // Pridanie checkbox stĺpca
+                        var checkboxColumn = new DataGridViewCheckBoxColumn
+                        {
+                            Name = "Selected",
+                            HeaderText = "",
+                            Width = 30
+                        };
+                        DataGridPreview.Columns.Add(checkboxColumn);
+
+                        // Zistenie počtu stĺpcov z prvého riadku
+                        if (lines.Length > 0)
+                        {
+                            string[] firstRow = lines[0].Split('|');
+                            for (int i = 0; i < firstRow.Length; i++)
+                            {
+                                DataGridPreview.Columns.Add(new DataGridViewCheckBoxColumn
+                                {
+                                    Name = $"Column{i}",
+                                    HeaderText = $"Stĺpec {i + 1}",
+                                    Width = 100
+                                });
+                            }
+                        }
+
+                        // Naplnenie dát
+                        foreach (string line in lines)
+                        {
+                            var parts = line.Split('|');
+                            int rowIndex = DataGridPreview.Rows.Add();
+                            var row = DataGridPreview.Rows[rowIndex];
+
+                            // Nastavenie checkbox bunky
+                            row.Cells[0].Value = false;
+
+                            // Naplnenie dát do buniek
+                            for (int i = 0; i < parts.Length; i++)
+                            {
+                                row.Cells[i + 1].Value = parts[i];
+                            }
+                        }
+
+                        // Nastavenie vlastností DataGridPreview
+                        DataGridPreview.AllowUserToAddRows = false;
+                        DataGridPreview.AllowUserToDeleteRows = false;
+                        DataGridPreview.ReadOnly = false;
+                        DataGridPreview.MultiSelect = true;
+                        DataGridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                        // Povolenie úpravy len pre checkbox stĺpec
+                        foreach (DataGridViewColumn column in DataGridPreview.Columns)
+                        {
+                            if (column.Name != "Selected")
+                            {
+                                column.ReadOnly = true;
+                            }
+                        }
+
+                        // Pridanie header checkbox pre označenie všetkých riadkov
+                        var headerCell = new DataGridViewCheckBoxHeaderCell();  // Použitie správneho typu bunky
+                        headerCell.Value = false;
+                        checkboxColumn.HeaderCell = headerCell;
+
+                        // Handler pre kliknutie na header checkbox
+                        checkboxColumn.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                        headerCell.OnCheckBoxClicked += (s, state) =>  // Zmenené 'sender' na 's'
+                        {
+                            foreach (DataGridViewRow row in DataGridPreview.Rows)
+                            {
+                                row.Cells[0].Value = state;
+                            }
+                        };
+
+
+
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Chyba pri čítaní súboru: {ex.Message}", "Chyba",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Chyba pri čítaní súboru: {ex.Message}",
+                            "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -83,8 +183,8 @@ namespace CountAndSortWinFormsAppNetFr4
             return lines
                 .Select(line => line.Split('|'))
                 .Where(parts => parts.Length > 4 && int.TryParse(parts[0], out _))
-                .OrderBy(parts => parts[3])      // Primárne zoradenie podľa mena (4. stĺpec)
-                .ThenBy(parts => int.Parse(parts[1]))  // Sekundárne zoradenie podľa druhého stĺpca
+                .OrderBy(parts => parts[COLUMN_NAME_INDEX])      // Primárne zoradenie podľa mena (4. stĺpec)
+                .ThenBy(parts => int.Parse(parts[COLUMN_ID_INDEX])) // Sekundárne zoradenie podľa druhého stĺpca
                 .Select(parts => string.Join("|", parts))
                 .ToList();
         }
@@ -133,10 +233,10 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             return lines
                 .Select(line => line.Split('|'))
-                .Where(parts => parts.Length > 6 && int.TryParse(parts[0], out _))
-                .GroupBy(parts => $"{parts[1]}|{parts[2]}|{parts[5]}")  // Kľúč z 2., 3. a 6. stĺpca
+                .Where(parts => parts.Length > MIN_COLUMNS_REQUIRED && int.TryParse(parts[0], out _))
+                .GroupBy(parts => $"{parts[COLUMN_ID_INDEX]}|{parts[2]}|{parts[5]}")// Kľúč z 2., 3. a 6. stĺpca
                 .Select(group => group.First())  // Vybrať prvý záznam z každej skupiny
-                .OrderBy(parts => parts[3])      // Zoradiť podľa mena
+                .OrderBy(parts => parts[COLUMN_NAME_INDEX]) // Zoradiť podľa mena
                 .Select((parts, index) => $"{index + 1}|{string.Join("|", parts.Skip(1))}") // Prečíslovať
                 .ToList();
         }
@@ -146,11 +246,11 @@ namespace CountAndSortWinFormsAppNetFr4
             return lines
                 .Skip(2)  // Preskočiť hlavičku
                 .Select(line => line.Split('|'))
-                .Where(parts => parts.Length > 10)  // Kontrola či má riadok dostatok stĺpcov
+                .Where(parts => parts.Length > COLUMN_POINTS_INDEX)  // Kontrola či má riadok dostatok stĺpcov
                 .Sum(parts =>
                 {
-                    // Sčítanie hodnôt len z 10. stĺpca (index 9)
-                    if (int.TryParse(parts[9], out int points))
+                    // Sčítanie hodnôt len z 11. stĺpca (index 10)
+                    if (int.TryParse(parts[COLUMN_POINTS_INDEX], out int points))
                         return points;
                     return 0;  // Ak nie je možné konvertovať na číslo, vráti 0
                 });
@@ -220,7 +320,11 @@ namespace CountAndSortWinFormsAppNetFr4
                 int originalPoints = await CalculateTotalPointsAsync(originalLines);
 
                 var processedLines = await ProcessDataAsync(originalLines);
-                RichTextBoxDataPreview.Lines = processedLines.ToArray();
+
+
+                // DataGridPreview.Lines = processedLines.ToArray();
+                // DataGridPreview.DataSource = processedLines.Select(line => new { Value = line }).ToList();
+
 
                 string outputPath = await SaveProcessedDataAsync(processedLines);
                 int processedPoints = await CalculateTotalPointsAsync(processedLines);
@@ -254,12 +358,30 @@ namespace CountAndSortWinFormsAppNetFr4
             }
         }
 
+        private List<string> GetUnselectedRows()
+        {
+            List<string> unselectedRows = new List<string>();
+            foreach (DataGridViewRow row in DataGridPreview.Rows)
+            {
+                if (!(bool)row.Cells["Selected"].Value)
+                {
+                    var cells = row.Cells.Cast<DataGridViewCell>()
+                                   .Skip(1)
+                                   .Select(c => c.Value?.ToString() ?? "");
+                    unselectedRows.Add(string.Join("|", cells));
+                }
+            }
+            return unselectedRows;
+        }
+
         private async Task<List<string>> ProcessDataAsync(List<string> lines)
         {
             return await Task.Factory.StartNew(() =>
             {
                 var headerLines = lines.Take(2).ToList();
                 var dataLines = lines.Skip(2).ToList();
+                // Získame len neoznačené riadky
+                var unselectedRows = GetUnselectedRows();
 
                 if (CheckBoxOmitTheHeader.Checked)
                     dataLines = RemoveLeadingZeros(dataLines);
@@ -287,35 +409,42 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 int totalPoints = 0;
                 int lineCount = 0;
+                int errorCount = 0;
 
-                foreach (var line in lines.Skip(2))  // Preskočíme prvé 2 riadky (hlavičku)
+                foreach (var line in lines.Skip(HEADER_LINES))
                 {
                     lineCount++;
-                    var parts = line.Split('|');
+                    var parts = line.Split(COLUMN_SEPARATOR[0]);
 
-                    // Potrebujeme aspoň 11 stĺpcov (index 10 pre body)
-                    if (parts.Length > 10)
+                    if (parts.Length <= COLUMN_POINTS_INDEX)
                     {
-                        string value = parts[10].Trim(); //index 10
+                        Debug.WriteLine($"Riadok {lineCount}: Nedostatočný počet stĺpcov ({parts.Length})");
+                        errorCount++;
+                        continue;
+                    }
 
-                        if (!string.IsNullOrEmpty(value) && int.TryParse(value, out int points) && points >= 0)
-                        {
-                            totalPoints += points;
-                            Console.WriteLine($"Riadok {lineCount}: Pridávam {points} bodov. Celkový súčet: {totalPoints}");
-                        }
-                        else if (!string.IsNullOrEmpty(value))
-                        {
-                            Console.WriteLine($"Riadok {lineCount}: Neplatná alebo záporná hodnota: '{value}'");
-                        }
-                    }
-                    else
+                    string value = parts[COLUMN_POINTS_INDEX].Trim();
+                    if (string.IsNullOrEmpty(value))
                     {
-                        Console.WriteLine($"Riadok {lineCount}: Príliš málo stĺpcov ({parts.Length})");
+                        Debug.WriteLine($"Riadok {lineCount}: Prázdna hodnota bodov");
+                        errorCount++;
+                        continue;
                     }
+
+                    if (!int.TryParse(value, out int points))
+                    {
+                        Debug.WriteLine($"Riadok {lineCount}: Neplatná hodnota bodov: '{value}'");
+                        errorCount++;
+                        continue;
+                    }
+
+                    totalPoints += points;
+                    Debug.WriteLine($"Riadok {lineCount}: Pridaných {points} bodov. Celkový súčet: {totalPoints}");
                 }
 
-                Console.WriteLine($"Celkový počet analyzovaných riadkov: {lineCount}");
-                Console.WriteLine($"Celkový súčet bodov: {totalPoints}");
+                Debug.WriteLine($"Celkový počet chybných riadkov: {errorCount}");
+                Debug.WriteLine($"Celkový počet spracovaných riadkov: {lineCount}");
+                Debug.WriteLine($"Celkový súčet bodov: {totalPoints}");
                 return totalPoints;
             });
         }
@@ -324,34 +453,77 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             return await Task.Factory.StartNew(() =>
             {
-                string outputPath;
-                if (!string.IsNullOrEmpty(TextBoxSelectOutputFolder.Text))
+                try
                 {
-                    outputPath = Path.Combine(
-                        TextBoxSelectOutputFolder.Text,
-                        "processed_" + Path.GetFileName(TextBoxSelectedFileDirectory.Text)
-                    );
-                }
-                else
-                {
-                    outputPath = Path.Combine(
-                        Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text),
-                        "processed_" + Path.GetFileName(TextBoxSelectedFileDirectory.Text)
-                    );
-                }
+                    string outputPath;
+                    string originalDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
+                    string originalFileName = Path.GetFileName(TextBoxSelectedFileDirectory.Text);
 
-                string targetDirectory = Path.GetDirectoryName(outputPath);
-                if (!Directory.Exists(targetDirectory))
-                {
-                    Directory.CreateDirectory(targetDirectory);
-                }
+                    // Ak je zadaný výstupný priečinok a máme k nemu prístup
+                    if (!string.IsNullOrEmpty(TextBoxSelectOutputFolder.Text) &&
+                        Directory.Exists(TextBoxSelectOutputFolder.Text) &&
+                        HasWriteAccessToFolder(TextBoxSelectOutputFolder.Text))
+                    {
+                        outputPath = Path.Combine(
+                            TextBoxSelectOutputFolder.Text,
+                            PROCESSED_PREFIX + originalFileName
+                        );
+                    }
+                    // Ak nie je zadaný priečinok alebo nemáme k nemu prístup, použijeme pôvodný adresár
+                    else
+                    {
+                        outputPath = Path.Combine(
+                            originalDirectory,  // Použiť pôvodný adresár
+                            PROCESSED_PREFIX + originalFileName
+                        );
+                    }
 
-                File.WriteAllLines(outputPath, processedLines);
-                return outputPath;
+                    // Skontrolujeme, či môžeme zapisovať do cieľového adresára
+                    string targetDirectory = Path.GetDirectoryName(outputPath);
+                    if (HasWriteAccessToFolder(targetDirectory))
+                    {
+                        File.WriteAllLines(outputPath, processedLines);
+                        return outputPath;
+                    }
+                    else
+                    {
+                        throw new UnauthorizedAccessException($"Nemáte prístup pre zápis do priečinka: {targetDirectory}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Logovanie chyby
+                    Debug.WriteLine($"Chyba pri ukladaní súboru: {ex.Message}");
+                    throw; // Znovu vyhodíme výnimku pre spracovanie vo volajúcom kóde
+                }
             });
         }
 
-       // Pomocná trieda pre File operácie
+        // Pomocná metóda na kontrolu prístupu k priečinku
+        private bool HasWriteAccessToFolder(string folderPath)
+        {
+            try
+            {
+                // Pokúsime sa vytvoriť testovací súbor
+                string testFile = Path.Combine(folderPath, "test.txt");
+                using (FileStream fs = File.Create(testFile))
+                {
+                    fs.Close();
+                }
+                File.Delete(testFile);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        // Pomocná trieda pre File operácie
         public static class FileExtensions
         {
             public static Task<string[]> ReadAllLinesAsync(string path)
@@ -436,9 +608,8 @@ namespace CountAndSortWinFormsAppNetFr4
                         int totalPoints = 0;
                         foreach (ListViewItem item in ListViewShowPointsValues.Items)
                         {
-                            string pointsText = item.SubItems[1].Text;
-                            // Odstráňte všetky medzery a skúste skonvertovať na číslo
-                            pointsText = pointsText.Replace(" ", "").Replace(",", "");
+                            string pointsText = new string(item.SubItems[1].Text
+                                .Where(c => !char.IsWhiteSpace(c)).ToArray());
                             if (int.TryParse(pointsText, out int points))
                             {
                                 totalPoints += points;
@@ -466,7 +637,7 @@ namespace CountAndSortWinFormsAppNetFr4
                         content.AppendLine();
                         content.AppendLine($"Celkový súčet: {totalPoints:N0}");
                         content.AppendLine($"Počet súborov: {fileCount}");
-                        content.AppendLine($"Priemerné body: {averagePoints:N0}");  
+                        content.AppendLine($"Priemerné body: {averagePoints:N0}");
 
                         File.WriteAllText(saveDialog.FileName, content.ToString());
 
@@ -487,57 +658,83 @@ namespace CountAndSortWinFormsAppNetFr4
 
         private void AddToHistory(string fileName, int points)
         {
-            // Vytvorenie nového záznamu
+            // Kontrola duplicity pred pridaním
+            foreach (ListViewItem existingItem in ListViewShowPointsValues.Items)
+            {
+                if (existingItem.SubItems[0].Text == fileName)
+                {
+                    // Ak sa našiel rovnaký súbor, aktualizujeme hodnoty
+                    existingItem.SubItems[1].Text = points.ToString("N0");
+                    existingItem.SubItems[2].Text = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+                    UpdateStatistics();
+                    return;
+                }
+            }
+
+            // Ak sa nenašla duplicita, pridáme nový záznam
             ListViewItem item = new ListViewItem(new[] {
                 fileName,
-                points.ToString("N0"),
-                DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")
+                points.ToString(NUMBER_FORMAT),
+                DateTime.Now.ToString(DATE_TIME_FORMAT)
             });
 
-            // Pridanie do ListView
             ListViewShowPointsValues.Items.Add(item);
-
-            // Aktualizácia štatistík
             UpdateStatistics();
         }
 
         private void UpdateStatistics()
         {
-            Console.WriteLine("UpdateStatistics sa volá");
-            int totalPoints = 0;
-            foreach (ListViewItem item in ListViewShowPointsValues.Items)
+            try
             {
-                string pointsText = item.SubItems[1].Text;
-                Console.WriteLine($"Pôvodná hodnota: '{pointsText}'");
+                int totalPoints = 0;
+                int fileCount = ListViewShowPointsValues.Items.Count;
+                int errorCount = 0;
 
-                // Odstránenie všetkých bielych znakov a špeciálnych znakov
-                pointsText = new string(pointsText.Where(c => char.IsDigit(c)).ToArray());
+                Debug.WriteLine($"Začínam aktualizáciu štatistík. Počet položiek: {fileCount}");
 
-                Console.WriteLine($"Upravená hodnota pre parsing: '{pointsText}'");
-
-                if (int.TryParse(pointsText, out int points))
+                foreach (ListViewItem item in ListViewShowPointsValues.Items)
                 {
-                    totalPoints += points;
-                    Console.WriteLine($"Úspešne parsované číslo: {points}");
+                    Debug.WriteLine($"Spracovávam položku: {item.SubItems[0].Text}");
+                    Debug.WriteLine($"Hodnota bodov (raw): {item.SubItems[1].Text}");
+
+                    // Odstránime všetky whitespace znaky
+                    string pointsText = new string(item.SubItems[1].Text.Where(c => !char.IsWhiteSpace(c)).ToArray());
+                    Debug.WriteLine($"Hodnota bodov (očistená): {pointsText}");
+
+                    if (int.TryParse(pointsText, out int points))
+                    {
+                        totalPoints += points;
+                        Debug.WriteLine($"Úspešne pripočítané body: {points}, nový súčet: {totalPoints}");
+                    }
+                    else
+                    {
+                        errorCount++;
+                        Debug.WriteLine($"CHYBA: Nepodarilo sa spracovať hodnotu: '{item.SubItems[1].Text}'");
+                    }
                 }
-                else
+
+                double averagePoints = fileCount > 0 ? (double)totalPoints / fileCount : 0;
+
+                Debug.WriteLine($"Finálne hodnoty:");
+                Debug.WriteLine($"Celkový súčet: {totalPoints}");
+                Debug.WriteLine($"Počet súborov: {fileCount}");
+                Debug.WriteLine($"Priemer: {averagePoints}");
+
+                LabelTotalSum.Text = $"Celkový súčet: {totalPoints:N0}";
+                LabelFileCount.Text = $"Počet súborov: {fileCount}";
+                LabelAverage.Text = $"Priemerné body: {averagePoints:N0}";
+
+                if (errorCount > 0)
                 {
-                    Console.WriteLine($"Nepodarilo sa parsovať hodnotu: '{pointsText}'");
+                    Debug.WriteLine($"Počet chýb pri výpočte štatistík: {errorCount}");
                 }
             }
-
-            int fileCount = ListViewShowPointsValues.Items.Count;
-            double averagePoints = fileCount > 0 ? (double)totalPoints / fileCount : 0;
-
-            // Nastavenie textu labelov s formátovaním
-            LabelTotalSum.Text = $"Celkový súčet: {totalPoints:N0}";
-            LabelFileCount.Text = $"Počet súborov: {fileCount}";
-            LabelAverage.Text = $"Priemerné body: {averagePoints:N0}";
-
-            Console.WriteLine($"Nastavené hodnoty:");
-            Console.WriteLine(LabelTotalSum.Text);
-            Console.WriteLine(LabelFileCount.Text);
-            Console.WriteLine(LabelAverage.Text);
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Chyba pri aktualizácii štatistík: {ex.Message}");
+                MessageBox.Show("Nastala chyba pri aktualizácii štatistík.",
+                    "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void DisableButtons()
@@ -554,11 +751,37 @@ namespace CountAndSortWinFormsAppNetFr4
             // ButtonProcessData zostane zakázané, kým sa nevyberie nový súbor
         }
 
+        private void LoadDataToGrid(string[] lines)
+        {
+            DataGridPreview.Rows.Clear();
+            foreach (string line in lines)
+            {
+                var parts = line.Split('|');
+                // Pridanie riadku s checkboxom
+                int rowIndex = DataGridPreview.Rows.Add(false, parts); // false je pre checkbox
+                var row = DataGridPreview.Rows[rowIndex];
+
+                // Nastavenie ďalších buniek
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    row.Cells[i + 1].Value = parts[i];
+                }
+            }
+        }
+
         private void ClearHistory()
         {
             ListViewShowPointsValues.Items.Clear();
             processedFiles.Clear();
             UpdateStatistics();
+        }
+
+        private void CheckBoxSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DataGridPreview.Rows)
+            {
+                row.Cells["Selected"].Value = CheckBoxSelectAll.Checked;
+            }
         }
     }
 }

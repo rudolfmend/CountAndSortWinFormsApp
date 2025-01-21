@@ -34,7 +34,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.TextBoxSelectedFileDirectory = new System.Windows.Forms.TextBox();
             this.ButtonSelectAFile = new System.Windows.Forms.Button();
             this.ButtonProcessData = new System.Windows.Forms.Button();
-            this.RichTextBoxDataPreview = new System.Windows.Forms.RichTextBox();
             this.CheckBoxRenumberTheOrder = new System.Windows.Forms.CheckBox();
             this.CheckBoxSortByName = new System.Windows.Forms.CheckBox();
             this.CheckBoxOmitTheHeader = new System.Windows.Forms.CheckBox();
@@ -46,6 +45,9 @@ namespace CountAndSortWinFormsAppNetFr4
             this.LabelTotalSum = new System.Windows.Forms.Label();
             this.LabelFileCount = new System.Windows.Forms.Label();
             this.LabelAverage = new System.Windows.Forms.Label();
+            this.DataGridPreview = new System.Windows.Forms.DataGridView();
+            this.CheckBoxSelectAll = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             this.SuspendLayout();
             // 
             // TextBoxSelectedFileDirectory
@@ -76,16 +78,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ButtonProcessData.Text = "Spracovať údaje";
             this.ButtonProcessData.UseVisualStyleBackColor = true;
             this.ButtonProcessData.Click += new System.EventHandler(this.ButtonProcessData_Click);
-            // 
-            // RichTextBoxDataPreview
-            // 
-            this.RichTextBoxDataPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.RichTextBoxDataPreview.Location = new System.Drawing.Point(12, 219);
-            this.RichTextBoxDataPreview.Name = "RichTextBoxDataPreview";
-            this.RichTextBoxDataPreview.Size = new System.Drawing.Size(1180, 675);
-            this.RichTextBoxDataPreview.TabIndex = 3;
-            this.RichTextBoxDataPreview.Text = "";
             // 
             // CheckBoxRenumberTheOrder
             // 
@@ -207,12 +199,35 @@ namespace CountAndSortWinFormsAppNetFr4
             this.LabelAverage.Size = new System.Drawing.Size(0, 22);
             this.LabelAverage.TabIndex = 15;
             // 
+            // DataGridPreview
+            // 
+            this.DataGridPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.DataGridPreview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridPreview.Location = new System.Drawing.Point(12, 220);
+            this.DataGridPreview.Name = "DataGridPreview";
+            this.DataGridPreview.Size = new System.Drawing.Size(1191, 583);
+            this.DataGridPreview.TabIndex = 16;
+            // 
+            // CheckBoxSelectAll
+            // 
+            this.CheckBoxSelectAll.AutoSize = true;
+            this.CheckBoxSelectAll.Location = new System.Drawing.Point(480, 182);
+            this.CheckBoxSelectAll.Name = "CheckBoxSelectAll";
+            this.CheckBoxSelectAll.Size = new System.Drawing.Size(195, 26);
+            this.CheckBoxSelectAll.TabIndex = 17;
+            this.CheckBoxSelectAll.Text = "označiť všetky riadky";
+            this.CheckBoxSelectAll.UseVisualStyleBackColor = true;
+            this.CheckBoxSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxSelectAll_CheckedChanged);
+            // 
             // SelectFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1757, 906);
+            this.Controls.Add(this.CheckBoxSelectAll);
+            this.Controls.Add(this.DataGridPreview);
             this.Controls.Add(this.LabelAverage);
             this.Controls.Add(this.LabelFileCount);
             this.Controls.Add(this.LabelTotalSum);
@@ -224,7 +239,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Controls.Add(this.CheckBoxOmitTheHeader);
             this.Controls.Add(this.CheckBoxSortByName);
             this.Controls.Add(this.CheckBoxRenumberTheOrder);
-            this.Controls.Add(this.RichTextBoxDataPreview);
             this.Controls.Add(this.ButtonProcessData);
             this.Controls.Add(this.ButtonSelectAFile);
             this.Controls.Add(this.TextBoxSelectedFileDirectory);
@@ -234,6 +248,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.MinimumSize = new System.Drawing.Size(1200, 700);
             this.Name = "SelectFileForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,7 +259,6 @@ namespace CountAndSortWinFormsAppNetFr4
         private System.Windows.Forms.TextBox TextBoxSelectedFileDirectory;
         private System.Windows.Forms.Button ButtonSelectAFile;
         private System.Windows.Forms.Button ButtonProcessData;
-        private System.Windows.Forms.RichTextBox RichTextBoxDataPreview;
         private System.Windows.Forms.CheckBox CheckBoxRenumberTheOrder;
         private System.Windows.Forms.CheckBox CheckBoxSortByName;
         private System.Windows.Forms.CheckBox CheckBoxOmitTheHeader;
@@ -256,6 +270,8 @@ namespace CountAndSortWinFormsAppNetFr4
         private System.Windows.Forms.Label LabelTotalSum;
         private System.Windows.Forms.Label LabelFileCount;
         private System.Windows.Forms.Label LabelAverage;
+        private DataGridView DataGridPreview;
+        private CheckBox CheckBoxSelectAll;
     }
 }
 

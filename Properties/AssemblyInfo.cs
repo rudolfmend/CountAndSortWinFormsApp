@@ -1,15 +1,16 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Count & Sort app")]
-[assembly: AssemblyDescription("Count & Sort app")]
+[assembly: AssemblyTitle("Kontrola duplicity a spočítanie bodov dávok do poisťovní")]
+[assembly: AssemblyDescription("Odstránenie duplicitných riadkov, prečíslovanie poradia záznamov, zoradenie podľa mena, sledovanie histórie spracovaných súborov, zobrazenie štatistík (celkový súčet, počet súborov, priemer), možnosť exportu histórie do textového súboru.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CountAndSortWinFormsAppNetFr4")]
+[assembly: AssemblyCompany("Rudolf Mendzezof Software Development")]
+[assembly: AssemblyProduct("Kontrola duplicity a spočítanie bodov dávok do poisťovní")]
 [assembly: AssemblyCopyright("Copyright Rudolf Mendzezof©  2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -31,3 +32,4 @@ using System.Runtime.InteropServices;
 //
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguage("sk-SK")]
