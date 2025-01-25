@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -59,6 +58,104 @@ namespace CountAndSortWinFormsAppNetFr4
 
         }
 
+        private class ProcessedFileInfo
+        {
+            // properties for unique identification
+            public string FileName { get; set; }  // Added missing property
+            public string FullPath { get; set; }
+            public DateTime ProcessedTime { get; set; }
+            public int Points { get; set; }
+            public string UniqueIdentifier { get; set; }
+            public DateTime FileCreationTime { get; set; }
+            public long FileSize { get; set; }
+            public string SourceDirectory { get; set; }
+
+            // property for duplicate count
+            public int RemovedDuplicates { get; set; }
+            public int DuplicatesRemoved { get; set; }
+
+
+            public ProcessedFileInfo(string fileName, string fullPath, DateTime time = default, int points = 0, string sourceDirectory = "")
+            {
+                FileName = fileName;
+                FullPath = Path.GetFullPath(fullPath); // Convert to absolute path
+                ProcessedTime = time == default ? DateTime.Now : time;
+                Points = points;
+                // Store the source directory from the input file / Na uloženie zdrojového adresára zo vstupného súboru
+                //SourceDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
+                SourceDirectory = sourceDirectory;
+
+                try
+                {
+                    var fileInfo = new FileInfo(FullPath);
+                    FileCreationTime = fileInfo.CreationTime;
+                    FileSize = fileInfo.Length;
+                    UniqueIdentifier = $"{fileName}_{FileCreationTime.Ticks}_{FileSize}";
+                }
+                catch (Exception)
+                {
+                    // Handle file not found gracefully
+                    FileCreationTime = DateTime.Now;
+                    FileSize = 0;
+                    UniqueIdentifier = $"{fileName}_{DateTime.Now.Ticks}";
+                }
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (obj is ProcessedFileInfo other)
+                {
+                    return UniqueIdentifier == other.UniqueIdentifier;
+                }
+                return false;
+            }
+
+            public override int GetHashCode()
+            {
+                return UniqueIdentifier.GetHashCode();
+            }
+        }
+
+        private HashSet<ProcessedFileInfo> processedFiles = new HashSet<ProcessedFileInfo>();
+
+        private bool IsFileAlreadyProcessed(string filePath)
+        {
+            var file = new ProcessedFileInfo(
+                Path.GetFileName(filePath),
+                Path.GetFullPath(filePath));
+            return processedFiles.Contains(file);
+        }
+
+        private void AddToHistory(string filePath, int points, string sourceDirectory)
+        {
+            string fileName = Path.GetFileName(filePath);
+            string fullPath = Path.GetFullPath(filePath);
+            DateTime now = DateTime.Now;
+
+            var newFileInfo = new ProcessedFileInfo(fileName, fullPath, now, points, sourceDirectory);
+
+            //Add only if it does not already exist with the same identifier / Pridať len ak ešte neexistuje s rovnakým identifikátorom
+            if (!processedFiles.Any(f => f.UniqueIdentifier == newFileInfo.UniqueIdentifier))
+            {
+                processedFiles.Add(newFileInfo);
+            }
+
+            //Updating ListView / Aktualizácia ListView
+            ListViewShowPointsValues.Items.Clear();
+            foreach (var file in processedFiles.OrderBy(f => f.ProcessedTime))
+            {
+                ListViewItem item = new ListViewItem(new[]
+                {
+                    file.FileName,
+                    file.Points.ToString(NUMBER_FORMAT),
+                    file.ProcessedTime.ToString(DATE_TIME_FORMAT)
+                });
+                ListViewShowPointsValues.Items.Add(item);
+            }
+
+            UpdateStatistics();
+        }
+
         private void ButtonSelectAFile_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -69,99 +166,74 @@ namespace CountAndSortWinFormsAppNetFr4
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     TextBoxSelectedFileDirectory.Text = openFileDialog.FileName;
-
-                    // Aktualizácia titulku formulára
-                    var fileName = Path.GetFileName(openFileDialog.FileName);
-                    var baseTitle = this.Text.Split('-')[0].Trim();
-                    this.Text = $"{baseTitle} - {fileName}";
                     ButtonProcessData.Enabled = true;
 
                     try
                     {
-                        // Načítanie a spracovanie súboru
                         string[] lines = File.ReadAllLines(openFileDialog.FileName);
 
-                        // Vyčistenie existujúcich dát
+                        // Reset DataGridView
                         DataGridPreview.Rows.Clear();
                         DataGridPreview.Columns.Clear();
 
-                        // Nastavenie stĺpcov
-                        DataGridPreview.AutoGenerateColumns = false;
+                        // Určenie maximálneho počtu stĺpcov
+                        int maxColumns = lines
+                            .Select(line => line.Split('|').Length)
+                            .Max();
 
                         // Pridanie checkbox stĺpca
-                        var checkboxColumn = new DataGridViewCheckBoxColumn
+                        DataGridPreview.Columns.Add(new DataGridViewCheckBoxColumn
                         {
                             Name = "Selected",
                             HeaderText = "",
                             Width = 30
-                        };
-                        DataGridPreview.Columns.Add(checkboxColumn);
+                        });
 
-                        // Zistenie počtu stĺpcov z prvého riadku
-                        if (lines.Length > 0)
+                        // Pridanie dátových stĺpcov
+                        for (int i = 0; i < maxColumns; i++)
                         {
-                            string[] firstRow = lines[0].Split('|');
-                            for (int i = 0; i < firstRow.Length; i++)
+                            DataGridPreview.Columns.Add(new DataGridViewTextBoxColumn
                             {
-                                DataGridPreview.Columns.Add(new DataGridViewCheckBoxColumn
-                                {
-                                    Name = $"Column{i}",
-                                    HeaderText = $"Stĺpec {i + 1}",
-                                    Width = 100
-                                });
-                            }
+                                Name = $"Column{i}",
+                                HeaderText = $"Stĺpec {i + 1}",
+                                Width = 100,
+                                ReadOnly = true
+                            });
                         }
 
                         // Naplnenie dát
                         foreach (string line in lines)
                         {
-                            var parts = line.Split('|');
+                            string[] parts = line.Split('|');
                             int rowIndex = DataGridPreview.Rows.Add();
                             var row = DataGridPreview.Rows[rowIndex];
 
-                            // Nastavenie checkbox bunky
+                            // Checkbox
                             row.Cells[0].Value = false;
 
-                            // Naplnenie dát do buniek
-                            for (int i = 0; i < parts.Length; i++)
+                            // Dáta
+                            for (int i = 0; i < parts.Length && i < maxColumns; i++)
                             {
                                 row.Cells[i + 1].Value = parts[i];
                             }
                         }
 
-                        // Nastavenie vlastností DataGridPreview
+                        // Nastavenia DataGridView
                         DataGridPreview.AllowUserToAddRows = false;
                         DataGridPreview.AllowUserToDeleteRows = false;
-                        DataGridPreview.ReadOnly = false;
                         DataGridPreview.MultiSelect = true;
                         DataGridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-                        // Povolenie úpravy len pre checkbox stĺpec
-                        foreach (DataGridViewColumn column in DataGridPreview.Columns)
+                        // Povoliť editáciu len pre checkbox stĺpec
+                        foreach (DataGridViewColumn col in DataGridPreview.Columns)
                         {
-                            if (column.Name != "Selected")
-                            {
-                                column.ReadOnly = true;
-                            }
+                            col.ReadOnly = col.Name != "Selected";
                         }
 
-                        // Pridanie header checkbox pre označenie všetkých riadkov
-                        var headerCell = new DataGridViewCheckBoxHeaderCell();  // Použitie správneho typu bunky
-                        headerCell.Value = false;
-                        checkboxColumn.HeaderCell = headerCell;
-
-                        // Handler pre kliknutie na header checkbox
-                        checkboxColumn.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                        headerCell.OnCheckBoxClicked += (s, state) =>  // Zmenené 'sender' na 's'
-                        {
-                            foreach (DataGridViewRow row in DataGridPreview.Rows)
-                            {
-                                row.Cells[0].Value = state;
-                            }
-                        };
-
-
-
+                        // Aktualizácia titulku
+                        var fileName = Path.GetFileName(openFileDialog.FileName);
+                        var baseTitle = this.Text.Split('-')[0].Trim();
+                        this.Text = $"{baseTitle} - {fileName}";
                     }
                     catch (Exception ex)
                     {
@@ -206,29 +278,6 @@ namespace CountAndSortWinFormsAppNetFr4
                 .ToList();
         }
 
-        private List<string> RemoveLeadingZeros(List<string> lines)
-        {
-            return lines
-                .Select(line =>
-                {
-                    var parts = line.Split('|');
-                    if (parts.Length > 4 && int.TryParse(parts[0], out _))
-                    {
-                        // Odstránenie núl z prvého stĺpca
-                        if (int.TryParse(parts[0], out int firstNum))
-                            parts[0] = firstNum.ToString();
-
-                        // Odstránenie núl z druhého stĺpca
-                        if (parts.Length > 1 && int.TryParse(parts[1], out int secondNum))
-                            parts[1] = secondNum.ToString();
-
-                        return string.Join("|", parts);
-                    }
-                    return line;
-                })
-                .ToList();
-        }
-
         private List<string> RemoveDuplicateRows(List<string> lines)
         {
             return lines
@@ -256,19 +305,6 @@ namespace CountAndSortWinFormsAppNetFr4
                 });
         }
 
-
-        private HashSet<string> processedFiles = new HashSet<string>(); // Zoznam spracovaných súborov
-
-        private bool IsFileAlreadyProcessed(string fileName)// Pomocná metóda na kontrolu či súbor už bol spracovaný
-        {
-            foreach (ListViewItem item in ListViewShowPointsValues.Items)
-            {
-                if (item.SubItems[0].Text.Equals(fileName, StringComparison.OrdinalIgnoreCase))
-                    return true;
-            }
-            return false;
-        }
-
         /// <summary>
         /// Spracovanie údajov podľa nastavení checkboxov.
         /// Umožňuje užívateľovi vybrať priečinok pre uloženie súboru.
@@ -294,19 +330,20 @@ namespace CountAndSortWinFormsAppNetFr4
                 }
 
                 string currentFile = Path.GetFileName(TextBoxSelectedFileDirectory.Text);
-                // Kontrola či súbor už bol spracovaný
-                if (processedFiles.Contains(currentFile))
+                string currentFilePath = TextBoxSelectedFileDirectory.Text;
+                string sourceDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
+
+                if (IsFileAlreadyProcessed(currentFilePath))
                 {
                     var result = MessageBox.Show(
-                    "Tento súbor už bol spracovaný. Chcete ho spracovať znova?",
-                    "Upozornenie",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
+                        "Tento súbor už bol spracovaný. Chcete ho spracovať znova?",
+                        "Upozornenie",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
 
                     if (result == DialogResult.No)
                         return;
                 }
-
 
                 if (string.IsNullOrEmpty(TextBoxSelectedFileDirectory.Text))
                 {
@@ -320,20 +357,11 @@ namespace CountAndSortWinFormsAppNetFr4
                 int originalPoints = await CalculateTotalPointsAsync(originalLines);
 
                 var processedLines = await ProcessDataAsync(originalLines);
-
-
-                // DataGridPreview.Lines = processedLines.ToArray();
-                // DataGridPreview.DataSource = processedLines.Select(line => new { Value = line }).ToList();
-
-
                 string outputPath = await SaveProcessedDataAsync(processedLines);
                 int processedPoints = await CalculateTotalPointsAsync(processedLines);
 
-                // Pridanie záznamu do histórie
-                AddToHistory(Path.GetFileName(TextBoxSelectedFileDirectory.Text), processedPoints);
-
-                // Po úspešnom spracovaní pridať do zoznamu
-                processedFiles.Add(currentFile);
+                // Pass source directory to AddToHistory
+                AddToHistory(currentFilePath, processedPoints, sourceDirectory);
 
                 MessageBox.Show(
                     $"Údaje boli spracované a uložené do súboru:\n{outputPath}\n" +
@@ -383,12 +411,13 @@ namespace CountAndSortWinFormsAppNetFr4
                 // Získame len neoznačené riadky
                 var unselectedRows = GetUnselectedRows();
 
-                if (CheckBoxOmitTheHeader.Checked)
-                    dataLines = RemoveLeadingZeros(dataLines);
-
                 if (CheckBoxRemoveDuplicatesRows.Checked)
                 {
+                    var originalCount = dataLines.Count;
                     dataLines = RemoveDuplicateRows(dataLines);
+                    //duplicatesRemoved = originalCount - dataLines.Count;
+                    //// Store duplicate count for current file
+                    //currentFileInfo.RemovedDuplicates = duplicatesRemoved;
                 }
                 else
                 {
@@ -447,57 +476,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 Debug.WriteLine($"Celkový súčet bodov: {totalPoints}");
                 return totalPoints;
             });
-        }
-
-        private async Task<string> SaveProcessedDataAsync(List<string> processedLines)
-        {
-            return await Task.Factory.StartNew(() =>
-            {
-                try
-                {
-                    string outputPath;
-                    string originalDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
-                    string originalFileName = Path.GetFileName(TextBoxSelectedFileDirectory.Text);
-
-                    // Ak je zadaný výstupný priečinok a máme k nemu prístup
-                    if (!string.IsNullOrEmpty(TextBoxSelectOutputFolder.Text) &&
-                        Directory.Exists(TextBoxSelectOutputFolder.Text) &&
-                        HasWriteAccessToFolder(TextBoxSelectOutputFolder.Text))
-                    {
-                        outputPath = Path.Combine(
-                            TextBoxSelectOutputFolder.Text,
-                            PROCESSED_PREFIX + originalFileName
-                        );
-                    }
-                    // Ak nie je zadaný priečinok alebo nemáme k nemu prístup, použijeme pôvodný adresár
-                    else
-                    {
-                        outputPath = Path.Combine(
-                            originalDirectory,  // Použiť pôvodný adresár
-                            PROCESSED_PREFIX + originalFileName
-                        );
-                    }
-
-                    // Skontrolujeme, či môžeme zapisovať do cieľového adresára
-                    string targetDirectory = Path.GetDirectoryName(outputPath);
-                    if (HasWriteAccessToFolder(targetDirectory))
-                    {
-                        File.WriteAllLines(outputPath, processedLines);
-                        return outputPath;
-                    }
-                    else
-                    {
-                        throw new UnauthorizedAccessException($"Nemáte prístup pre zápis do priečinka: {targetDirectory}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Logovanie chyby
-                    Debug.WriteLine($"Chyba pri ukladaní súboru: {ex.Message}");
-                    throw; // Znovu vyhodíme výnimku pre spracovanie vo volajúcom kóde
-                }
-            });
-        }
+        }       
 
         // Pomocná metóda na kontrolu prístupu k priečinku
         private bool HasWriteAccessToFolder(string folderPath)
@@ -597,55 +576,35 @@ namespace CountAndSortWinFormsAppNetFr4
                     saveDialog.DefaultExt = "txt";
                     saveDialog.FileName = $"historia_bodov_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
 
-                    if (!string.IsNullOrEmpty(Properties.Settings.Default.LastOutputFolder))
-                    {
-                        saveDialog.InitialDirectory = Properties.Settings.Default.LastOutputFolder;
-                    }
-
                     if (saveDialog.ShowDialog() == DialogResult.OK)
                     {
-                        // Výpočet súhrnných informácií
-                        int totalPoints = 0;
-                        foreach (ListViewItem item in ListViewShowPointsValues.Items)
-                        {
-                            string pointsText = new string(item.SubItems[1].Text
-                                .Where(c => !char.IsWhiteSpace(c)).ToArray());
-                            if (int.TryParse(pointsText, out int points))
-                            {
-                                totalPoints += points;
-                            }
-                        }
-
-                        int fileCount = ListViewShowPointsValues.Items.Count;
-                        double averagePoints = fileCount > 0 ? (double)totalPoints / fileCount : 0;
-
                         StringBuilder content = new StringBuilder();
                         content.AppendLine("História spracovaných bodov");
                         content.AppendLine($"Vytvorené: {DateTime.Now:dd.MM.yyyy HH:mm:ss}");
                         content.AppendLine("--------------------------------------------------");
                         content.AppendLine();
 
-                        // Zápis záznamov
-                        foreach (ListViewItem item in ListViewShowPointsValues.Items)
+                        // Použite distinct na odstránenie duplicít
+                        var uniqueFiles = processedFiles.GroupBy(f => f.UniqueIdentifier)
+                                                      .Select(g => g.First());
+
+                        foreach (var file in uniqueFiles)
                         {
-                            content.AppendLine($"{item.SubItems[0].Text}  Celkové body: {item.SubItems[1].Text}");
-                            content.AppendLine($"Dátum spracovania: {item.SubItems[2].Text}");
+                            content.AppendLine($"{file.FileName}  Celkové body: {file.Points:N0}");
+                            content.AppendLine(file.SourceDirectory);
+                            content.AppendLine($"Dátum spracovania: {file.ProcessedTime:dd.MM.yyyy HH:mm:ss}");
                             content.AppendLine("-----------------------");
                         }
 
-                        // Zápis súhrnných informácií s vypočítanými hodnotami
-                        content.AppendLine();
-                        content.AppendLine($"Celkový súčet: {totalPoints:N0}");
-                        content.AppendLine($"Počet súborov: {fileCount}");
-                        content.AppendLine($"Priemerné body: {averagePoints:N0}");
+                        content.AppendLine($"Celkový počet zmazaných duplicít: {0}"); // Upravte podľa potreby
+                        content.AppendLine($"Celkový súčet: {uniqueFiles.Sum(f => f.Points):N0}");
+                        content.AppendLine($"Počet súborov: {uniqueFiles.Count()}");
+                        int avgPoints = uniqueFiles.Any() ? (int)(uniqueFiles.Sum(f => f.Points) / uniqueFiles.Count()) : 0;
+                        content.AppendLine($"Priemerné body: {avgPoints:N0}");
 
                         File.WriteAllText(saveDialog.FileName, content.ToString());
-
                         MessageBox.Show($"História bola úspešne uložená do súboru:\n{saveDialog.FileName}",
                             "Informácia", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        Properties.Settings.Default.LastOutputFolder = Path.GetDirectoryName(saveDialog.FileName);
-                        Properties.Settings.Default.Save();
                     }
                 }
             }
@@ -654,32 +613,6 @@ namespace CountAndSortWinFormsAppNetFr4
                 MessageBox.Show($"Chyba pri ukladaní histórie: {ex.Message}",
                     "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void AddToHistory(string fileName, int points)
-        {
-            // Kontrola duplicity pred pridaním
-            foreach (ListViewItem existingItem in ListViewShowPointsValues.Items)
-            {
-                if (existingItem.SubItems[0].Text == fileName)
-                {
-                    // Ak sa našiel rovnaký súbor, aktualizujeme hodnoty
-                    existingItem.SubItems[1].Text = points.ToString("N0");
-                    existingItem.SubItems[2].Text = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
-                    UpdateStatistics();
-                    return;
-                }
-            }
-
-            // Ak sa nenašla duplicita, pridáme nový záznam
-            ListViewItem item = new ListViewItem(new[] {
-                fileName,
-                points.ToString(NUMBER_FORMAT),
-                DateTime.Now.ToString(DATE_TIME_FORMAT)
-            });
-
-            ListViewShowPointsValues.Items.Add(item);
-            UpdateStatistics();
         }
 
         private void UpdateStatistics()
@@ -782,6 +715,81 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 row.Cells["Selected"].Value = CheckBoxSelectAll.Checked;
             }
+        }
+
+        private string GetUniqueFileName(string filePath)
+        {
+            if (!File.Exists(filePath))
+                return filePath;
+
+            string folder = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string extension = Path.GetExtension(filePath);
+            int counter = 1;
+
+            string newFilePath;
+            do
+            {
+                newFilePath = Path.Combine(folder, $"{fileName}({counter}){extension}");
+                counter++;
+            } while (File.Exists(newFilePath));
+
+            return newFilePath;
+        }
+
+        private async Task<string> SaveProcessedDataAsync(List<string> processedLines)
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    string outputPath;
+                    string originalDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
+                    string originalFileName = Path.GetFileName(TextBoxSelectedFileDirectory.Text);
+
+                    Debug.WriteLine($"Pôvodný adresár: {originalDirectory}");
+                    Debug.WriteLine($"Pôvodný súbor: {originalFileName}");
+
+                    if (!string.IsNullOrEmpty(TextBoxSelectOutputFolder.Text) &&
+                        Directory.Exists(TextBoxSelectOutputFolder.Text) &&
+                        HasWriteAccessToFolder(TextBoxSelectOutputFolder.Text))
+                    {
+                        outputPath = Path.Combine(
+                            TextBoxSelectOutputFolder.Text,
+                            PROCESSED_PREFIX + originalFileName
+                        );
+                        Debug.WriteLine($"Použitý výstupný adresár: {TextBoxSelectOutputFolder.Text}");
+                    }
+                    else
+                    {
+                        outputPath = Path.Combine(
+                            originalDirectory,
+                            PROCESSED_PREFIX + originalFileName
+                        );
+                        Debug.WriteLine("Použitý pôvodný adresár");
+                    }
+
+                    string uniqueOutputPath = GetUniqueFileName(outputPath);
+                    Debug.WriteLine($"Unikátna výstupná cesta: {uniqueOutputPath}");
+
+                    string targetDirectory = Path.GetDirectoryName(uniqueOutputPath);
+                    if (HasWriteAccessToFolder(targetDirectory))
+                    {
+                        File.WriteAllLines(uniqueOutputPath, processedLines);
+                        Debug.WriteLine("Súbor úspešne uložený");
+                        return uniqueOutputPath;
+                    }
+                    else
+                    {
+                        throw new UnauthorizedAccessException($"Nemáte prístup pre zápis do priečinka: {targetDirectory}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Chyba pri ukladaní súboru: {ex.Message}");
+                    throw;
+                }
+            });
         }
     }
 }

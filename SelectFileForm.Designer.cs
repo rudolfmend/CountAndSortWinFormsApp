@@ -36,7 +36,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ButtonProcessData = new System.Windows.Forms.Button();
             this.CheckBoxRenumberTheOrder = new System.Windows.Forms.CheckBox();
             this.CheckBoxSortByName = new System.Windows.Forms.CheckBox();
-            this.CheckBoxOmitTheHeader = new System.Windows.Forms.CheckBox();
             this.CheckBoxRemoveDuplicatesRows = new System.Windows.Forms.CheckBox();
             this.ButtonSelectOutputFolder = new System.Windows.Forms.Button();
             this.TextBoxSelectOutputFolder = new System.Windows.Forms.TextBox();
@@ -102,18 +101,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSortByName.TabIndex = 5;
             this.CheckBoxSortByName.Text = "zoradiť podľa mena";
             this.CheckBoxSortByName.UseVisualStyleBackColor = true;
-            // 
-            // CheckBoxOmitTheHeader
-            // 
-            this.CheckBoxOmitTheHeader.AutoSize = true;
-            this.CheckBoxOmitTheHeader.Checked = true;
-            this.CheckBoxOmitTheHeader.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckBoxOmitTheHeader.Location = new System.Drawing.Point(235, 153);
-            this.CheckBoxOmitTheHeader.Name = "CheckBoxOmitTheHeader";
-            this.CheckBoxOmitTheHeader.Size = new System.Drawing.Size(172, 26);
-            this.CheckBoxOmitTheHeader.TabIndex = 6;
-            this.CheckBoxOmitTheHeader.Text = "vynechať hlavičku";
-            this.CheckBoxOmitTheHeader.UseVisualStyleBackColor = true;
             // 
             // CheckBoxRemoveDuplicatesRows
             // 
@@ -206,13 +193,13 @@ namespace CountAndSortWinFormsAppNetFr4
             this.DataGridPreview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataGridPreview.Location = new System.Drawing.Point(12, 220);
             this.DataGridPreview.Name = "DataGridPreview";
-            this.DataGridPreview.Size = new System.Drawing.Size(1191, 583);
+            this.DataGridPreview.Size = new System.Drawing.Size(1191, 675);
             this.DataGridPreview.TabIndex = 16;
             // 
             // CheckBoxSelectAll
             // 
             this.CheckBoxSelectAll.AutoSize = true;
-            this.CheckBoxSelectAll.Location = new System.Drawing.Point(480, 182);
+            this.CheckBoxSelectAll.Location = new System.Drawing.Point(235, 153);
             this.CheckBoxSelectAll.Name = "CheckBoxSelectAll";
             this.CheckBoxSelectAll.Size = new System.Drawing.Size(195, 26);
             this.CheckBoxSelectAll.TabIndex = 17;
@@ -236,7 +223,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Controls.Add(this.TextBoxSelectOutputFolder);
             this.Controls.Add(this.ButtonSelectOutputFolder);
             this.Controls.Add(this.CheckBoxRemoveDuplicatesRows);
-            this.Controls.Add(this.CheckBoxOmitTheHeader);
             this.Controls.Add(this.CheckBoxSortByName);
             this.Controls.Add(this.CheckBoxRenumberTheOrder);
             this.Controls.Add(this.ButtonProcessData);
@@ -261,7 +247,6 @@ namespace CountAndSortWinFormsAppNetFr4
         private System.Windows.Forms.Button ButtonProcessData;
         private System.Windows.Forms.CheckBox CheckBoxRenumberTheOrder;
         private System.Windows.Forms.CheckBox CheckBoxSortByName;
-        private System.Windows.Forms.CheckBox CheckBoxOmitTheHeader;
         private System.Windows.Forms.CheckBox CheckBoxRemoveDuplicatesRows;
         private System.Windows.Forms.Button ButtonSelectOutputFolder;
         private System.Windows.Forms.TextBox TextBoxSelectOutputFolder;
