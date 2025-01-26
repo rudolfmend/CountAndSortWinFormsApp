@@ -46,6 +46,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.LabelAverage = new System.Windows.Forms.Label();
             this.DataGridPreview = new System.Windows.Forms.DataGridView();
             this.CheckBoxSelectAll = new System.Windows.Forms.CheckBox();
+            this.LabelDataStructureSeparatorIs = new System.Windows.Forms.Label();
+            this.ComboBoxSeparatorType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -207,12 +209,38 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSelectAll.UseVisualStyleBackColor = true;
             this.CheckBoxSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxSelectAll_CheckedChanged);
             // 
+            // LabelDataStructureSeparatorIs
+            // 
+            this.LabelDataStructureSeparatorIs.AutoSize = true;
+            this.LabelDataStructureSeparatorIs.Location = new System.Drawing.Point(1267, 103);
+            this.LabelDataStructureSeparatorIs.Name = "LabelDataStructureSeparatorIs";
+            this.LabelDataStructureSeparatorIs.Size = new System.Drawing.Size(247, 22);
+            this.LabelDataStructureSeparatorIs.TabIndex = 18;
+            this.LabelDataStructureSeparatorIs.Text = "Oddeľovač stĺpcov tabuľky je:";
+            // 
+            // ComboBoxSeparatorType
+            // 
+            this.ComboBoxSeparatorType.AutoCompleteCustomSource.AddRange(new string[] {
+            "\"|\"",
+            "\";\"",
+            "\",\"",
+            "\".\"",
+            "\" \""});
+            this.ComboBoxSeparatorType.FormattingEnabled = true;
+            this.ComboBoxSeparatorType.Location = new System.Drawing.Point(1520, 97);
+            this.ComboBoxSeparatorType.Name = "ComboBoxSeparatorType";
+            this.ComboBoxSeparatorType.Size = new System.Drawing.Size(121, 28);
+            this.ComboBoxSeparatorType.TabIndex = 19;
+            this.ComboBoxSeparatorType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSeparatorType_SelectedIndexChanged);
+            // 
             // SelectFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1757, 906);
+            this.Controls.Add(this.ComboBoxSeparatorType);
+            this.Controls.Add(this.LabelDataStructureSeparatorIs);
             this.Controls.Add(this.CheckBoxSelectAll);
             this.Controls.Add(this.DataGridPreview);
             this.Controls.Add(this.LabelAverage);
@@ -257,6 +285,8 @@ namespace CountAndSortWinFormsAppNetFr4
         private System.Windows.Forms.Label LabelAverage;
         private DataGridView DataGridPreview;
         private CheckBox CheckBoxSelectAll;
+        private Label LabelDataStructureSeparatorIs;
+        private ComboBox ComboBoxSeparatorType;
     }
 }
 
