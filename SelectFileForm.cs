@@ -14,7 +14,6 @@ namespace CountAndSortWinFormsAppNetFr4
     public partial class SelectFileForm : Form
     {
         // Konštanty pre štruktúru dávkového súboru
-        private const int HEADER_LINES = 2;
         private const int COLUMN_NAME_INDEX = 3;        // Index stĺpca s menom
         private const int COLUMN_ID_INDEX = 1;          // Index pre sekundárne triedenie
         private const int COLUMN_POINTS_INDEX = 10;     // Index stĺpca s bodmi
@@ -174,6 +173,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 {
                     TextBoxSelectedFileDirectory.Text = openFileDialog.FileName;
                     ButtonProcessData.Enabled = true;
+                    CheckBoxSelectAll.Checked = false;  //Reset checkbox status when loading a new file / Reset checkbox stavu pri načítaní nového súboru
 
                     try
                     {
@@ -241,6 +241,8 @@ namespace CountAndSortWinFormsAppNetFr4
                         var fileName = Path.GetFileName(openFileDialog.FileName);
                         var baseTitle = this.Text.Split('-')[0].Trim();
                         this.Text = $"{baseTitle} - {fileName}";
+
+                        CheckBoxSelectAll.Checked = false;  //Reset checkbox status when loading a new file / Reset checkbox stavu pri načítaní nového súboru
                     }
                     catch (Exception ex)
                     {
@@ -398,9 +400,8 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             return await Task.Factory.StartNew(() =>
             {
-                var headerLines = lines.Take(2).ToList();
                 var dataLines = lines.Skip(2).ToList();
-                // Získame len neoznačené riadky
+                //We get unmarked rows / Získame neoznačené riadky
                 var unselectedRows = GetUnselectedRows();
 
                 if (CheckBoxRemoveDuplicatesRows.Checked)
@@ -418,7 +419,9 @@ namespace CountAndSortWinFormsAppNetFr4
                         dataLines = RenumberFirstColumn(dataLines);
                 }
 
-                return headerLines.Concat(dataLines).ToList();
+                //return headerLines.Concat(dataLines).ToList();
+                //return dataLines.Concat(unselectedRows).ToList();
+                return dataLines;
             });
         }
 
@@ -430,7 +433,8 @@ namespace CountAndSortWinFormsAppNetFr4
                 int lineCount = 0;
                 int errorCount = 0;
 
-                foreach (var line in lines.Skip(HEADER_LINES))
+              //foreach (var line in lines.Skip(HEADER_LINES))
+                foreach (var line in lines)
                 {
                     lineCount++;
                     var parts = line.Split(new[] { columnSeparator }, StringSplitOptions.None);
