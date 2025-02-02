@@ -158,7 +158,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 });
                 ListViewShowPointsValues.Items.Add(item);
             }
-
+ 
             UpdateStatistics();
         }
 
@@ -168,13 +168,13 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 openFileDialog.Filter = "Všetky súbory (*.*)|*.*|súbory (*.001)|*.001|súbory (*.002)|*.002|Textové súbory (*.txt)|*.txt";
                 openFileDialog.FilterIndex = 1;
+                CheckBoxSelectAll.Checked = false;//Reset CheckBoxSelectAll
+
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     TextBoxSelectedFileDirectory.Text = openFileDialog.FileName;
-                    ButtonProcessData.Enabled = true;
-                    CheckBoxSelectAll.Checked = false;  //Reset checkbox status when loading a new file / Reset checkbox stavu pri načítaní nového súboru
-
+                    ButtonProcessData.Enabled = true;  
                     try
                     {
                         string[] lines = File.ReadAllLines(openFileDialog.FileName);
@@ -316,6 +316,15 @@ namespace CountAndSortWinFormsAppNetFr4
                 ButtonSelectAFile.Enabled = false;
                 ButtonSelectOutputFolder.Enabled = false;
 
+                // 1. Najprv kontrolujeme či je vôbec zadaná cesta k súboru
+                if (string.IsNullOrEmpty(TextBoxSelectedFileDirectory.Text))
+                {
+                    MessageBox.Show("Prosím, najprv vyberte súbor.", "Upozornenie",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 2. Potom kontrolujeme či súbor existuje
                 if (!File.Exists(TextBoxSelectedFileDirectory.Text))
                 {
                     MessageBox.Show("Vybraný súbor neexistuje.", "Chyba",
@@ -334,23 +343,26 @@ namespace CountAndSortWinFormsAppNetFr4
                         "Upozornenie",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Warning);
-
                     if (result == DialogResult.No)
                         return;
                 }
 
-                if (string.IsNullOrEmpty(TextBoxSelectedFileDirectory.Text))
+                var originalLines = (await Task.Factory.StartNew(() =>
+                    File.ReadAllLines(TextBoxSelectedFileDirectory.Text))).ToList();
+                var processedLines = await ProcessDataAsync(originalLines);
+
+                var selectedRowsCount = DataGridPreview.Rows.Cast<DataGridViewRow>()
+                    .Count(row => (bool?)row.Cells["Selected"].Value ?? false);
+
+                if (processedLines.Count == 0)
                 {
-                    MessageBox.Show("Prosím, najprv vyberte súbor.", "Upozornenie",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Nie sú označené žiadne riadky na spracovanie.\n" +
+                        "Prosím, označte riadky, ktoré chcete spracovať.",
+                        "Upozornenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                var originalLines = (await Task.Factory.StartNew(() =>
-                    File.ReadAllLines(TextBoxSelectedFileDirectory.Text))).ToList();
                 int originalPoints = await CalculateTotalPointsAsync(originalLines);
-
-                var processedLines = await ProcessDataAsync(originalLines);
                 string outputPath = await SaveProcessedDataAsync(processedLines);
                 int processedPoints = await CalculateTotalPointsAsync(processedLines);
 
@@ -366,6 +378,10 @@ namespace CountAndSortWinFormsAppNetFr4
                     "Hotovo",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Upozornenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
@@ -400,28 +416,46 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             return await Task.Factory.StartNew(() =>
             {
-                var dataLines = lines.Skip(2).ToList();
-                //We get unmarked rows / Získame neoznačené riadky
-                var unselectedRows = GetUnselectedRows();
-
-                if (CheckBoxRemoveDuplicatesRows.Checked)
+                try
                 {
-                    var originalCount = dataLines.Count;
-                    dataLines = RemoveDuplicateRows(dataLines);
-                    duplicatesRemoved = originalCount - dataLines.Count;
+                    // Získame označené riadky
+                    var dataLines = GetSelectedRows();
+
+                    // Kontrola prázdneho výberu - vrátime prázdny list namiesto vyhodenia výnimky
+                    if (dataLines.Count == 0)
+                    {
+                        return new List<string>();
+                    }
+
+                    // Spracovanie podľa nastavených možností
+                    List<string> processedLines = new List<string>(dataLines);
+
+                    if (CheckBoxRemoveDuplicatesRows.Checked)
+                    {
+                        var originalCount = processedLines.Count;
+                        processedLines = RemoveDuplicateRows(processedLines);
+                        duplicatesRemoved = originalCount - processedLines.Count;
+                    }
+                    else
+                    {
+                        if (CheckBoxSortByName.Checked)
+                        {
+                            processedLines = SortLinesByName(processedLines);
+                        }
+
+                        if (CheckBoxRenumberTheOrder.Checked)
+                        {
+                            processedLines = RenumberFirstColumn(processedLines);
+                        }
+                    }
+
+                    return processedLines;
                 }
-                else
+                catch (Exception ex)
                 {
-                    if (CheckBoxSortByName.Checked)
-                        dataLines = SortLinesByName(dataLines);
-
-                    if (CheckBoxRenumberTheOrder.Checked)
-                        dataLines = RenumberFirstColumn(dataLines);
+                    Debug.WriteLine($"Chyba pri spracovaní dát: {ex.Message}");
+                    throw;
                 }
-
-                //return headerLines.Concat(dataLines).ToList();
-                //return dataLines.Concat(unselectedRows).ToList();
-                return dataLines;
             });
         }
 
@@ -690,6 +724,22 @@ namespace CountAndSortWinFormsAppNetFr4
             } while (File.Exists(newFilePath));
 
             return newFilePath;
+        }
+
+        private List<string> GetSelectedRows()
+        {
+            List<string> selectedRows = new List<string>();
+            foreach (DataGridViewRow row in DataGridPreview.Rows)
+            {
+                if ((bool?)row.Cells["Selected"].Value ?? false)  // Ak je označený
+                {
+                    var cells = row.Cells.Cast<DataGridViewCell>()
+                                   .Skip(1)  // Preskočiť checkbox stĺpec
+                                   .Select(c => c.Value?.ToString() ?? "");
+                    selectedRows.Add(string.Join(columnSeparator, cells));
+                }
+            }
+            return selectedRows;
         }
 
         private async Task<string> SaveProcessedDataAsync(List<string> processedLines)
