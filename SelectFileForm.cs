@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -37,6 +38,13 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             InitializeComponent();
 
+            LanguageToolTip.SetToolTip(LanguageComboBox,
+                  "Výber jazyka / Language selection / Sprachauswahl / Wybór języka / Nyelvválasztás / Вибір мови");
+
+            // Default language + DropDownStyle
+            LanguageComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            LanguageComboBox.SelectedIndex = 1;  // slovak as default language / slovenčina ako predvolený jazyk
+
             // Získanie názvu a verzie aplikácie z Assembly
             Assembly assembly = Assembly.GetExecutingAssembly();
             Version version = assembly.GetName().Version;
@@ -60,8 +68,22 @@ namespace CountAndSortWinFormsAppNetFr4
             ComboBoxSeparatorType.Items.AddRange(new[] { "|", ";", ",", ".", " " });
             ComboBoxSeparatorType.SelectedItem = columnSeparator;
 
-            ComboBoxSeparatorType.SelectedIndex = 0; // Nastaví prvú položku ("|")
+            ComboBoxSeparatorType.DrawMode = DrawMode.OwnerDrawFixed;
+            ComboBoxSeparatorType.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboBoxSeparatorType.DrawItem += ComboBoxSeparatorType_DrawItem;
+
+            ComboBoxSeparatorType.SelectedIndex = 0; // Set first item ("|")
             columnSeparator = ComboBoxSeparatorType.SelectedItem.ToString();
+
+            // Nastavenie alternujúcich farieb riadkov
+            DataGridPreview.AlternatingRowsDefaultCellStyle.BackColor = Color.LightBlue;
+            DataGridPreview.RowsDefaultCellStyle.BackColor = Color.White;
+            DataGridPreview.BackgroundColor = Color.White;
+
+            // Voliteľné vylepšenia pre lepší vzhľad
+            DataGridPreview.GridColor = Color.LightGray;
+            DataGridPreview.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+            DataGridPreview.BorderStyle = BorderStyle.Fixed3D;
         }
 
         private class ProcessedFileInfo
@@ -122,7 +144,7 @@ namespace CountAndSortWinFormsAppNetFr4
             }
         }
 
-        private HashSet<ProcessedFileInfo> processedFiles = new HashSet<ProcessedFileInfo>();
+        private readonly HashSet<ProcessedFileInfo> processedFiles = new HashSet<ProcessedFileInfo>();
 
         private bool IsFileAlreadyProcessed(string filePath)
         {
@@ -168,64 +190,18 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 openFileDialog.Filter = "Všetky súbory (*.*)|*.*|súbory (*.001)|*.001|súbory (*.002)|*.002|Textové súbory (*.txt)|*.txt";
                 openFileDialog.FilterIndex = 1;
-                CheckBoxSelectAll.Checked = false;//Reset CheckBoxSelectAll
-
+                CheckBoxSelectAll.Checked = false; //Reset CheckBoxSelectAll
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     TextBoxSelectedFileDirectory.Text = openFileDialog.FileName;
-                    ButtonProcessData.Enabled = true;  
+                    ButtonProcessData.Enabled = true;
                     try
                     {
                         string[] lines = File.ReadAllLines(openFileDialog.FileName);
+                        LoadDataToGrid(lines);
 
-                        // Reset DataGridView
-                        DataGridPreview.Rows.Clear();
-                        DataGridPreview.Columns.Clear();
-
-                        // Určenie maximálneho počtu stĺpcov
-                        int maxColumns = lines
-                            .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None).Length)
-                            .Max();
-
-                        // Pridanie checkbox stĺpca
-                        DataGridPreview.Columns.Add(new DataGridViewCheckBoxColumn
-                        {
-                            Name = "Selected",
-                            HeaderText = "",
-                            Width = 30
-                        });
-
-                        // Pridanie dátových stĺpcov
-                        for (int i = 0; i < maxColumns; i++)
-                        {
-                            DataGridPreview.Columns.Add(new DataGridViewTextBoxColumn
-                            {
-                                Name = $"Column{i}",
-                                HeaderText = $"Stĺpec {i + 1}",
-                                Width = 100,
-                                ReadOnly = true
-                            });
-                        }
-
-                        //Filling with data / Naplnenie dát
-                        foreach (string line in lines)
-                        {
-                            string[] parts = line.Split(new[] { columnSeparator }, StringSplitOptions.None);
-                            int rowIndex = DataGridPreview.Rows.Add();
-                            var row = DataGridPreview.Rows[rowIndex];
-
-                            // Checkbox
-                            row.Cells[0].Value = false;
-
-                            // Dáta
-                            for (int i = 0; i < parts.Length && i < maxColumns; i++)
-                            {
-                                row.Cells[i + 1].Value = parts[i];
-                            }
-                        }
-
-                        // Nastavenia DataGridView
+                        // Nastavenia DataGridView ktoré sú špecifické pre inicializáciu
                         DataGridPreview.AllowUserToAddRows = false;
                         DataGridPreview.AllowUserToDeleteRows = false;
                         DataGridPreview.MultiSelect = true;
@@ -242,7 +218,7 @@ namespace CountAndSortWinFormsAppNetFr4
                         var baseTitle = this.Text.Split('-')[0].Trim();
                         this.Text = $"{baseTitle} - {fileName}";
 
-                        CheckBoxSelectAll.Checked = false;  //Reset checkbox status when loading a new file / Reset checkbox stavu pri načítaní nového súboru
+                        CheckBoxSelectAll.Checked = false;
                     }
                     catch (Exception ex)
                     {
@@ -683,17 +659,65 @@ namespace CountAndSortWinFormsAppNetFr4
         private void LoadDataToGrid(string[] lines)
         {
             DataGridPreview.Rows.Clear();
+            DataGridPreview.Columns.Clear();
+
+            // 1. Nájdeme najvyšší počet oddeľovačov vo všetkých riadkoch
+            int maxColumnCount = 0;
             foreach (string line in lines)
             {
-                var parts = line.Split(new[] { columnSeparator }, StringSplitOptions.None);
-                //Adding a row with a checkbox / Pridanie riadku s checkboxom
-                int rowIndex = DataGridPreview.Rows.Add(false, parts); // false je pre checkbox
-                var row = DataGridPreview.Rows[rowIndex];
-
-                //Setting up additional cells / Nastavenie ďalších buniek
-                for (int i = 0; i < parts.Length; i++)
+                if (!string.IsNullOrEmpty(line))
                 {
-                    row.Cells[i + 1].Value = parts[i];
+                    int separatorCount = line.Count(c => c == columnSeparator[0]);
+                    maxColumnCount = Math.Max(maxColumnCount, separatorCount);
+                }
+            }
+
+            // 2. Vytvoríme presný počet stĺpcov podľa najvyššieho počtu oddeľovačov
+            // Pridanie checkbox stĺpca
+            DataGridPreview.Columns.Add(new DataGridViewCheckBoxColumn
+            {
+                Name = "Selected",
+                HeaderText = "",
+                Width = 30
+            });
+
+            // Pridanie stĺpcov podľa najvyššieho počtu oddeľovačov
+            for (int i = 0; i < maxColumnCount; i++)
+            {
+                DataGridPreview.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = $"Column{i}",
+                    HeaderText = $"{i + 1}.",
+                    Width = 100,
+                    ReadOnly = true
+                });
+            }
+
+            // 3. Plníme dáta a kontrolujeme hranice
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrEmpty(line)) continue;
+
+                int rowIndex = DataGridPreview.Rows.Add();
+                var row = DataGridPreview.Rows[rowIndex];
+                row.Cells[0].Value = false;  // Checkbox
+
+                int startIndex = 0;
+                int columnIndex = 0;
+
+                // Prechádzame cez každý oddeľovač v riadku
+                for (int i = 0; i < line.Length && columnIndex < maxColumnCount; i++)
+                {
+                    if (line[i] == columnSeparator[0])
+                    {
+                        if (startIndex < i)
+                        {
+                            string value = line.Substring(startIndex, i - startIndex);
+                            row.Cells[columnIndex + 1].Value = value;
+                        }
+                        columnIndex++;
+                        startIndex = i + 1;
+                    }
                 }
             }
         }
@@ -731,12 +755,13 @@ namespace CountAndSortWinFormsAppNetFr4
             List<string> selectedRows = new List<string>();
             foreach (DataGridViewRow row in DataGridPreview.Rows)
             {
-                if ((bool?)row.Cells["Selected"].Value ?? false)  // Ak je označený
+                if ((bool?)row.Cells["Selected"].Value ?? false)
                 {
                     var cells = row.Cells.Cast<DataGridViewCell>()
-                                   .Skip(1)  // Preskočiť checkbox stĺpec
-                                   .Select(c => c.Value?.ToString() ?? "");
-                    selectedRows.Add(string.Join(columnSeparator, cells));
+                                   .Skip(1)  // Skip checkbox column / Preskočiť checkbox stĺpec
+                                   .Select(c => (c.Value?.ToString() ?? "") + columnSeparator); // We add a separator to each value / Pridáme oddeľovač ku každej hodnote
+
+                    selectedRows.Add(string.Join("", cells)); // no column separator, because it is already part of each column / Žiadny oddeľovač stĺpcov, pretože je už súčasťou každého stĺpca
                 }
             }
             return selectedRows;
@@ -816,6 +841,43 @@ namespace CountAndSortWinFormsAppNetFr4
                         "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void ComboBoxSeparatorType_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0) return;
+
+            ComboBox combo = sender as ComboBox;
+            string text = combo.Items[e.Index].ToString();
+
+            // Získanie stredu pre text
+            StringFormat sf = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+
+            // Vykreslenie pozadia
+            e.DrawBackground();
+
+            // Vykreslenie textu v strede
+            using (Brush brush = new SolidBrush(e.ForeColor))
+            {
+                e.Graphics.DrawString(text, e.Font, brush, e.Bounds, sf);
+            }
+
+            // Ak je položka vybraná, vykresliť focus rectangle
+            if ((e.State & DrawItemState.Focus) == DrawItemState.Focus)
+            {
+                e.DrawFocusRectangle();
+            }
+        }
+
+        private void LanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedLanguage = LanguageComboBox.SelectedItem.ToString();
+            LanguageManager.ChangeLanguage(selectedLanguage);
+            UpdateFormText();
         }
     }
 }

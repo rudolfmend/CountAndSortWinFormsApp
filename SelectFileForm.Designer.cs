@@ -30,6 +30,7 @@ namespace CountAndSortWinFormsAppNetFr4
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectFileForm));
             this.TextBoxSelectedFileDirectory = new System.Windows.Forms.TextBox();
             this.ButtonSelectAFile = new System.Windows.Forms.Button();
@@ -48,6 +49,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSelectAll = new System.Windows.Forms.CheckBox();
             this.LabelDataStructureSeparatorIs = new System.Windows.Forms.Label();
             this.ComboBoxSeparatorType = new System.Windows.Forms.ComboBox();
+            this.LanguageComboBox = new System.Windows.Forms.ComboBox();
+            this.LanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +60,7 @@ namespace CountAndSortWinFormsAppNetFr4
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSelectedFileDirectory.Location = new System.Drawing.Point(12, 12);
             this.TextBoxSelectedFileDirectory.Name = "TextBoxSelectedFileDirectory";
-            this.TextBoxSelectedFileDirectory.Size = new System.Drawing.Size(1733, 27);
+            this.TextBoxSelectedFileDirectory.Size = new System.Drawing.Size(1389, 27);
             this.TextBoxSelectedFileDirectory.TabIndex = 0;
             // 
             // ButtonSelectAFile
@@ -133,7 +136,7 @@ namespace CountAndSortWinFormsAppNetFr4
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSelectOutputFolder.Location = new System.Drawing.Point(788, 56);
             this.TextBoxSelectOutputFolder.Name = "TextBoxSelectOutputFolder";
-            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(957, 27);
+            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(613, 27);
             this.TextBoxSelectOutputFolder.TabIndex = 9;
             this.TextBoxSelectOutputFolder.Text = " ";
             // 
@@ -212,11 +215,11 @@ namespace CountAndSortWinFormsAppNetFr4
             // LabelDataStructureSeparatorIs
             // 
             this.LabelDataStructureSeparatorIs.AutoSize = true;
-            this.LabelDataStructureSeparatorIs.Location = new System.Drawing.Point(1267, 103);
+            this.LabelDataStructureSeparatorIs.Location = new System.Drawing.Point(609, 125);
             this.LabelDataStructureSeparatorIs.Name = "LabelDataStructureSeparatorIs";
-            this.LabelDataStructureSeparatorIs.Size = new System.Drawing.Size(247, 22);
+            this.LabelDataStructureSeparatorIs.Size = new System.Drawing.Size(289, 22);
             this.LabelDataStructureSeparatorIs.TabIndex = 18;
-            this.LabelDataStructureSeparatorIs.Text = "Oddeľovač stĺpcov tabuľky je:";
+            this.LabelDataStructureSeparatorIs.Text = "Oddeľovač stĺpcov tabuľky je znak:";
             // 
             // ComboBoxSeparatorType
             // 
@@ -226,12 +229,31 @@ namespace CountAndSortWinFormsAppNetFr4
             "\",\"",
             "\".\"",
             "\" \""});
+            this.ComboBoxSeparatorType.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComboBoxSeparatorType.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ComboBoxSeparatorType.FormattingEnabled = true;
-            this.ComboBoxSeparatorType.Location = new System.Drawing.Point(1520, 97);
+            this.ComboBoxSeparatorType.Location = new System.Drawing.Point(904, 121);
             this.ComboBoxSeparatorType.Name = "ComboBoxSeparatorType";
-            this.ComboBoxSeparatorType.Size = new System.Drawing.Size(121, 28);
+            this.ComboBoxSeparatorType.Size = new System.Drawing.Size(54, 31);
             this.ComboBoxSeparatorType.TabIndex = 19;
             this.ComboBoxSeparatorType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSeparatorType_SelectedIndexChanged);
+            // 
+            // LanguageComboBox
+            // 
+            this.LanguageComboBox.FormattingEnabled = true;
+            this.LanguageComboBox.Items.AddRange(new object[] {
+            "English",
+            "Slovensky",
+            "Česky",
+            "Deutsch",
+            "Polski",
+            "Magyar",
+            "Українська"});
+            this.LanguageComboBox.Location = new System.Drawing.Point(1601, 12);
+            this.LanguageComboBox.Name = "LanguageComboBox";
+            this.LanguageComboBox.Size = new System.Drawing.Size(121, 28);
+            this.LanguageComboBox.TabIndex = 20;
+            this.LanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_SelectedIndexChanged);
             // 
             // SelectFileForm
             // 
@@ -239,6 +261,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1757, 906);
+            this.Controls.Add(this.LanguageComboBox);
             this.Controls.Add(this.ComboBoxSeparatorType);
             this.Controls.Add(this.LabelDataStructureSeparatorIs);
             this.Controls.Add(this.CheckBoxSelectAll);
@@ -287,6 +310,8 @@ namespace CountAndSortWinFormsAppNetFr4
         private CheckBox CheckBoxSelectAll;
         private Label LabelDataStructureSeparatorIs;
         private ComboBox ComboBoxSeparatorType;
+        private ComboBox LanguageComboBox;
+        private ToolTip LanguageToolTip;
     }
 }
 

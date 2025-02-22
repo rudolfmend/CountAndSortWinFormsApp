@@ -24,7 +24,14 @@ namespace CountAndSortWinFormsAppNetFr4
                 checkBoxSize, checkBoxSize);
 
             ButtonState state = isChecked ? ButtonState.Checked : ButtonState.Normal;
-            ControlPaint.DrawCheckBox(graphics, checkBoxLocation, state);
+
+            // Paint the checkbox - style of pen and brush is taken from the current system theme(more Windows version friendly)
+            using (Pen pen = new Pen(SystemColors.ControlText))
+            using (SolidBrush brush = new SolidBrush(SystemColors.Control))
+            {
+                // Paint a checkbox
+                ControlPaint.DrawCheckBox(graphics, checkBoxLocation, state);
+            }
         }
 
         protected override void OnMouseClick(DataGridViewCellMouseEventArgs e)
