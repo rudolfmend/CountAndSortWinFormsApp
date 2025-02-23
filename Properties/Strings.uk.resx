@@ -118,114 +118,114 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonProcessData" xml:space="preserve">
-    <value>Przetwórz dane</value>
+    <value>Обробити дані</value>
   </data>
   <data name="ButtonSaveHistory" xml:space="preserve">
-    <value>Zapisz historię punktów</value>
+    <value>Зберегти історію балів</value>
   </data>
   <data name="ButtonSelectFile" xml:space="preserve">
-    <value>Wybierz plik</value>
+    <value>Вибрати файл</value>
   </data>
   <data name="ButtonSelectOutputFolder" xml:space="preserve">
-    <value>Wybierz lokalizację zapisania przetworzonego pliku</value>
+    <value>Вибрати місце збереження обробленого файлу</value>
   </data>
   <data name="CheckBoxRemoveDuplicatesRows" xml:space="preserve">
-    <value>Usuń zduplikowane wiersze</value>
+    <value>Видалити дублікати рядків</value>
   </data>
   <data name="CheckBoxRenumberTheOrder" xml:space="preserve">
-    <value>Przenumeruj kolejność</value>
+    <value>Перенумерувати порядок</value>
   </data>
   <data name="CheckBoxSelectAll" xml:space="preserve">
-    <value>Zaznacz wszystkie wiersze</value>
+    <value>Вибрати всі рядки</value>
   </data>
   <data name="CheckBoxSortByName" xml:space="preserve">
-    <value>Sortuj według nazwiska</value>
+    <value>Сортувати за іменем</value>
   </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
-    <value>Przeglądaj folder</value>
+    <value>Огляд папки</value>
   </data>
   <data name="DialogCreateNewFolder" xml:space="preserve">
-    <value>Utwórz nowy folder</value>
+    <value />
   </data>
   <data name="DialogSelectOutputFolder" xml:space="preserve">
-    <value>Wybierz folder do zapisania przetworzonego pliku</value>
+    <value>Виберіть папку для збереження обробленого файлу</value>
   </data>
   <data name="HistoryAveragePoints" xml:space="preserve">
-    <value>Średnia liczba punktów:</value>
+    <value>Середні бали:</value>
   </data>
   <data name="HistoryCreated" xml:space="preserve">
-    <value>Stworzony:</value>
+    <value>Створено:</value>
   </data>
   <data name="HistoryDuplicates" xml:space="preserve">
-    <value>Łączna liczba usuniętych duplikatów:</value>
+    <value>Загальна кількість видалених дублікатів:</value>
   </data>
   <data name="HistoryFileCount" xml:space="preserve">
-    <value>Liczba plików:</value>
+    <value>Кількість файлів:</value>
   </data>
   <data name="HistoryHeader" xml:space="preserve">
-    <value>Historia przetworzonych punktów</value>
+    <value>Історія оброблених балів</value>
   </data>
   <data name="HistoryTotalPoints" xml:space="preserve">
-    <value>Łączna liczba punktów:</value>
+    <value>Всього балів:</value>
   </data>
   <data name="LabelAverage" xml:space="preserve">
-    <value>Średnia punktów:</value>
+    <value>Середній бал:</value>
   </data>
   <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
-    <value>Separator kolumn tabeli to znak:</value>
+    <value>Роздільник стовпців таблиці:</value>
   </data>
   <data name="LabelFileCount" xml:space="preserve">
-    <value>Liczba plików:</value>
+    <value>Кількість файлів:</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
-    <value>Suma całkowita:</value>
+    <value>Загальна сума:</value>
   </data>
   <data name="ListViewColumnDate" xml:space="preserve">
-    <value>Data</value>
+    <value>Дата</value>
   </data>
   <data name="ListViewColumnFile" xml:space="preserve">
-    <value>Plik</value>
+    <value>Файл</value>
   </data>
   <data name="ListViewColumnPoints" xml:space="preserve">
-    <value>Punkty</value>
+    <value>Очки</value>
   </data>
   <data name="MessageDone" xml:space="preserve">
-    <value>Zrobione</value>
+    <value>Готово</value>
   </data>
   <data name="MessageError" xml:space="preserve">
-    <value>Błąd</value>
+    <value>Помилка</value>
   </data>
   <data name="MessageFileAlreadyProcessed" xml:space="preserve">
-    <value>Ten plik został już przetworzony. Czy chcesz go przetworzyć ponownie?</value>
+    <value>Цей файл уже оброблено. Ви хочете обробити його знову?</value>
   </data>
   <data name="MessageFileError" xml:space="preserve">
-    <value>Błąd odczytu pliku:</value>
+    <value>Помилка читання файлу:</value>
   </data>
   <data name="MessageFileNotExist" xml:space="preserve">
-    <value>Wybrany plik nie istnieje.</value>
+    <value>Вибраний файл не існує.</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
-    <value>Informacja</value>
+    <value>Інформація</value>
   </data>
   <data name="MessageNoHistoryToSave" xml:space="preserve">
-    <value>Brak historii do zapisania.</value>
+    <value>Немає доступної історії для збереження.</value>
   </data>
   <data name="MessageNoRowsSelected" xml:space="preserve">
-    <value>Żadne wiersze nie są oznaczone do przetworzenia. Proszę zaznaczyć wiersze, które chcesz przetworzyć.</value>
+    <value>Жоден рядок не позначено для обробки. Позначте рядки, які ви хочете обробити.</value>
   </data>
   <data name="MessageProcessingError" xml:space="preserve">
-    <value>Błąd podczas przetwarzania danych:</value>
+    <value>Помилка обробки даних:</value>
   </data>
   <data name="MessageProcessingResults" xml:space="preserve">
-    <value>Dane zostały przetworzone i zapisane w pliku:\n{0}\n\nLiczba usuniętych wierszy: {1}\nOryginalna liczba wierszy: {2}\nLiczba przetworzonych wierszy: {3}\n\nOryginalne punkty: {4}\nPunkty po przetworzeniu: {5}</value>
+    <value>Дані оброблено та збережено у файл:\n{0}\n\nКількість видалених рядків: {1}\nПочаткова кількість рядків: {2}\nКількість оброблених рядків: {3}\n\nПочаткові точки: {4}\nБали після обробки: {5}</value>
   </data>
   <data name="MessageSelectFile" xml:space="preserve">
-    <value>Proszę najpierw wybrać plik.</value>
+    <value>Спочатку виберіть файл.</value>
   </data>
   <data name="MessageStatisticsError" xml:space="preserve">
-    <value>Błąd podczas aktualizacji statystyk.</value>
+    <value>Помилка оновлення статистики.</value>
   </data>
   <data name="MessageWarning" xml:space="preserve">
-    <value>Ostrzeżenie</value>
+    <value>УВАГА</value>
   </data>
 </root>

@@ -38,12 +38,15 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             InitializeComponent();
 
-            LanguageToolTip.SetToolTip(LanguageComboBox,
-                  "Výber jazyka / Language selection / Sprachauswahl / Wybór języka / Nyelvválasztás / Вибір мови");
-
-            // Default language + DropDownStyle
+            // slovak as default language / slovenčina ako predvolený jazyk
+            // Nastavenie predvoleného jazyka // Default language + DropDownStyle
             LanguageComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            LanguageComboBox.SelectedIndex = 1;  // slovak as default language / slovenčina ako predvolený jazyk
+            LanguageComboBox.SelectedIndex = 1; // Index pre "Slovensky"
+
+            // Nastavenie ToolTipu
+            LanguageToolTip.SetToolTip(LanguageComboBox,
+                "Wybór języka / Nyelvválasztás / Вибір мови");
+
 
             // Získanie názvu a verzie aplikácie z Assembly
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -61,9 +64,11 @@ namespace CountAndSortWinFormsAppNetFr4
             }
 
             // Inicializácia stĺpcov pre ListView
-            ListViewShowPointsValues.Columns.Add("Súbor", COLUMN_WIDTH_FILENAME);
-            ListViewShowPointsValues.Columns.Add("Body", COLUMN_WIDTH_POINTS);
-            ListViewShowPointsValues.Columns.Add("Dátum", COLUMN_WIDTH_DATE);
+            ListViewShowPointsValues.Columns.Clear();
+            ListViewShowPointsValues.Columns.Add(Properties.Strings.ListViewColumnFile, COLUMN_WIDTH_FILENAME);
+            ListViewShowPointsValues.Columns.Add(Properties.Strings.ListViewColumnPoints, COLUMN_WIDTH_POINTS);
+            ListViewShowPointsValues.Columns.Add(Properties.Strings.ListViewColumnDate, COLUMN_WIDTH_DATE);
+
 
             ComboBoxSeparatorType.Items.AddRange(new[] { "|", ";", ",", ".", " " });
             ComboBoxSeparatorType.SelectedItem = columnSeparator;
@@ -295,7 +300,8 @@ namespace CountAndSortWinFormsAppNetFr4
                 // 1. Najprv kontrolujeme či je vôbec zadaná cesta k súboru
                 if (string.IsNullOrEmpty(TextBoxSelectedFileDirectory.Text))
                 {
-                    MessageBox.Show("Prosím, najprv vyberte súbor.", "Upozornenie",
+                    MessageBox.Show(Properties.Strings.MessageSelectFile,
+                        Properties.Strings.MessageWarning,
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -303,7 +309,9 @@ namespace CountAndSortWinFormsAppNetFr4
                 // 2. Potom kontrolujeme či súbor existuje
                 if (!File.Exists(TextBoxSelectedFileDirectory.Text))
                 {
-                    MessageBox.Show("Vybraný súbor neexistuje.", "Chyba",
+                    //"Vybraný súbor neexistuje.", "Chyba",
+                    MessageBox.Show(Properties.Strings.MessageFileNotExist,
+                        Properties.Strings.MessageError,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -315,10 +323,10 @@ namespace CountAndSortWinFormsAppNetFr4
                 if (IsFileAlreadyProcessed(currentFilePath))
                 {
                     var result = MessageBox.Show(
-                        "Tento súbor už bol spracovaný. Chcete ho spracovať znova?",
-                        "Upozornenie",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning);
+                        //"Tento súbor už bol spracovaný. Chcete ho spracovať znova?","Upozornenie",
+                        Properties.Strings.MessageFileAlreadyProcessed,
+                        Properties.Strings.MessageWarning,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result == DialogResult.No)
                         return;
                 }
@@ -332,9 +340,11 @@ namespace CountAndSortWinFormsAppNetFr4
 
                 if (processedLines.Count == 0)
                 {
-                    MessageBox.Show("Nie sú označené žiadne riadky na spracovanie.\n" +
-                        "Prosím, označte riadky, ktoré chcete spracovať.",
-                        "Upozornenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //"Nie sú označené žiadne riadky na spracovanie.\n" +
+                    //"Prosím, označte riadky, ktoré chcete spracovať." "Upozornenie"
+                    MessageBox.Show(Properties.Strings.MessageNoRowsSelected,
+                        Properties.Strings.MessageWarning,
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning); 
                     return;
                 }
 
@@ -345,15 +355,23 @@ namespace CountAndSortWinFormsAppNetFr4
                 // Pass source directory to AddToHistory
                 AddToHistory(currentFilePath, processedPoints, sourceDirectory);
 
+                    //$"Údaje boli spracované a uložené do súboru:\n{outputPath}\n" +
+                    //$"\nPočet zmazaných riadkov: {originalLines.Count - processedLines.Count}" +
+                    //$"\nPôvodný počet riadkov: {originalLines.Count}\nPočet spracovaných riadkov: {processedLines.Count}" +
+                    //$"\n\nPôvodný počet bodov: {originalPoints}" +
+                    //$"\nPočet bodov po spracovaní: {processedPoints}",
+
                 MessageBox.Show(
-                    $"Údaje boli spracované a uložené do súboru:\n{outputPath}\n" +
-                    $"\nPočet zmazaných riadkov: {originalLines.Count - processedLines.Count}" +
-                    $"\nPôvodný počet riadkov: {originalLines.Count}\nPočet spracovaných riadkov: {processedLines.Count}" +
-                    $"\n\nPôvodný počet bodov: {originalPoints}" +
-                    $"\nPočet bodov po spracovaní: {processedPoints}",
-                    "Hotovo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                string.Format(Properties.Strings.MessageProcessingResults,
+                    outputPath,
+                    originalLines.Count - processedLines.Count,
+                    originalLines.Count,
+                    processedLines.Count,
+                    originalPoints,
+                    processedPoints),
+                Properties.Strings.MessageDone,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
             }
             catch (InvalidOperationException ex)
             {
@@ -388,7 +406,7 @@ namespace CountAndSortWinFormsAppNetFr4
             return unselectedRows;
         }
 
-        private async Task<List<string>> ProcessDataAsync(List<string> lines)
+        private async Task<List<string>> ProcessDataAsync(List<string> _lines)
         {
             return await Task.Factory.StartNew(() =>
             {
@@ -524,7 +542,7 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
-                folderDialog.Description = "Vyberte priečinok pre uloženie spracovaného súboru";
+                folderDialog.Description = Properties.Strings.DialogSelectOutputFolder; //"Vyberte priečinok pre uloženie spracovaného súboru";
 
                 // Ak už bol predtým vybraný priečinok, začneme od neho
                 if (!string.IsNullOrEmpty(TextBoxSelectOutputFolder.Text) &&
@@ -565,8 +583,8 @@ namespace CountAndSortWinFormsAppNetFr4
 
                     if (saveDialog.ShowDialog() == DialogResult.OK)
                     {
-                        content.AppendLine("História spracovaných bodov");
-                        content.AppendLine($"Vytvorené: {DateTime.Now:dd.MM.yyyy HH:mm:ss}");
+                        content.AppendLine(Properties.Strings.HistoryHeader); //("História spracovaných bodov");
+                        content.AppendLine($"{Properties.Strings.HistoryCreated} {DateTime.Now:dd.MM.yyyy HH:mm:ss}"); //($"Vytvorené: {DateTime.Now:dd.MM.yyyy HH:mm:ss}");
                         content.AppendLine("--------------------------------------------------");
                         content.AppendLine();
 
@@ -875,9 +893,35 @@ namespace CountAndSortWinFormsAppNetFr4
 
         private void LanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedLanguage = LanguageComboBox.SelectedItem.ToString();
-            LanguageManager.ChangeLanguage(selectedLanguage);
-            UpdateFormText();
+            try
+            {
+                string selectedLanguage = LanguageComboBox.SelectedItem.ToString();
+                LanguageManager.ChangeLanguage(selectedLanguage);
+                UpdateFormText();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Chyba pri zmene jazyka: {ex.Message}",
+                    "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateFormText()
+        {
+            ButtonSelectAFile.Text = Properties.Strings.ButtonSelectFile;
+            ButtonProcessData.Text = Properties.Strings.ButtonProcessData;
+            ButtonSelectOutputFolder.Text = Properties.Strings.ButtonSelectOutputFolder;
+            ButtonSaveHistory.Text = Properties.Strings.ButtonSaveHistory;
+
+            CheckBoxRenumberTheOrder.Text = Properties.Strings.CheckBoxRenumberTheOrder;
+            CheckBoxSortByName.Text = Properties.Strings.CheckBoxSortByName;
+            CheckBoxRemoveDuplicatesRows.Text = Properties.Strings.CheckBoxRemoveDuplicatesRows;
+            CheckBoxSelectAll.Text = Properties.Strings.CheckBoxSelectAll;
+
+            LabelDataStructureSeparatorIs.Text = Properties.Strings.LabelDataStructureSeparatorIs;
+            LabelTotalSum.Text = Properties.Strings.LabelTotalSum;
+            LabelFileCount.Text = Properties.Strings.LabelFileCount;
+            LabelAverage.Text = Properties.Strings.LabelAverage;
         }
     }
 }

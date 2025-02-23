@@ -51,6 +51,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ComboBoxSeparatorType = new System.Windows.Forms.ComboBox();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.LanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.LabelLanguagesChoice = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -250,10 +251,28 @@ namespace CountAndSortWinFormsAppNetFr4
             "Magyar",
             "Українська"});
             this.LanguageComboBox.Location = new System.Drawing.Point(1601, 12);
+            this.LanguageComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.LanguageComboBox.Name = "LanguageComboBox";
-            this.LanguageComboBox.Size = new System.Drawing.Size(121, 28);
+            this.LanguageComboBox.Size = new System.Drawing.Size(144, 28);
             this.LanguageComboBox.TabIndex = 20;
             this.LanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_SelectedIndexChanged);
+            // 
+            // LanguageToolTip
+            // 
+            this.LanguageToolTip.ShowAlways = true;
+            this.LanguageToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.LanguageToolTip.ToolTipTitle = "Výber jazyka / Language selection / Sprachauswahl";
+            // 
+            // LabelLanguagesChoice
+            // 
+            this.LabelLanguagesChoice.AutoSize = true;
+            this.LabelLanguagesChoice.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LabelLanguagesChoice.Location = new System.Drawing.Point(1553, 9);
+            this.LabelLanguagesChoice.Margin = new System.Windows.Forms.Padding(0);
+            this.LabelLanguagesChoice.Name = "LabelLanguagesChoice";
+            this.LabelLanguagesChoice.Size = new System.Drawing.Size(48, 33);
+            this.LabelLanguagesChoice.TabIndex = 21;
+            this.LabelLanguagesChoice.Text = "🌐";
             // 
             // SelectFileForm
             // 
@@ -261,6 +280,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1757, 906);
+            this.Controls.Add(this.LabelLanguagesChoice);
             this.Controls.Add(this.LanguageComboBox);
             this.Controls.Add(this.ComboBoxSeparatorType);
             this.Controls.Add(this.LabelDataStructureSeparatorIs);
@@ -312,6 +332,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private ComboBox ComboBoxSeparatorType;
         private ComboBox LanguageComboBox;
         private ToolTip LanguageToolTip;
+        private Label LabelLanguagesChoice;
     }
 }
 

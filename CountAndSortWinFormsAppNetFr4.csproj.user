@@ -9,6 +9,7 @@
     <ErrorReportUrlHistory>https://github.com/rudolfmend/CountAndSortWinFormsApp/issues</ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
+    <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>

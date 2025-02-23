@@ -6,25 +6,23 @@ namespace CountAndSortWinFormsAppNetFr4
 {
     public static class LanguageManager
     {
-        private static Dictionary<string, string> languageCodes = new Dictionary<string, string>()
+        private static readonly Dictionary<string, CultureInfo> LanguageMappings = new Dictionary<string, CultureInfo>
     {
-        {"English", "en"},
-        {"Slovensky", "sk"},
-        {"Česky", "cs"},
-        {"Deutsch", "de"},
-        {"Polski", "pl"},
-        {"Magyar", "hu"},
-        {"Українська", "uk"}
+        {"English", new CultureInfo("en")},
+        {"Slovensky", new CultureInfo("sk")},
+        {"Česky", new CultureInfo("cs")},
+        {"Deutsch", new CultureInfo("de")},
+        {"Polski", new CultureInfo("pl")},
+        {"Magyar", new CultureInfo("hu")},
+        {"Українська", new CultureInfo("uk")}
     };
 
         public static void ChangeLanguage(string language)
         {
-            if (languageCodes.ContainsKey(language))
+            if (LanguageMappings.ContainsKey(language))
             {
-                Thread.CurrentThread.CurrentUICulture =
-                    new CultureInfo(languageCodes[language]);
-                Thread.CurrentThread.CurrentCulture =
-                    new CultureInfo(languageCodes[language]);
+                Thread.CurrentThread.CurrentUICulture = LanguageMappings[language];
+                Thread.CurrentThread.CurrentCulture = LanguageMappings[language];
             }
         }
     }

@@ -133,6 +133,87 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse Folder.
+        /// </summary>
+        internal static string DialogBrowseFolder {
+            get {
+                return ResourceManager.GetString("DialogBrowseFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Folder.
+        /// </summary>
+        internal static string DialogCreateNewFolder {
+            get {
+                return ResourceManager.GetString("DialogCreateNewFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select folder for saving processed file.
+        /// </summary>
+        internal static string DialogSelectOutputFolder {
+            get {
+                return ResourceManager.GetString("DialogSelectOutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average Points:.
+        /// </summary>
+        internal static string HistoryAveragePoints {
+            get {
+                return ResourceManager.GetString("HistoryAveragePoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created:.
+        /// </summary>
+        internal static string HistoryCreated {
+            get {
+                return ResourceManager.GetString("HistoryCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Duplicates Removed:.
+        /// </summary>
+        internal static string HistoryDuplicates {
+            get {
+                return ResourceManager.GetString("HistoryDuplicates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Count:.
+        /// </summary>
+        internal static string HistoryFileCount {
+            get {
+                return ResourceManager.GetString("HistoryFileCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processed Points History.
+        /// </summary>
+        internal static string HistoryHeader {
+            get {
+                return ResourceManager.GetString("HistoryHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Points:.
+        /// </summary>
+        internal static string HistoryTotalPoints {
+            get {
+                return ResourceManager.GetString("HistoryTotalPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Average Points:.
         /// </summary>
         internal static string LabelAverage {
@@ -165,6 +246,150 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string LabelTotalSum {
             get {
                 return ResourceManager.GetString("LabelTotalSum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string ListViewColumnDate {
+            get {
+                return ResourceManager.GetString("ListViewColumnDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string ListViewColumnFile {
+            get {
+                return ResourceManager.GetString("ListViewColumnFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points.
+        /// </summary>
+        internal static string ListViewColumnPoints {
+            get {
+                return ResourceManager.GetString("ListViewColumnPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        internal static string MessageDone {
+            get {
+                return ResourceManager.GetString("MessageDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string MessageError {
+            get {
+                return ResourceManager.GetString("MessageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This file has already been processed. Do you want to process it again?.
+        /// </summary>
+        internal static string MessageFileAlreadyProcessed {
+            get {
+                return ResourceManager.GetString("MessageFileAlreadyProcessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error reading file:.
+        /// </summary>
+        internal static string MessageFileError {
+            get {
+                return ResourceManager.GetString("MessageFileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected file does not exist..
+        /// </summary>
+        internal static string MessageFileNotExist {
+            get {
+                return ResourceManager.GetString("MessageFileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        internal static string MessageInfo {
+            get {
+                return ResourceManager.GetString("MessageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No history available to save..
+        /// </summary>
+        internal static string MessageNoHistoryToSave {
+            get {
+                return ResourceManager.GetString("MessageNoHistoryToSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No rows are marked for processing. Please mark the rows you want to process..
+        /// </summary>
+        internal static string MessageNoRowsSelected {
+            get {
+                return ResourceManager.GetString("MessageNoRowsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error processing data:.
+        /// </summary>
+        internal static string MessageProcessingError {
+            get {
+                return ResourceManager.GetString("MessageProcessingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data has been processed and saved to file:\n{0}\n\nNumber of deleted rows: {1}\nOriginal number of rows: {2}\nNumber of processed rows: {3}\n\nOriginal points: {4}\nPoints after processing: {5}.
+        /// </summary>
+        internal static string MessageProcessingResults {
+            get {
+                return ResourceManager.GetString("MessageProcessingResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a file first..
+        /// </summary>
+        internal static string MessageSelectFile {
+            get {
+                return ResourceManager.GetString("MessageSelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error updating statistics..
+        /// </summary>
+        internal static string MessageStatisticsError {
+            get {
+                return ResourceManager.GetString("MessageStatisticsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string MessageWarning {
+            get {
+                return ResourceManager.GetString("MessageWarning", resourceCulture);
             }
         }
     }

@@ -141,6 +141,33 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>seřadit podle jména</value>
   </data>
+  <data name="DialogBrowseFolder" xml:space="preserve">
+    <value>Procházet složku</value>
+  </data>
+  <data name="DialogCreateNewFolder" xml:space="preserve">
+    <value>Vytvořit novou složku</value>
+  </data>
+  <data name="DialogSelectOutputFolder" xml:space="preserve">
+    <value>Vyberte složku pro uložení zpracovaného souboru</value>
+  </data>
+  <data name="HistoryAveragePoints" xml:space="preserve">
+    <value>Průměr bodů:</value>
+  </data>
+  <data name="HistoryCreated" xml:space="preserve">
+    <value>Vytvořeno:</value>
+  </data>
+  <data name="HistoryDuplicates" xml:space="preserve">
+    <value>Celkový počet odstraněných duplikátů:</value>
+  </data>
+  <data name="HistoryFileCount" xml:space="preserve">
+    <value>Počet souborů:</value>
+  </data>
+  <data name="HistoryHeader" xml:space="preserve">
+    <value>Historie zpracovaných bodů</value>
+  </data>
+  <data name="HistoryTotalPoints" xml:space="preserve">
+    <value>Celkový počet bodů:</value>
+  </data>
   <data name="LabelAverage" xml:space="preserve">
     <value>Průměrné body:</value>
   </data>
@@ -152,5 +179,53 @@
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Celkový součet:</value>
+  </data>
+  <data name="ListViewColumnDate" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="ListViewColumnFile" xml:space="preserve">
+    <value>Soubor</value>
+  </data>
+  <data name="ListViewColumnPoints" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="MessageDone" xml:space="preserve">
+    <value>Hotovo</value>
+  </data>
+  <data name="MessageError" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="MessageFileAlreadyProcessed" xml:space="preserve">
+    <value>Tento soubor již byl zpracován. Chcete ho znovu zpracovat?</value>
+  </data>
+  <data name="MessageFileError" xml:space="preserve">
+    <value>Chyba při čtení souboru:</value>
+  </data>
+  <data name="MessageFileNotExist" xml:space="preserve">
+    <value>Vybraný soubor neexistuje.</value>
+  </data>
+  <data name="MessageInfo" xml:space="preserve">
+    <value>Informace</value>
+  </data>
+  <data name="MessageNoHistoryToSave" xml:space="preserve">
+    <value>Není k dispozici žádná historie k uložení.</value>
+  </data>
+  <data name="MessageNoRowsSelected" xml:space="preserve">
+    <value>Pro zpracování nejsou označeny žádné řádky. Označte prosím řádky, které chcete zpracovat.</value>
+  </data>
+  <data name="MessageProcessingError" xml:space="preserve">
+    <value>Chyba při zpracování dat:</value>
+  </data>
+  <data name="MessageProcessingResults" xml:space="preserve">
+    <value>Data byla zpracována a uložena do souboru:\n{0}\n\nPočet smazaných řádků: {1}\nPůvodní počet řádků: {2}\nPočet zpracovaných řádků: {3}\n\nPůvodní body: {4}\nBody po zpracování: {5}</value>
+  </data>
+  <data name="MessageSelectFile" xml:space="preserve">
+    <value>Nejprve prosím vyberte soubor.</value>
+  </data>
+  <data name="MessageStatisticsError" xml:space="preserve">
+    <value>Při aktualizaci statistik došlo k chybě.</value>
+  </data>
+  <data name="MessageWarning" xml:space="preserve">
+    <value>Varování</value>
   </data>
 </root>
