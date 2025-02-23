@@ -147,6 +147,9 @@
   <data name="DialogCreateNewFolder" xml:space="preserve">
     <value>Vytvořit novou složku</value>
   </data>
+  <data name="DialogFilterTextFiles" xml:space="preserve">
+    <value>"Textové soubory (*.txt)|*.txt|Všechny soubory (*.*)|*.*"</value>
+  </data>
   <data name="DialogSelectOutputFolder" xml:space="preserve">
     <value>Vyberte složku pro uložení zpracovaného souboru</value>
   </data>
@@ -154,22 +157,22 @@
     <value>Průměr bodů:</value>
   </data>
   <data name="HistoryCreated" xml:space="preserve">
-    <value>Vytvořeno:</value>
+    <value>Datum zpracování:</value>
   </data>
   <data name="HistoryDuplicates" xml:space="preserve">
-    <value>Celkový počet odstraněných duplikátů:</value>
+    <value>Celkový počet odstraněných duplicit:</value>
   </data>
   <data name="HistoryFileCount" xml:space="preserve">
     <value>Počet souborů:</value>
+  </data>
+  <data name="HistoryFileName" xml:space="preserve">
+    <value>historie_bodů</value>
   </data>
   <data name="HistoryHeader" xml:space="preserve">
     <value>Historie zpracovaných bodů</value>
   </data>
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Celkový počet bodů:</value>
-  </data>
-  <data name="LabelAverage" xml:space="preserve">
-    <value>Průměrné body:</value>
   </data>
   <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
     <value>Oddělovač sloupců tabulky je znak:</value>
@@ -195,6 +198,9 @@
   <data name="MessageError" xml:space="preserve">
     <value>Chyba</value>
   </data>
+  <data name="MessageErrorSavingHistory" xml:space="preserve">
+    <value>Chyba při ukládání historie</value>
+  </data>
   <data name="MessageFileAlreadyProcessed" xml:space="preserve">
     <value>Tento soubor již byl zpracován. Chcete ho znovu zpracovat?</value>
   </data>
@@ -203,6 +209,9 @@
   </data>
   <data name="MessageFileNotExist" xml:space="preserve">
     <value>Vybraný soubor neexistuje.</value>
+  </data>
+  <data name="MessageHistorySaved" xml:space="preserve">
+    <value>Historie byla úspěšně uložena do souboru:</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Informace</value>
@@ -217,7 +226,12 @@
     <value>Chyba při zpracování dat:</value>
   </data>
   <data name="MessageProcessingResults" xml:space="preserve">
-    <value>Data byla zpracována a uložena do souboru:\n{0}\n\nPočet smazaných řádků: {1}\nPůvodní počet řádků: {2}\nPočet zpracovaných řádků: {3}\n\nPůvodní body: {4}\nBody po zpracování: {5}</value>
+    <value>Data byla zpracována a uložena do souboru:
+{0}
+
+Počet smazaných řádků: {1}Původní počet řádků: {2}Počet zpracovaných řádků: {3}
+Původní body: {4}
+Body po zpracování: {5}</value>
   </data>
   <data name="MessageSelectFile" xml:space="preserve">
     <value>Nejprve prosím vyberte soubor.</value>

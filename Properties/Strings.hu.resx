@@ -147,6 +147,9 @@
   <data name="DialogCreateNewFolder" xml:space="preserve">
     <value>Új mappa létrehozása</value>
   </data>
+  <data name="DialogFilterTextFiles" xml:space="preserve">
+    <value>"Szöveges fájlok (*.txt)|*.txt|Minden fájl (*.*)|*.*"</value>
+  </data>
   <data name="DialogSelectOutputFolder" xml:space="preserve">
     <value>Válasszon mappát a feldolgozott fájl mentéséhez</value>
   </data>
@@ -154,7 +157,7 @@
     <value>Átlagpontok:</value>
   </data>
   <data name="HistoryCreated" xml:space="preserve">
-    <value>Létrehozva:</value>
+    <value>Feldolgozás dátuma:</value>
   </data>
   <data name="HistoryDuplicates" xml:space="preserve">
     <value>Összes eltávolított ismétlődés:</value>
@@ -162,14 +165,14 @@
   <data name="HistoryFileCount" xml:space="preserve">
     <value>Fájlok száma:</value>
   </data>
+  <data name="HistoryFileName" xml:space="preserve">
+    <value>történelem_pontok</value>
+  </data>
   <data name="HistoryHeader" xml:space="preserve">
     <value>Feldolgozott pontok előzményei</value>
   </data>
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Összes pont:</value>
-  </data>
-  <data name="LabelAverage" xml:space="preserve">
-    <value>Átlagos pontszám:</value>
   </data>
   <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
     <value>Táblázat oszlop elválasztó jel:</value>
@@ -195,6 +198,9 @@
   <data name="MessageError" xml:space="preserve">
     <value>Hiba</value>
   </data>
+  <data name="MessageErrorSavingHistory" xml:space="preserve">
+    <value>Hiba történt az előzmények mentése közben</value>
+  </data>
   <data name="MessageFileAlreadyProcessed" xml:space="preserve">
     <value>Ezt a fájlt már feldolgozták. Szeretné újra feldolgozni?</value>
   </data>
@@ -203,6 +209,9 @@
   </data>
   <data name="MessageFileNotExist" xml:space="preserve">
     <value>A kiválasztott fájl nem létezik.</value>
+  </data>
+  <data name="MessageHistorySaved" xml:space="preserve">
+    <value>Az előzmények sikeresen mentve a következő fájlba:</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Információ</value>
@@ -217,7 +226,14 @@
     <value>Hiba az adatok feldolgozásakor:</value>
   </data>
   <data name="MessageProcessingResults" xml:space="preserve">
-    <value>Az adatok feldolgozása megtörtént és a fájlba mentve:\n{0}\n\nTörölt sorok száma: {1}\nSorok eredeti száma: {2}\nFeldolgozott sorok száma: {3}\n\nEredeti pontok: {4}\nPontok a feldolgozás után: {5}</value>
+    <value>Az adatok feldolgozása megtörtént és a fájlba mentve:
+{0}
+Törölt sorok száma: {1}
+Sorok eredeti száma: {2}
+
+Feldolgozott sorok száma: {3}
+Eredeti pontok: {4}
+Pontok a feldolgozás után: {5}</value>
   </data>
   <data name="MessageSelectFile" xml:space="preserve">
     <value>Kérjük, először válasszon egy fájlt.</value>

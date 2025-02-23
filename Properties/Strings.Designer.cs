@@ -151,6 +151,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;Text files (*.txt)|*.txt|All files (*.*)|*.*&quot;.
+        /// </summary>
+        internal static string DialogFilterTextFiles {
+            get {
+                return ResourceManager.GetString("DialogFilterTextFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select folder for saving processed file.
         /// </summary>
         internal static string DialogSelectOutputFolder {
@@ -196,6 +205,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to points_history.
+        /// </summary>
+        internal static string HistoryFileName {
+            get {
+                return ResourceManager.GetString("HistoryFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Processed Points History.
         /// </summary>
         internal static string HistoryHeader {
@@ -210,15 +228,6 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string HistoryTotalPoints {
             get {
                 return ResourceManager.GetString("HistoryTotalPoints", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Average Points:.
-        /// </summary>
-        internal static string LabelAverage {
-            get {
-                return ResourceManager.GetString("LabelAverage", resourceCulture);
             }
         }
         
@@ -295,6 +304,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error saving history.
+        /// </summary>
+        internal static string MessageErrorSavingHistory {
+            get {
+                return ResourceManager.GetString("MessageErrorSavingHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This file has already been processed. Do you want to process it again?.
         /// </summary>
         internal static string MessageFileAlreadyProcessed {
@@ -322,11 +340,29 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History saved successfully to file:.
+        /// </summary>
+        internal static string MessageHistorySaved {
+            get {
+                return ResourceManager.GetString("MessageHistorySaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
         internal static string MessageInfo {
             get {
                 return ResourceManager.GetString("MessageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error when changing language:.
+        /// </summary>
+        internal static string MessageLanguageChangeError {
+            get {
+                return ResourceManager.GetString("MessageLanguageChangeError", resourceCulture);
             }
         }
         
@@ -358,7 +394,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data has been processed and saved to file:\n{0}\n\nNumber of deleted rows: {1}\nOriginal number of rows: {2}\nNumber of processed rows: {3}\n\nOriginal points: {4}\nPoints after processing: {5}.
+        ///   Looks up a localized string similar to Data has been processed and saved to file:
+        ///	{0}
+        ///			
+        ///Number of deleted rows: {1}
+        ///Original number of rows: {2}
+        ///Number of processed rows: {3}
+        ///			
+        ///Original points: {4}
+        ///Points after processing: {5}.
         /// </summary>
         internal static string MessageProcessingResults {
             get {

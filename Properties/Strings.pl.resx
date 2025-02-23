@@ -147,6 +147,9 @@
   <data name="DialogCreateNewFolder" xml:space="preserve">
     <value>Utwórz nowy folder</value>
   </data>
+  <data name="DialogFilterTextFiles" xml:space="preserve">
+    <value>"Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*"</value>
+  </data>
   <data name="DialogSelectOutputFolder" xml:space="preserve">
     <value>Wybierz folder do zapisania przetworzonego pliku</value>
   </data>
@@ -154,7 +157,7 @@
     <value>Średnia liczba punktów:</value>
   </data>
   <data name="HistoryCreated" xml:space="preserve">
-    <value>Stworzony:</value>
+    <value>Data przetwarzania:</value>
   </data>
   <data name="HistoryDuplicates" xml:space="preserve">
     <value>Łączna liczba usuniętych duplikatów:</value>
@@ -162,14 +165,14 @@
   <data name="HistoryFileCount" xml:space="preserve">
     <value>Liczba plików:</value>
   </data>
+  <data name="HistoryFileName" xml:space="preserve">
+    <value>historia_punktów</value>
+  </data>
   <data name="HistoryHeader" xml:space="preserve">
     <value>Historia przetworzonych punktów</value>
   </data>
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Łączna liczba punktów:</value>
-  </data>
-  <data name="LabelAverage" xml:space="preserve">
-    <value>Średnia punktów:</value>
   </data>
   <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
     <value>Separator kolumn tabeli to znak:</value>
@@ -195,6 +198,9 @@
   <data name="MessageError" xml:space="preserve">
     <value>Błąd</value>
   </data>
+  <data name="MessageErrorSavingHistory" xml:space="preserve">
+    <value>Błąd podczas zapisywania historii</value>
+  </data>
   <data name="MessageFileAlreadyProcessed" xml:space="preserve">
     <value>Ten plik został już przetworzony. Czy chcesz go przetworzyć ponownie?</value>
   </data>
@@ -203,6 +209,9 @@
   </data>
   <data name="MessageFileNotExist" xml:space="preserve">
     <value>Wybrany plik nie istnieje.</value>
+  </data>
+  <data name="MessageHistorySaved" xml:space="preserve">
+    <value>Historia została pomyślnie zapisana do pliku:</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Informacja</value>
@@ -217,7 +226,15 @@
     <value>Błąd podczas przetwarzania danych:</value>
   </data>
   <data name="MessageProcessingResults" xml:space="preserve">
-    <value>Dane zostały przetworzone i zapisane w pliku:\n{0}\n\nLiczba usuniętych wierszy: {1}\nOryginalna liczba wierszy: {2}\nLiczba przetworzonych wierszy: {3}\n\nOryginalne punkty: {4}\nPunkty po przetworzeniu: {5}</value>
+    <value>Dane zostały przetworzone i zapisane w pliku:
+{0}
+
+Liczba usuniętych wierszy: {1}
+Oryginalna liczba wierszy: {2}
+Liczba przetworzonych wierszy: {3}
+
+Oryginalne punkty: {4}
+Punkty po przetworzeniu: {5}</value>
   </data>
   <data name="MessageSelectFile" xml:space="preserve">
     <value>Proszę najpierw wybrać plik.</value>

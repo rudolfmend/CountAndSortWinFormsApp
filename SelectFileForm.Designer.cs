@@ -44,7 +44,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ListViewShowPointsValues = new System.Windows.Forms.ListView();
             this.LabelTotalSum = new System.Windows.Forms.Label();
             this.LabelFileCount = new System.Windows.Forms.Label();
-            this.LabelAverage = new System.Windows.Forms.Label();
+            this.LabelTotalPoints = new System.Windows.Forms.Label();
             this.DataGridPreview = new System.Windows.Forms.DataGridView();
             this.CheckBoxSelectAll = new System.Windows.Forms.CheckBox();
             this.LabelDataStructureSeparatorIs = new System.Windows.Forms.Label();
@@ -60,8 +60,9 @@ namespace CountAndSortWinFormsAppNetFr4
             this.TextBoxSelectedFileDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSelectedFileDirectory.Location = new System.Drawing.Point(12, 12);
+            this.TextBoxSelectedFileDirectory.Margin = new System.Windows.Forms.Padding(3, 3, 15, 3);
             this.TextBoxSelectedFileDirectory.Name = "TextBoxSelectedFileDirectory";
-            this.TextBoxSelectedFileDirectory.Size = new System.Drawing.Size(1389, 27);
+            this.TextBoxSelectedFileDirectory.Size = new System.Drawing.Size(1472, 27);
             this.TextBoxSelectedFileDirectory.TabIndex = 0;
             // 
             // ButtonSelectAFile
@@ -137,7 +138,7 @@ namespace CountAndSortWinFormsAppNetFr4
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSelectOutputFolder.Location = new System.Drawing.Point(788, 56);
             this.TextBoxSelectOutputFolder.Name = "TextBoxSelectOutputFolder";
-            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(613, 27);
+            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(696, 27);
             this.TextBoxSelectOutputFolder.TabIndex = 9;
             this.TextBoxSelectOutputFolder.Text = " ";
             // 
@@ -179,18 +180,20 @@ namespace CountAndSortWinFormsAppNetFr4
             // LabelFileCount
             // 
             this.LabelFileCount.AutoSize = true;
-            this.LabelFileCount.Location = new System.Drawing.Point(609, 153);
+            this.LabelFileCount.Location = new System.Drawing.Point(609, 157);
             this.LabelFileCount.Name = "LabelFileCount";
-            this.LabelFileCount.Size = new System.Drawing.Size(0, 22);
+            this.LabelFileCount.Size = new System.Drawing.Size(131, 22);
             this.LabelFileCount.TabIndex = 14;
+            this.LabelFileCount.Text = "LabelFileCount";
             // 
-            // LabelAverage
+            // LabelTotalPoints
             // 
-            this.LabelAverage.AutoSize = true;
-            this.LabelAverage.Location = new System.Drawing.Point(609, 191);
-            this.LabelAverage.Name = "LabelAverage";
-            this.LabelAverage.Size = new System.Drawing.Size(0, 22);
-            this.LabelAverage.TabIndex = 15;
+            this.LabelTotalPoints.AutoSize = true;
+            this.LabelTotalPoints.Location = new System.Drawing.Point(609, 191);
+            this.LabelTotalPoints.Name = "LabelTotalPoints";
+            this.LabelTotalPoints.Size = new System.Drawing.Size(145, 22);
+            this.LabelTotalPoints.TabIndex = 15;
+            this.LabelTotalPoints.Text = "LabelTotalPoints";
             // 
             // DataGridPreview
             // 
@@ -216,7 +219,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // LabelDataStructureSeparatorIs
             // 
             this.LabelDataStructureSeparatorIs.AutoSize = true;
-            this.LabelDataStructureSeparatorIs.Location = new System.Drawing.Point(609, 125);
+            this.LabelDataStructureSeparatorIs.Location = new System.Drawing.Point(609, 119);
             this.LabelDataStructureSeparatorIs.Name = "LabelDataStructureSeparatorIs";
             this.LabelDataStructureSeparatorIs.Size = new System.Drawing.Size(289, 22);
             this.LabelDataStructureSeparatorIs.TabIndex = 18;
@@ -233,7 +236,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ComboBoxSeparatorType.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ComboBoxSeparatorType.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ComboBoxSeparatorType.FormattingEnabled = true;
-            this.ComboBoxSeparatorType.Location = new System.Drawing.Point(904, 121);
+            this.ComboBoxSeparatorType.Location = new System.Drawing.Point(904, 115);
             this.ComboBoxSeparatorType.Name = "ComboBoxSeparatorType";
             this.ComboBoxSeparatorType.Size = new System.Drawing.Size(54, 31);
             this.ComboBoxSeparatorType.TabIndex = 19;
@@ -250,8 +253,8 @@ namespace CountAndSortWinFormsAppNetFr4
             "Polski",
             "Magyar",
             "Українська"});
-            this.LanguageComboBox.Location = new System.Drawing.Point(1601, 12);
-            this.LanguageComboBox.Margin = new System.Windows.Forms.Padding(0);
+            this.LanguageComboBox.Location = new System.Drawing.Point(1589, 11);
+            this.LanguageComboBox.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.LanguageComboBox.Name = "LanguageComboBox";
             this.LanguageComboBox.Size = new System.Drawing.Size(144, 28);
             this.LanguageComboBox.TabIndex = 20;
@@ -267,7 +270,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // 
             this.LabelLanguagesChoice.AutoSize = true;
             this.LabelLanguagesChoice.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LabelLanguagesChoice.Location = new System.Drawing.Point(1553, 9);
+            this.LabelLanguagesChoice.Location = new System.Drawing.Point(1541, 9);
             this.LabelLanguagesChoice.Margin = new System.Windows.Forms.Padding(0);
             this.LabelLanguagesChoice.Name = "LabelLanguagesChoice";
             this.LabelLanguagesChoice.Size = new System.Drawing.Size(48, 33);
@@ -286,7 +289,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Controls.Add(this.LabelDataStructureSeparatorIs);
             this.Controls.Add(this.CheckBoxSelectAll);
             this.Controls.Add(this.DataGridPreview);
-            this.Controls.Add(this.LabelAverage);
+            this.Controls.Add(this.LabelTotalPoints);
             this.Controls.Add(this.LabelFileCount);
             this.Controls.Add(this.LabelTotalSum);
             this.Controls.Add(this.ListViewShowPointsValues);
@@ -325,7 +328,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private System.Windows.Forms.ListView ListViewShowPointsValues;
         private System.Windows.Forms.Label LabelTotalSum;
         private System.Windows.Forms.Label LabelFileCount;
-        private System.Windows.Forms.Label LabelAverage;
+        private System.Windows.Forms.Label LabelTotalPoints;
         private DataGridView DataGridPreview;
         private CheckBox CheckBoxSelectAll;
         private Label LabelDataStructureSeparatorIs;
