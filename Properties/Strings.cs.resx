@@ -141,6 +141,9 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>seřadit podle jména</value>
   </data>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Zde nastavíte, který sloupec se má počítat.</value>
+  </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Procházet složku</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="LabelFileCount" xml:space="preserve">
     <value>Počet souborů:</value>
   </data>
+  <data name="LabelPointsColumn" xml:space="preserve">
+    <value>Sloupec s body (číslo):</value>
+  </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Celkový součet:</value>
   </data>
@@ -215,6 +221,12 @@
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Informace</value>
+  </data>
+  <data name="MessageInvalidColumn" xml:space="preserve">
+    <value>Vybraný sloupec pro body v souboru neexistuje. Vyberte prosím platný sloupec.</value>
+  </data>
+  <data name="MessageLanguageChangeError" xml:space="preserve">
+    <value>Chyba při změně jazyka: {0}</value>
   </data>
   <data name="MessageNoHistoryToSave" xml:space="preserve">
     <value>Není k dispozici žádná historie k uložení.</value>

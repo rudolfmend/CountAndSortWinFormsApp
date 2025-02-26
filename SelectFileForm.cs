@@ -15,9 +15,6 @@ namespace CountAndSortWinFormsAppNetFr4
     public partial class SelectFileForm : Form
     {
         // Konštanty pre štruktúru dávkového súboru
-        private const int COLUMN_NAME_INDEX = 3;        // Index stĺpca s menom
-        private const int COLUMN_ID_INDEX = 1;          // Index pre sekundárne triedenie
-        private const int COLUMN_POINTS_INDEX = 10;     // Index stĺpca s bodmi
         private const int MIN_COLUMNS_REQUIRED = 11;    // Minimálny počet stĺpcov
         private string columnSeparator = string.Empty;  // Oddeľovač stĺpcov
 
@@ -31,25 +28,37 @@ namespace CountAndSortWinFormsAppNetFr4
         private const int COLUMN_WIDTH_POINTS = 100;
         private const int COLUMN_WIDTH_DATE = 220;
 
-        // Pre výpis počtu duplicít
-        private int duplicatesRemoved = 0;
+        private string selectedFilePath = string.Empty; // Path to the selected file / Cesta k vybranému súboru - náhrada za selectedFilePath 
+        private int ColumnPointsIndex => (int)NumericUpDownPointsColumn.Value - 1;  // Prevod z 1-indexovaného UI na 0-indexovaný index
+        private int ColumnNameIndex => (int)NumericUpDownNameColumn.Value - 1;
+        private int ColumnIdIndex => (int)NumericUpDownIdColumn.Value - 1;
+        private int duplicatesRemoved = 0; // Pre výpis počtu duplicít
+
 
         public SelectFileForm()
         {
             InitializeComponent();
+
+            NumericUpDownPointsColumn.Value = Properties.Settings.Default.PointsColumnIndex > 0 ?
+    Properties.Settings.Default.PointsColumnIndex : 11;
 
             // slovak as default language / slovenčina ako predvolený jazyk
             // Nastavenie predvoleného jazyka // Default language + DropDownStyle
             LanguageComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             LanguageComboBox.SelectedIndex = 1; // Index pre "Slovensky"
 
+            NumericUpDownPointsColumn.Value = 11; // Default to column 11 (index 10) / Predvolene na stĺpec 11 (index 10)
+            NumericUpDownPointsColumn.ValueChanged += (s, e) => UpdateFormText(); // Aktualizácia popiskov pri zmene stĺpca
+
+
             // Nastavenie ToolTipu
             LanguageToolTip.SetToolTip(LanguageComboBox,
                 "Wybór języka / Nyelvválasztás / Вибір мови");
-
             LanguageToolTip.SetToolTip(LabelLanguagesChoice,
                 "Wybór języka / Nyelvválasztás / Вибір мови");
-
+            
+            ColumnToCountToolTip.SetToolTip(LabelPointsColumn, Properties.Strings.ColumnToCountToolTip);
+            ColumnToCountToolTip.SetToolTip(NumericUpDownPointsColumn, Properties.Strings.ColumnToCountToolTip);
 
             // Získanie názvu a verzie aplikácie z Assembly
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -95,7 +104,24 @@ namespace CountAndSortWinFormsAppNetFr4
             DataGridPreview.GridColor = Color.LightGray;
             DataGridPreview.CellBorderStyle = DataGridViewCellBorderStyle.Single;
             DataGridPreview.BorderStyle = BorderStyle.Fixed3D;
+
+            //  obslužná rutina udalosti pre zmenu hodnoty NumericUpDownPointsColumn
+            NumericUpDownPointsColumn.ValueChanged += (s, e) =>
+            {
+                ValidatePointsColumn();
+                UpdateFormText();
+            };
         }
+
+
+        private void SaveColumnSettings()
+        {
+            Properties.Settings.Default.PointsColumnIndex = (int)NumericUpDownPointsColumn.Value;
+            Properties.Settings.Default.NameColumnIndex = (int)NumericUpDownNameColumn.Value;
+            Properties.Settings.Default.IdColumnIndex = (int)NumericUpDownIdColumn.Value;
+            Properties.Settings.Default.Save();
+        }
+
 
         private class ProcessedFileInfo
         {
@@ -113,6 +139,7 @@ namespace CountAndSortWinFormsAppNetFr4
             public int RemovedDuplicates { get; set; }
             public int DuplicatesRemoved { get; set; }
 
+           
 
             public ProcessedFileInfo(string fileName, string fullPath, DateTime time = default, int points = 0, string sourceDirectory = "")
             {
@@ -121,7 +148,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 ProcessedTime = time == default ? DateTime.Now : time;
                 Points = points;
                 // Store the source directory from the input file / Na uloženie zdrojového adresára zo vstupného súboru
-                //SourceDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
+                //SourceDirectory = Path.GetDirectoryName(selectedFilePath.Text);
                 SourceDirectory = sourceDirectory;
 
                 try
@@ -209,7 +236,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    TextBoxSelectedFileDirectory.Text = openFileDialog.FileName;
+                    selectedFilePath = openFileDialog.FileName;
                     ButtonProcessData.Enabled = true;
                     try
                     {
@@ -255,8 +282,8 @@ namespace CountAndSortWinFormsAppNetFr4
             return lines
                 .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None))
                 .Where(parts => parts.Length > 4 && int.TryParse(parts[0], out _))
-                .OrderBy(parts => parts[COLUMN_NAME_INDEX])      // Primárne zoradenie podľa mena (4. stĺpec)
-                .ThenBy(parts => int.Parse(parts[COLUMN_ID_INDEX])) // Sekundárne zoradenie podľa druhého stĺpca
+                .OrderBy(parts => parts[ColumnNameIndex])      // Použite vlastnosť namiesto ovládacieho prvku
+                .ThenBy(parts => int.Parse(parts[ColumnIdIndex])) // Použite vlastnosť namiesto ovládacieho prvku
                 .Select(parts => string.Join(columnSeparator, parts))
                 .ToList();
         }
@@ -283,9 +310,9 @@ namespace CountAndSortWinFormsAppNetFr4
             return lines
                 .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None))
                 .Where(parts => parts.Length > MIN_COLUMNS_REQUIRED && int.TryParse(parts[0], out _))
-                .GroupBy(parts => $"{parts[COLUMN_ID_INDEX]}|{parts[2]}|{parts[5]}")// Kľúč z 2., 3. a 6. stĺpca
+                .GroupBy(parts => $"{parts[ColumnIdIndex]}|{parts[2]}|{parts[5]}")
                 .Select(group => group.First())  // Vybrať prvý záznam z každej skupiny
-                .OrderBy(parts => parts[COLUMN_NAME_INDEX]) // Zoradiť podľa mena
+                .OrderBy(parts => parts[ColumnNameIndex]) // Použite vlastnosť namiesto ovládacieho prvku
                 .Select((parts, index) => $"{index + 1}|{string.Join(columnSeparator, parts.Skip(1))}") // Prečíslovať
                 .ToList();
         }
@@ -308,7 +335,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 ButtonSelectOutputFolder.Enabled = false;
 
                 // 1. Najprv kontrolujeme či je vôbec zadaná cesta k súboru
-                if (string.IsNullOrEmpty(TextBoxSelectedFileDirectory.Text))
+                if (string.IsNullOrEmpty(selectedFilePath))
                 {
                     MessageBox.Show(Properties.Strings.MessageSelectFile,
                         Properties.Strings.MessageWarning,
@@ -316,8 +343,17 @@ namespace CountAndSortWinFormsAppNetFr4
                     return;
                 }
 
+                if (!ValidatePointsColumn())
+                {
+                    MessageBox.Show(Properties.Strings.MessageInvalidColumn ??
+                        "Vybraný stĺpec pre body neexistuje v súbore. Prosím vyberte platný stĺpec.",
+                        Properties.Strings.MessageWarning,
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 // 2. Potom kontrolujeme či súbor existuje
-                if (!File.Exists(TextBoxSelectedFileDirectory.Text))
+                if (!File.Exists(selectedFilePath))
                 {
                     //"Vybraný súbor neexistuje.", "Chyba",
                     MessageBox.Show(Properties.Strings.MessageFileNotExist,
@@ -326,9 +362,9 @@ namespace CountAndSortWinFormsAppNetFr4
                     return;
                 }
 
-                string currentFile = Path.GetFileName(TextBoxSelectedFileDirectory.Text);
-                string currentFilePath = TextBoxSelectedFileDirectory.Text;
-                string sourceDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
+                string currentFile = Path.GetFileName(selectedFilePath);
+                string currentFilePath = selectedFilePath;
+                string sourceDirectory = Path.GetDirectoryName(selectedFilePath);
 
                 if (IsFileAlreadyProcessed(currentFilePath))
                 {
@@ -342,7 +378,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 }
 
                 var originalLines = (await Task.Factory.StartNew(() =>
-            File.ReadAllLines(TextBoxSelectedFileDirectory.Text))).ToList();
+            File.ReadAllLines(selectedFilePath))).ToList();
                 var processedLines = await ProcessDataAsync(originalLines);
 
                 if (processedLines.Count == 0)
@@ -467,14 +503,14 @@ namespace CountAndSortWinFormsAppNetFr4
                     lineCount++;
                     var parts = line.Split(new[] { columnSeparator }, StringSplitOptions.None);
 
-                    if (parts.Length <= COLUMN_POINTS_INDEX)
+                    if (parts.Length <= ColumnPointsIndex)
                     {
                         Debug.WriteLine($"Riadok {lineCount}: Nedostatočný počet stĺpcov ({parts.Length})");
                         errorCount++;
                         continue;
                     }
 
-                    string value = parts[COLUMN_POINTS_INDEX].Trim();
+                    string value = parts[ColumnPointsIndex].Trim();
                     if (string.IsNullOrEmpty(value))
                     {
                         Debug.WriteLine($"Riadok {lineCount}: Prázdna hodnota bodov");
@@ -646,7 +682,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
                 // Aktualizujeme všetky labely s rovnakými hodnotami
                 string pointsFormat = totalPoints.ToString("N0");  // Formátujeme číslo len raz
-                LabelTotalSum.Text = Properties.Strings.LabelTotalSum + $" {pointsFormat}";
+              //  LabelTotalPoints.Text = Properties.Strings.LabelTotalPoints + $" {pointsFormat}";
                 LabelFileCount.Text = Properties.Strings.LabelFileCount + $" {fileCount}";
                 LabelTotalPoints.Text = Properties.Strings.HistoryTotalPoints + $" {pointsFormat}";
             }
@@ -722,6 +758,7 @@ namespace CountAndSortWinFormsAppNetFr4
                     }
                 }
             }
+            SetupColumnsNumberRange();
         }
 
         private void CheckBoxSelectAll_CheckedChanged(object sender, EventArgs e)
@@ -776,8 +813,8 @@ namespace CountAndSortWinFormsAppNetFr4
                 try
                 {
                     string outputPath;
-                    string originalDirectory = Path.GetDirectoryName(TextBoxSelectedFileDirectory.Text);
-                    string originalFileName = Path.GetFileName(TextBoxSelectedFileDirectory.Text);
+                    string originalDirectory = Path.GetDirectoryName(selectedFilePath);
+                    string originalFileName = Path.GetFileName(selectedFilePath);
 
                     Debug.WriteLine($"Pôvodný adresár: {originalDirectory}");
                     Debug.WriteLine($"Pôvodný súbor: {originalFileName}");
@@ -799,6 +836,17 @@ namespace CountAndSortWinFormsAppNetFr4
                             PROCESSED_PREFIX + originalFileName
                         );
                         Debug.WriteLine("Použitý pôvodný adresár");
+                    }
+
+                    string outputSeparator = ComboBoxOutputSeparatorType.SelectedItem.ToString();
+
+                    // Prevod riadkov s pôvodným oddeľovačom na riadky s novým oddeľovačom
+                    if (outputSeparator != columnSeparator)
+                    {
+                        processedLines = processedLines.Select(line =>
+                            string.Join(outputSeparator,
+                                       line.Split(new[] { columnSeparator }, StringSplitOptions.None)))
+                                       .ToList();
                     }
 
                     string uniqueOutputPath = GetUniqueFileName(outputPath);
@@ -830,11 +878,11 @@ namespace CountAndSortWinFormsAppNetFr4
 
             // If the file is loaded, reload the data with a new delimiter
             // Ak je súbor načítaný, znovu načítať dáta s novým oddeľovačom
-            if (!string.IsNullOrEmpty(TextBoxSelectedFileDirectory.Text))
+            if (!string.IsNullOrEmpty(selectedFilePath))
             {
                 try
                 {
-                    string[] lines = File.ReadAllLines(TextBoxSelectedFileDirectory.Text);
+                    string[] lines = File.ReadAllLines(selectedFilePath);
                     LoadDataToGrid(lines);
                 }
                 catch (Exception ex)
@@ -904,15 +952,21 @@ namespace CountAndSortWinFormsAppNetFr4
             CheckBoxSelectAll.Text = Properties.Strings.CheckBoxSelectAll;
 
             LabelDataStructureSeparatorIs.Text = Properties.Strings.LabelDataStructureSeparatorIs;
+            LabelPointsColumn.Text = Properties.Strings.LabelPointsColumn ?? "Stĺpec s bodmi (číslo):";
 
             // Získame aktuálne hodnoty
             int totalPoints = CalculateTotalPointsFromListView();
             int fileCount = ListViewShowPointsValues.Items.Count;
 
             // Aktualizujeme labely s hodnotami
-            LabelTotalSum.Text = Properties.Strings.LabelTotalSum + $" {totalPoints:N0}";
+           // LabelTotalPoints.Text = Properties.Strings.LabelTotalPoints + $" {totalPoints:N0}";
             LabelFileCount.Text = Properties.Strings.LabelFileCount + $" {fileCount}";
             LabelTotalPoints.Text = Properties.Strings.HistoryTotalPoints + $" {totalPoints:N0}";
+
+            // ToolTip pri zmene jazyka
+            ColumnToCountToolTip.SetToolTip(LabelPointsColumn, Properties.Strings.ColumnToCountToolTip);
+          //ColumnToCountToolTip.ToolTipTitle = Properties.Strings.ColumnToCountToolTip;
+            ColumnToCountToolTip.SetToolTip(NumericUpDownPointsColumn, Properties.Strings.ColumnToCountToolTip);
 
             UpdateListViewColumns();
         }
@@ -945,8 +999,10 @@ namespace CountAndSortWinFormsAppNetFr4
         private void DelayedUpdateStatistics()
         {
             // Vytvoríme timer, ktorý sa spustí len raz
-            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = 100; // 100 milisekúnd
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer
+            {
+                Interval = 100 // 100 milisekúnd
+            };
             timer.Tick += (sender, e) =>
             {
                 UpdateStatistics();
@@ -954,6 +1010,42 @@ namespace CountAndSortWinFormsAppNetFr4
                 timer.Dispose();
             };
             timer.Start();
+        }
+
+        // Pridajte túto metódu na overenie, či vybraný stĺpec existuje v údajoch
+        private bool ValidatePointsColumn()
+        {
+            // Ak nie sú načítané žiadne údaje, preskočte validáciu
+            if (DataGridPreview.Columns.Count <= 1) // Iba stĺpec s checkboxom
+                return true;
+
+            // Skontrolujte, či vybraný stĺpec existuje v dátovej mriežke
+            // +1 pretože prvý stĺpec je checkbox
+            int columnIndex = (int)NumericUpDownPointsColumn.Value;
+            bool isValid = columnIndex < DataGridPreview.Columns.Count;
+
+            // Vizuálna spätná väzba - zmena farby na základe platnosti
+            NumericUpDownPointsColumn.BackColor = isValid ? System.Drawing.SystemColors.Window : System.Drawing.Color.LightPink;
+
+            return isValid;
+        }
+
+        // Pridajte metódu, ktorá sa zavolá pri načítaní súboru na nastavenie vhodných minimálnych a maximálnych hodnôt
+        private void SetupColumnsNumberRange()
+        {
+            if (DataGridPreview.Columns.Count <= 1)
+            {
+                // Nie sú načítané žiadne údaje
+                NumericUpDownPointsColumn.Minimum = 1;
+                NumericUpDownPointsColumn.Maximum = 50; // Nejaká rozumná predvolená hodnota
+                return;
+            }
+
+            // DataGridPreview.Columns.Count - 1 pretože prvý stĺpec je checkbox
+            NumericUpDownPointsColumn.Minimum = 1;
+            NumericUpDownPointsColumn.Maximum = DataGridPreview.Columns.Count - 1;
+
+            ValidatePointsColumn();
         }
     }
 }

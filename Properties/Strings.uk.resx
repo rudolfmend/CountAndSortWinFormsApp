@@ -141,6 +141,9 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Сортувати за іменем</value>
   </data>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Тут ви встановлюєте, який стовпець потрібно обчислити.</value>
+  </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Огляд папки</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="LabelFileCount" xml:space="preserve">
     <value>Кількість файлів:</value>
   </data>
+  <data name="LabelPointsColumn" xml:space="preserve">
+    <value>Колонка балів (число):</value>
+  </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Загальна сума:</value>
   </data>
@@ -215,6 +221,12 @@
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Інформація</value>
+  </data>
+  <data name="MessageInvalidColumn" xml:space="preserve">
+    <value>Вибраний стовпець для балів не існує у файлі. Виберіть дійсний стовпець.</value>
+  </data>
+  <data name="MessageLanguageChangeError" xml:space="preserve">
+    <value>Помилка зміни мови: {0}</value>
   </data>
   <data name="MessageNoHistoryToSave" xml:space="preserve">
     <value>Немає доступної історії для збереження.</value>

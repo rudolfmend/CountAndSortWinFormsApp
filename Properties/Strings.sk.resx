@@ -141,6 +141,9 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>zoradiť podľa mena</value>
   </data>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Tu nastavíte, ktorý stĺpec sa má počítať.</value>
+  </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Vyhľadanie priečinka</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="LabelFileCount" xml:space="preserve">
     <value>Počet súborov:</value>
   </data>
+  <data name="LabelPointsColumn" xml:space="preserve">
+    <value>Stĺpec s bodmi (číslo):</value>
+  </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Celkový súčet:</value>
   </data>
@@ -215,6 +221,12 @@
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Informácie</value>
+  </data>
+  <data name="MessageInvalidColumn" xml:space="preserve">
+    <value>Vybraný stĺpec pre body neexistuje v súbore. Prosím vyberte platný stĺpec.</value>
+  </data>
+  <data name="MessageLanguageChangeError" xml:space="preserve">
+    <value>Chyba pri zmene jazyka: {0}</value>
   </data>
   <data name="MessageNoHistoryToSave" xml:space="preserve">
     <value>Nie je k dispozícii žiadna história na uloženie.</value>

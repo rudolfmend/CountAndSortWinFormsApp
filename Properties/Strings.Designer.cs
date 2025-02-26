@@ -133,6 +133,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Here you set which column needs to be calculated..
+        /// </summary>
+        internal static string ColumnToCountToolTip {
+            get {
+                return ResourceManager.GetString("ColumnToCountToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse Folder.
         /// </summary>
         internal static string DialogBrowseFolder {
@@ -250,6 +259,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Points column (number):.
+        /// </summary>
+        internal static string LabelPointsColumn {
+            get {
+                return ResourceManager.GetString("LabelPointsColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Sum:.
         /// </summary>
         internal static string LabelTotalSum {
@@ -358,7 +376,16 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error when changing language:.
+        ///   Looks up a localized string similar to The selected column for points does not exist in the file. Please select a valid column..
+        /// </summary>
+        internal static string MessageInvalidColumn {
+            get {
+                return ResourceManager.GetString("MessageInvalidColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error changing language: {0}.
         /// </summary>
         internal static string MessageLanguageChangeError {
             get {

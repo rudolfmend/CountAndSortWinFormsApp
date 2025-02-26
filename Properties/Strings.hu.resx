@@ -141,6 +141,9 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Rendezés név szerint</value>
   </data>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Itt állíthatja be, hogy melyik oszlopot kell kiszámítani.</value>
+  </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Tallózás a mappában</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="LabelFileCount" xml:space="preserve">
     <value>Fájlok száma:</value>
   </data>
+  <data name="LabelPointsColumn" xml:space="preserve">
+    <value>Pontok oszlopa (szám):</value>
+  </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Teljes összeg:</value>
   </data>
@@ -215,6 +221,12 @@
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Információ</value>
+  </data>
+  <data name="MessageInvalidColumn" xml:space="preserve">
+    <value>A pontokhoz kiválasztott oszlop nem létezik a fájlban. Kérjük, válasszon érvényes oszlopot.</value>
+  </data>
+  <data name="MessageLanguageChangeError" xml:space="preserve">
+    <value>Hiba a nyelv megváltoztatásakor: {0}</value>
   </data>
   <data name="MessageNoHistoryToSave" xml:space="preserve">
     <value>Nincs menthető előzmény.</value>

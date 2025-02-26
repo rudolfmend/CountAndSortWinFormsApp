@@ -141,6 +141,9 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Sort by Name</value>
   </data>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Here you set which column needs to be calculated.</value>
+  </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Browse Folder</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="LabelFileCount" xml:space="preserve">
     <value>File Count:</value>
   </data>
+  <data name="LabelPointsColumn" xml:space="preserve">
+    <value>Points column (number):</value>
+  </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Total Sum:</value>
   </data>
@@ -215,6 +221,13 @@
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="MessageInvalidColumn" xml:space="preserve">
+    <value>The selected column for points does not exist in the file. Please select a valid column.</value>
+  </data>
+  <data name="MessageLanguageChangeError" xml:space="preserve">
+    <value>Error changing language: {0}</value>
+    <comment>Error message displayed when language change fails</comment>
   </data>
   <data name="MessageNoHistoryToSave" xml:space="preserve">
     <value>No history available to save.</value>

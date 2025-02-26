@@ -141,6 +141,9 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Nach Namen sortieren</value>
   </data>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Stellen Sie hier ein, welche Spalte berechnet werden soll.</value>
+  </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Ordner durchsuchen</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="LabelFileCount" xml:space="preserve">
     <value>Anzahl der Dateien:</value>
   </data>
+  <data name="LabelPointsColumn" xml:space="preserve">
+    <value>Punktespalte (Nummer):</value>
+  </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Gesamtsumme:</value>
   </data>
@@ -215,6 +221,12 @@
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="MessageInvalidColumn" xml:space="preserve">
+    <value>Die ausgewählte Spalte für Punkte existiert nicht in der Datei. Bitte wählen Sie eine gültige Spalte.</value>
+  </data>
+  <data name="MessageLanguageChangeError" xml:space="preserve">
+    <value>Fehler beim Ändern der Sprache: {0}</value>
   </data>
   <data name="MessageNoHistoryToSave" xml:space="preserve">
     <value>Kein Verlauf zum Speichern verfügbar.</value>
