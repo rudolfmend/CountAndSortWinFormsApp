@@ -28,12 +28,25 @@ namespace CountAndSortWinFormsAppNetFr4
         private const int COLUMN_WIDTH_POINTS = 100;
         private const int COLUMN_WIDTH_DATE = 220;
 
-        private string selectedFilePath = string.Empty; // Path to the selected file / Cesta k vybranému súboru - náhrada za selectedFilePath 
+        private List<string> selectedFilePaths = new List<string>(); // Path to the selected files / Cesta k vybraným súborom
         private int ColumnPointsIndex => (int)NumericUpDownPointsColumn.Value - 1;  // Prevod z 1-indexovaného UI na 0-indexovaný index
         private int ColumnNameIndex => (int)NumericUpDownNameColumn.Value - 1;
         private int ColumnIdIndex => (int)NumericUpDownIdColumn.Value - 1;
         private int duplicatesRemoved = 0; // Pre výpis počtu duplicít
 
+        // Trieda pre sledovanie výsledkov spracovania súborov
+        private class FileProcessingResult
+        {
+            public string FileName { get; set; }
+            public bool Success { get; set; }
+            public string OutputPath { get; set; }
+            public int RemovedRows { get; set; }
+            public int OriginalRows { get; set; }
+            public int ProcessedRows { get; set; }
+            public int OriginalPoints { get; set; }
+            public int ProcessedPoints { get; set; }
+            public string ErrorMessage { get; set; }
+        }
 
         public SelectFileForm()
         {
@@ -113,6 +126,29 @@ namespace CountAndSortWinFormsAppNetFr4
             };
         }
 
+        // Aktualizácia konštruktora pre inicializáciu DataGridView s checkbox v záhlaví
+        private void InitializeDataGridWithCheckBoxHeader()
+        {
+            if (DataGridPreview.Columns.Count > 0 && DataGridPreview.Columns[0].Name == "Selected")
+            {
+                // Vytvoríme checkbox header pre stĺpec Selected
+                var headerCell = new DataGridViewCheckBoxHeaderCell();
+                headerCell.OnCheckBoxClicked += (sender, isChecked) =>
+                {
+                    // Označíme alebo odznačíme všetky riadky
+                    foreach (DataGridViewRow row in DataGridPreview.Rows)
+                    {
+                        row.Cells["Selected"].Value = isChecked;
+                    }
+                    // Aktualizujeme aj stav checkbox kontrolky
+                    CheckBoxSelectAll.Checked = isChecked;
+                };
+
+                DataGridPreview.Columns[0].HeaderCell = headerCell;
+                DataGridPreview.InvalidateColumn(0);
+            }
+        }
+
 
         private void SaveColumnSettings()
         {
@@ -148,7 +184,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 ProcessedTime = time == default ? DateTime.Now : time;
                 Points = points;
                 // Store the source directory from the input file / Na uloženie zdrojového adresára zo vstupného súboru
-                //SourceDirectory = Path.GetDirectoryName(selectedFilePath.Text);
+                //SourceDirectory = Path.GetDirectoryName(selectedFilePaths.Text);
                 SourceDirectory = sourceDirectory;
 
                 try
@@ -232,44 +268,306 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 openFileDialog.Filter = "Všetky súbory (*.*)|*.*|súbory (*.001)|*.001|súbory (*.002)|*.002|Textové súbory (*.txt)|*.txt";
                 openFileDialog.FilterIndex = 1;
+                openFileDialog.Multiselect = true; // Povolenie výberu viacerých súborov
                 CheckBoxSelectAll.Checked = false; //Reset CheckBoxSelectAll
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    selectedFilePath = openFileDialog.FileName;
-                    ButtonProcessData.Enabled = true;
-                    try
+                    selectedFilePaths = openFileDialog.FileNames.ToList();
+                    ButtonProcessData.Enabled = selectedFilePaths.Count > 0;
+
+                    // Ak je vybratý aspoň jeden súbor, načítame prvý pre náhľad
+                    if (selectedFilePaths.Count > 0)
                     {
-                        string[] lines = File.ReadAllLines(openFileDialog.FileName);
-                        LoadDataToGrid(lines);
-
-                        // Nastavenia DataGridView ktoré sú špecifické pre inicializáciu
-                        DataGridPreview.AllowUserToAddRows = false;
-                        DataGridPreview.AllowUserToDeleteRows = false;
-                        DataGridPreview.MultiSelect = true;
-                        DataGridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-                        // Povoliť editáciu len pre checkbox stĺpec
-                        foreach (DataGridViewColumn col in DataGridPreview.Columns)
+                        try
                         {
-                            col.ReadOnly = col.Name != "Selected";
+                            string[] lines = File.ReadAllLines(selectedFilePaths[0]);
+                            LoadDataToGrid(lines);
+
+                            // Nastavenia DataGridView ktoré sú špecifické pre inicializáciu
+                            DataGridPreview.AllowUserToAddRows = false;
+                            DataGridPreview.AllowUserToDeleteRows = false;
+                            DataGridPreview.MultiSelect = true;
+                            DataGridPreview.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                            // Povoliť editáciu len pre checkbox stĺpec
+                            foreach (DataGridViewColumn col in DataGridPreview.Columns)
+                            {
+                                col.ReadOnly = col.Name != "Selected";
+                            }
+
+                            // Aktualizácia titulku - zobraziť počet súborov
+                            var baseTitle = this.Text.Split('-')[0].Trim();
+                            if (selectedFilePaths.Count == 1)
+                            {
+                                // Ak je len jeden súbor, zobrazíme jeho názov
+                                this.Text = $"{baseTitle} - {Path.GetFileName(selectedFilePaths[0])}";
+                            }
+                            else
+                            {
+                                // Ak je viac súborov, zobrazíme ich počet
+                                this.Text = $"{baseTitle} - {selectedFilePaths.Count} súborov vybraných";
+
+                                // Keď sa vyberie viac súborov, môžeme zobraziť informáciu o počte vybraných súborov
+                                ShowMultipleFilesSelectedInfo();
+                            }
+
+                            CheckBoxSelectAll.Checked = false;
                         }
-
-                        // Aktualizácia titulku
-                        var fileName = Path.GetFileName(openFileDialog.FileName);
-                        var baseTitle = this.Text.Split('-')[0].Trim();
-                        this.Text = $"{baseTitle} - {fileName}";
-
-                        CheckBoxSelectAll.Checked = false;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Chyba pri čítaní súboru: {ex.Message}",
-                            "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Chyba pri čítaní súboru: {ex.Message}",
+                                "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
         }
+
+        private void ShowMultipleFilesSelectedInfo()
+        {
+            // Vytvoríme zoznam prvých 5 súborov pre zobrazenie
+            var filesList = new System.Text.StringBuilder();
+            int maxFilesToShow = Math.Min(selectedFilePaths.Count, 5);
+
+            for (int i = 0; i < maxFilesToShow; i++)
+            {
+                filesList.AppendLine($"- {Path.GetFileName(selectedFilePaths[i])}");
+            }
+
+            if (selectedFilePaths.Count > 5)
+            {
+                filesList.AppendLine($"- ... a ďalších {selectedFilePaths.Count - 5} súborov");
+            }
+
+            MessageBox.Show(
+                $"Vybraných {selectedFilePaths.Count} súborov.\n\n" +
+                $"V tabuľke je zobrazený náhľad prvého súboru. Všetky súbory budú spracované po kliknutí na 'Spracovať údaje'.\n\n" +
+                $"Zoznam súborov:\n{filesList}",
+                "Informácia o výbere súborov",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
+
+        private async Task<List<FileProcessingResult>> ProcessSingleFileWithSelectedRows(string filePath)
+        {
+            List<FileProcessingResult> results = new List<FileProcessingResult>();
+
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show(Properties.Strings.MessageFileNotExist,
+                        Properties.Strings.MessageError,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    results.Add(new FileProcessingResult
+                    {
+                        FileName = Path.GetFileName(filePath),
+                        Success = false,
+                        ErrorMessage = Properties.Strings.MessageFileNotExist
+                    });
+
+                    return results;
+                }
+
+                string currentFile = Path.GetFileName(filePath);
+                string sourceDirectory = Path.GetDirectoryName(filePath);
+
+                if (IsFileAlreadyProcessed(filePath))
+                {
+                    var dialogResult = MessageBox.Show(
+                        Properties.Strings.MessageFileAlreadyProcessed,
+                        Properties.Strings.MessageWarning,
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (dialogResult == DialogResult.No)
+                    {
+                        results.Add(new FileProcessingResult
+                        {
+                            FileName = currentFile,
+                            Success = false,
+                            ErrorMessage = "Užívateľ zrušil spracovanie už existujúceho súboru"
+                        });
+
+                        return results;
+                    }
+                }
+
+                var originalLines = (await Task.Factory.StartNew(() => File.ReadAllLines(filePath))).ToList();
+                var processedLines = await ProcessDataAsync(originalLines);
+
+                if (processedLines.Count == 0)
+                {
+                    MessageBox.Show(Properties.Strings.MessageNoRowsSelected,
+                        Properties.Strings.MessageWarning,
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    results.Add(new FileProcessingResult
+                    {
+                        FileName = currentFile,
+                        Success = false,
+                        ErrorMessage = Properties.Strings.MessageNoRowsSelected
+                    });
+
+                    return results;
+                }
+
+                int originalPoints = await CalculateTotalPointsAsync(originalLines);
+                string outputPath = await SaveProcessedDataAsync(processedLines, filePath);
+                int processedPoints = await CalculateTotalPointsAsync(processedLines);
+
+                // Pridáme do histórie a aktualizujeme štatistiky
+                AddToHistory(filePath, processedPoints, sourceDirectory);
+
+                // Vytvoríme výsledok spracovania
+                results.Add(new FileProcessingResult
+                {
+                    FileName = currentFile,
+                    Success = true,
+                    OutputPath = outputPath,
+                    RemovedRows = originalLines.Count - processedLines.Count,
+                    OriginalRows = originalLines.Count,
+                    ProcessedRows = processedLines.Count,
+                    OriginalPoints = originalPoints,
+                    ProcessedPoints = processedPoints
+                });
+
+                return results;
+            }
+            catch (Exception ex)
+            {
+                results.Add(new FileProcessingResult
+                {
+                    FileName = Path.GetFileName(filePath),
+                    Success = false,
+                    ErrorMessage = ex.Message
+                });
+
+                return results;
+            }
+        }
+
+        // Method for processing multiple files with progress indicator / Metóda pre spracovanie viacerých súborov s indikátorom priebehu
+        private async Task<List<FileProcessingResult>> ProcessMultipleFilesAsync(List<string> filePaths)
+        {
+            List<FileProcessingResult> results = new List<FileProcessingResult>();
+
+            // Kontrola, či chce užívateľ pokračovať, ak niektoré súbory už boli spracované
+            if (!ConfirmProcessingOfAlreadyProcessedFiles(filePaths))
+            {
+                // Užívateľ si neprial pokračovať, vrátime prázdny zoznam
+                return results;
+            }
+
+            // Vytvorenie a zobrazenie progress formulára
+            using (var progressForm = new ProgressForm("Spracovanie súborov"))
+            {
+                // Spustenie progress formy
+                progressForm.Show(this);
+
+                // Spracovanie každého súboru
+                for (int i = 0; i < filePaths.Count; i++)
+                {
+                    string currentFilePath = filePaths[i];
+                    string currentFile = Path.GetFileName(currentFilePath);
+
+                    // Aktualizácia progress baru
+                    progressForm.UpdateProgress(i + 1, filePaths.Count, currentFile);
+
+                    // Kontrola existencie súboru
+                    if (!File.Exists(currentFilePath))
+                    {
+                        results.Add(new FileProcessingResult
+                        {
+                            FileName = currentFile,
+                            Success = false,
+                            ErrorMessage = Properties.Strings.MessageFileNotExist
+                        });
+                        continue;
+                    }
+
+                    string sourceDirectory = Path.GetDirectoryName(currentFilePath);
+
+                    try
+                    {
+                        // Načítanie a spracovanie súboru
+                        var originalLines = await Task.Factory.StartNew(() =>
+                            File.ReadAllLines(currentFilePath).ToList());
+
+                        // Spracovanie dát súboru
+                        List<string> processedLines;
+                        if (CheckBoxRemoveDuplicatesRows.Checked)
+                        {
+                            var originalCount = originalLines.Count;
+                            processedLines = RemoveDuplicateRows(originalLines);
+                            duplicatesRemoved = originalCount - processedLines.Count;
+                        }
+                        else
+                        {
+                            processedLines = new List<string>(originalLines);
+                            if (CheckBoxSortByName.Checked)
+                            {
+                                processedLines = SortLinesByName(processedLines);
+                            }
+                            if (CheckBoxRenumberTheOrder.Checked)
+                            {
+                                processedLines = RenumberFirstColumn(processedLines);
+                            }
+                        }
+
+                        if (processedLines.Count == 0)
+                        {
+                            results.Add(new FileProcessingResult
+                            {
+                                FileName = currentFile,
+                                Success = false,
+                                ErrorMessage = Properties.Strings.MessageNoRowsSelected
+                            });
+                            continue;
+                        }
+
+                        // Výpočet bodov a uloženie súboru
+                        int originalPoints = await CalculateTotalPointsAsync(originalLines);
+                        string outputPath = await SaveProcessedDataAsync(processedLines, currentFilePath);
+                        int processedPoints = await CalculateTotalPointsAsync(processedLines);
+
+                        // Pridáme do histórie
+                        AddToHistory(currentFilePath, processedPoints, sourceDirectory);
+
+                        // Pridanie výsledku
+                        results.Add(new FileProcessingResult
+                        {
+                            FileName = currentFile,
+                            Success = true,
+                            OutputPath = outputPath,
+                            RemovedRows = originalLines.Count - processedLines.Count,
+                            OriginalRows = originalLines.Count,
+                            ProcessedRows = processedLines.Count,
+                            OriginalPoints = originalPoints,
+                            ProcessedPoints = processedPoints,
+                            ErrorMessage = string.Empty
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Chyba pri spracovaní súboru {currentFile}: {ex.Message}");
+                        results.Add(new FileProcessingResult
+                        {
+                            FileName = currentFile,
+                            Success = false,
+                            ErrorMessage = ex.Message
+                        });
+                    }
+                }
+
+                // Zatvorenie progress formy
+                progressForm.Close();
+            }
+
+            return results;
+        }
+
 
         /// <summary>
         /// Záznamy sa najprv zoradia podľa mena (stĺpec 4).
@@ -335,7 +633,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 ButtonSelectOutputFolder.Enabled = false;
 
                 // 1. Najprv kontrolujeme či je vôbec zadaná cesta k súboru
-                if (string.IsNullOrEmpty(selectedFilePath))
+                if (selectedFilePaths.Count == 0)
                 {
                     MessageBox.Show(Properties.Strings.MessageSelectFile,
                         Properties.Strings.MessageWarning,
@@ -352,68 +650,39 @@ namespace CountAndSortWinFormsAppNetFr4
                     return;
                 }
 
-                // 2. Potom kontrolujeme či súbor existuje
-                if (!File.Exists(selectedFilePath))
+                // Uloženie nastavení stĺpcov
+                SaveColumnSettings();
+
+                // Spracovanie súborov a získanie výsledkov
+                List<FileProcessingResult> results;
+                int totalFilesProcessed;
+                int totalOriginalPoints;
+                int totalProcessedPoints;
+
+                // Ak je vybraný len jeden súbor, použijeme označené riadky z tabuľky
+                if (selectedFilePaths.Count == 1)
                 {
-                    //"Vybraný súbor neexistuje.", "Chyba",
-                    MessageBox.Show(Properties.Strings.MessageFileNotExist,
-                        Properties.Strings.MessageError,
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    results = await ProcessSingleFileWithSelectedRows(selectedFilePaths[0]);
+                }
+                else
+                {
+                    // Pre viac súborov, spracujeme každý súbor kompletne
+                    results = await ProcessMultipleFilesAsync(selectedFilePaths);
                 }
 
-                string currentFile = Path.GetFileName(selectedFilePath);
-                string currentFilePath = selectedFilePath;
-                string sourceDirectory = Path.GetDirectoryName(selectedFilePath);
+                // Výpočet súhrnných štatistík
+                totalFilesProcessed = results.Count(r => r.Success);
+                totalOriginalPoints = results.Where(r => r.Success).Sum(r => r.OriginalPoints);
+                totalProcessedPoints = results.Where(r => r.Success).Sum(r => r.ProcessedPoints);
 
-                if (IsFileAlreadyProcessed(currentFilePath))
-                {
-                    var result = MessageBox.Show(
-                        //"Tento súbor už bol spracovaný. Chcete ho spracovať znova?","Upozornenie",
-                        Properties.Strings.MessageFileAlreadyProcessed,
-                        Properties.Strings.MessageWarning,
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (result == DialogResult.No)
-                        return;
-                }
-
-                var originalLines = (await Task.Factory.StartNew(() =>
-            File.ReadAllLines(selectedFilePath))).ToList();
-                var processedLines = await ProcessDataAsync(originalLines);
-
-                if (processedLines.Count == 0)
-                {
-                    MessageBox.Show(Properties.Strings.MessageNoRowsSelected,
-                        Properties.Strings.MessageWarning,
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                int originalPoints = await CalculateTotalPointsAsync(originalLines);
-                string outputPath = await SaveProcessedDataAsync(processedLines);
-                int processedPoints = await CalculateTotalPointsAsync(processedLines);
-
-                // Pridáme do histórie a aktualizujeme štatistiky
-                AddToHistory(currentFilePath, processedPoints, sourceDirectory);
+                // Zobrazenie výsledkov
+                ShowProcessingResults(results, totalFilesProcessed, totalOriginalPoints, totalProcessedPoints);
 
                 // Vynútime aktualizáciu štatistík s oneskorením
                 DelayedUpdateStatistics();
-
-                MessageBox.Show(
-                    string.Format(Properties.Strings.MessageProcessingResults,
-                        outputPath,
-                        originalLines.Count - processedLines.Count,
-                        originalLines.Count,
-                        processedLines.Count,
-                        originalPoints,
-                        processedPoints),
-                    Properties.Strings.MessageDone,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Upozornenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 MessageBox.Show($"Chyba pri spracovaní údajov: {ex.Message}",
                     "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -424,6 +693,222 @@ namespace CountAndSortWinFormsAppNetFr4
                 ButtonSelectOutputFolder.Enabled = true;
                 UpdateStatistics();
             }
+        }
+
+        // Metóda na zobrazenie súhrnných výsledkov
+        private void ShowProcessingResults(List<FileProcessingResult> results, int totalFilesProcessed,
+            int totalOriginalPoints, int totalProcessedPoints)
+        {
+            if (results is null || results.Count == 0)
+            {
+                return;
+            }
+
+            // Ak bol spracovaný len jeden súbor, použijeme pôvodnú správu
+            if (results.Count == 1 && results[0].Success)
+            {
+                var result = results[0];
+                MessageBox.Show(
+                    string.Format(Properties.Strings.MessageProcessingResults,
+                        result.OutputPath,
+                        result.RemovedRows,
+                        result.OriginalRows,
+                        result.ProcessedRows,
+                        result.OriginalPoints,
+                        result.ProcessedPoints),
+                    Properties.Strings.MessageDone,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+
+            // Pre viac súborov vytvoríme súhrnnú správu
+            StringBuilder message = new StringBuilder();
+            message.AppendLine($"Spracovanie súborov dokončené.");
+            message.AppendLine($"------------------------------------------");
+            message.AppendLine($"Spracovaných: {totalFilesProcessed} z {results.Count} súborov");
+            message.AppendLine($"Celkový počet bodov pred: {totalOriginalPoints:N0}");
+            message.AppendLine($"Celkový počet bodov po: {totalProcessedPoints:N0}");
+            message.AppendLine($"Rozdiel bodov: {totalProcessedPoints - totalOriginalPoints:N0}");
+            message.AppendLine($"------------------------------------------");
+
+            // Zoznam súborov podľa statusu
+            int maxFilesToShow = 10; // Zobrazíme maximálne prvých 10 súborov
+
+            // Úspešne spracované súbory
+            var successfulFiles = results.Where(r => r.Success).ToList();
+            if (successfulFiles.Any())
+            {
+                message.AppendLine();
+                message.AppendLine("Úspešne spracované súbory:");
+
+                for (int i = 0; i < Math.Min(successfulFiles.Count, maxFilesToShow); i++)
+                {
+                    var result = successfulFiles[i];
+                    message.AppendLine($"- {result.FileName}: {result.ProcessedPoints:N0} bodov, odstránených {result.RemovedRows} riadkov");
+                }
+
+                if (successfulFiles.Count > maxFilesToShow)
+                {
+                    message.AppendLine($"- ... a ďalších {successfulFiles.Count - maxFilesToShow} súborov");
+                }
+            }
+
+            // Neúspešne spracované súbory
+            var failedFiles = results.Where(r => !r.Success).ToList();
+            if (failedFiles.Any())
+            {
+                message.AppendLine();
+                message.AppendLine("Súbory, ktoré neboli spracované:");
+
+                for (int i = 0; i < Math.Min(failedFiles.Count, maxFilesToShow); i++)
+                {
+                    var result = failedFiles[i];
+                    message.AppendLine($"- {result.FileName}: {result.ErrorMessage}");
+                }
+
+                if (failedFiles.Count > maxFilesToShow)
+                {
+                    message.AppendLine($"- ... a ďalších {failedFiles.Count - maxFilesToShow} súborov");
+                }
+            }
+
+            // Opýtame sa užívateľa, či chce výsledky uložiť do súboru
+            var dialogResult = MessageBox.Show(
+                message.ToString() + "\n\nChcete uložiť podrobný výsledok do súboru?",
+                Properties.Strings.MessageDone,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                SaveProcessingResults(results, totalFilesProcessed, totalOriginalPoints, totalProcessedPoints);
+            }
+        }
+
+        private void SaveProcessingResults(List<FileProcessingResult> results, int totalFilesProcessed,
+            int totalOriginalPoints, int totalProcessedPoints)
+        {
+            try
+            {
+                using (SaveFileDialog saveDialog = new SaveFileDialog())
+                {
+                    saveDialog.Filter = Properties.Strings.DialogFilterTextFiles;
+                    saveDialog.FilterIndex = 1;
+                    saveDialog.DefaultExt = "txt";
+                    saveDialog.FileName = $"BatchProcessingResults_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+
+                    if (saveDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        StringBuilder content = new StringBuilder();
+                        content.AppendLine("VÝSLEDKY DÁVKOVÉHO SPRACOVANIA SÚBOROV");
+                        content.AppendLine($"Dátum a čas: {DateTime.Now:dd.MM.yyyy HH:mm:ss}");
+                        content.AppendLine("------------------------------------------");
+                        content.AppendLine($"Spracovaných: {totalFilesProcessed} z {results.Count} súborov");
+                        content.AppendLine($"Celkový počet bodov pred: {totalOriginalPoints:N0}");
+                        content.AppendLine($"Celkový počet bodov po: {totalProcessedPoints:N0}");
+                        content.AppendLine($"Rozdiel bodov: {totalProcessedPoints - totalOriginalPoints:N0}");
+                        content.AppendLine("------------------------------------------");
+
+                        // Podrobný výpis pre všetky súbory
+                        content.AppendLine("\nPODROBNÉ VÝSLEDKY PRE KAŽDÝ SÚBOR:");
+
+                        // Úspešne spracované súbory
+                        var successfulFiles = results.Where(r => r.Success).ToList();
+                        if (successfulFiles.Any())
+                        {
+                            content.AppendLine("\nÚSPEŠNE SPRACOVANÉ SÚBORY:");
+                            foreach (var result in successfulFiles)
+                            {
+                                content.AppendLine($"\n{result.FileName}");
+                                content.AppendLine($"- Výstupný súbor: {result.OutputPath}");
+                                content.AppendLine($"- Počet bodov pred: {result.OriginalPoints:N0}");
+                                content.AppendLine($"- Počet bodov po: {result.ProcessedPoints:N0}");
+                                content.AppendLine($"- Rozdiel bodov: {result.ProcessedPoints - result.OriginalPoints:N0}");
+                                content.AppendLine($"- Počet riadkov pred: {result.OriginalRows}");
+                                content.AppendLine($"- Počet riadkov po: {result.ProcessedRows}");
+                                content.AppendLine($"- Odstránené duplicity: {result.RemovedRows}");
+                            }
+                        }
+
+                        // Neúspešne spracované súbory
+                        var failedFiles = results.Where(r => !r.Success).ToList();
+                        if (failedFiles.Any())
+                        {
+                            content.AppendLine("\nNESPRACOVANÉ SÚBORY:");
+                            foreach (var result in failedFiles)
+                            {
+                                content.AppendLine($"\n{result.FileName}");
+                                content.AppendLine($"- Dôvod: {result.ErrorMessage}");
+                            }
+                        }
+
+                        File.WriteAllText(saveDialog.FileName, content.ToString());
+                        MessageBox.Show(
+                            $"Výsledky boli úspešne uložené do súboru:\n{saveDialog.FileName}",
+                            "Informácia",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Chyba pri ukladaní výsledkov: {ex.Message}",
+                    "Chyba",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+    
+
+        // Kontrola, či chce užívateľ prepísať súbory, ktoré už boli spracované
+        private bool ConfirmProcessingOfAlreadyProcessedFiles(List<string> filePaths)
+        {
+            // Kontrola, koľko súborov bolo už spracovaných
+            var alreadyProcessedFiles = filePaths
+                .Where(file => IsFileAlreadyProcessed(file))
+                .Select(file => Path.GetFileName(file))
+                .ToList();
+
+            if (alreadyProcessedFiles.Count == 0)
+                return true;
+
+            // Ak je len jeden súbor, použijeme štandardnú správu
+            if (alreadyProcessedFiles.Count == 1 && filePaths.Count == 1)
+            {
+                var result = MessageBox.Show(Properties.Strings.MessageFileAlreadyProcessed,
+                    Properties.Strings.MessageWarning,
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                return result == DialogResult.Yes;
+            }
+
+            // Pre viac súborov zostavíme zoznam a spýtame sa raz
+            var message = new StringBuilder();
+            message.AppendLine($"{alreadyProcessedFiles.Count} z {filePaths.Count} vybraných súborov už bolo spracovaných:");
+
+            // Zobraziť prvých 5 súborov v správe
+            int showCount = Math.Min(alreadyProcessedFiles.Count, 5);
+            for (int i = 0; i < showCount; i++)
+            {
+                message.AppendLine($"- {alreadyProcessedFiles[i]}");
+            }
+
+            // Ak je viac ako 5 súborov, pridáme poznámku
+            if (alreadyProcessedFiles.Count > 5)
+            {
+                message.AppendLine($"- ... a ďalších {alreadyProcessedFiles.Count - 5} súborov");
+            }
+
+            message.AppendLine("\nChcete tieto súbory spracovať znova?");
+
+            var dialogResult = MessageBox.Show(
+                message.ToString(),
+                Properties.Strings.MessageWarning,
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            return dialogResult == DialogResult.Yes;
         }
 
         private List<string> GetUnselectedRows()
@@ -757,8 +1242,18 @@ namespace CountAndSortWinFormsAppNetFr4
                         startIndex = i + 1;
                     }
                 }
+
+                // Pridanie posledného stĺpca, ak existuje
+                if (startIndex < line.Length && columnIndex < maxColumnCount)
+                {
+                    string value = line.Substring(startIndex);
+                    row.Cells[columnIndex + 1].Value = value;
+                }
             }
             SetupColumnsNumberRange();
+
+            // Inicializácia checkbox headera
+            InitializeDataGridWithCheckBoxHeader();
         }
 
         private void CheckBoxSelectAll_CheckedChanged(object sender, EventArgs e)
@@ -769,7 +1264,7 @@ namespace CountAndSortWinFormsAppNetFr4
             }
         }
 
-        private string GetUniqueFileName(string filePath)
+        private string GetUniqueFileName(string filePath, bool useBatchProcessing)
         {
             if (!File.Exists(filePath))
                 return filePath;
@@ -806,28 +1301,35 @@ namespace CountAndSortWinFormsAppNetFr4
             return selectedRows;
         }
 
-        private async Task<string> SaveProcessedDataAsync(List<string> processedLines)
+        private async Task<string> SaveProcessedDataAsync(List<string> processedLines, string filePath)
         {
+            // Získaj hodnotu z UI kontrolky na hlavnom vlákne
+            string outputSeparator = ComboBoxOutputSeparatorType.SelectedItem?.ToString() ?? columnSeparator;
+
+            // Získaj hodnotu z TextBoxu na hlavnom vlákne
+            string outputFolderPath = TextBoxSelectOutputFolder.Text;
+
             return await Task.Factory.StartNew(() =>
             {
                 try
                 {
                     string outputPath;
-                    string originalDirectory = Path.GetDirectoryName(selectedFilePath);
-                    string originalFileName = Path.GetFileName(selectedFilePath);
+                    string originalDirectory = Path.GetDirectoryName(filePath);
+                    string originalFileName = Path.GetFileName(filePath);
 
                     Debug.WriteLine($"Pôvodný adresár: {originalDirectory}");
                     Debug.WriteLine($"Pôvodný súbor: {originalFileName}");
 
-                    if (!string.IsNullOrEmpty(TextBoxSelectOutputFolder.Text) &&
-                        Directory.Exists(TextBoxSelectOutputFolder.Text) &&
-                        HasWriteAccessToFolder(TextBoxSelectOutputFolder.Text))
+                    // Kontrola výstupného adresára (bez prístupu k UI kontrolke)
+                    if (!string.IsNullOrEmpty(outputFolderPath) &&
+                        Directory.Exists(outputFolderPath) &&
+                        HasWriteAccessToFolder(outputFolderPath))
                     {
                         outputPath = Path.Combine(
-                            TextBoxSelectOutputFolder.Text,
+                            outputFolderPath,
                             PROCESSED_PREFIX + originalFileName
                         );
-                        Debug.WriteLine($"Použitý výstupný adresár: {TextBoxSelectOutputFolder.Text}");
+                        Debug.WriteLine($"Použitý výstupný adresár: {outputFolderPath}");
                     }
                     else
                     {
@@ -838,9 +1340,7 @@ namespace CountAndSortWinFormsAppNetFr4
                         Debug.WriteLine("Použitý pôvodný adresár");
                     }
 
-                    string outputSeparator = ComboBoxOutputSeparatorType.SelectedItem.ToString();
-
-                    // Prevod riadkov s pôvodným oddeľovačom na riadky s novým oddeľovačom
+                    // Prevod riadkov s pôvodným oddeľovačom na riadky s novým oddeľovačom (len raz)
                     if (outputSeparator != columnSeparator)
                     {
                         processedLines = processedLines.Select(line =>
@@ -849,7 +1349,10 @@ namespace CountAndSortWinFormsAppNetFr4
                                        .ToList();
                     }
 
-                    string uniqueOutputPath = GetUniqueFileName(outputPath);
+                    // Pre dávkové spracovanie použijeme timestamp, aby sme mali unikátne súbory
+                    bool useBatchProcessing = selectedFilePaths.Count > 1;
+                    string uniqueOutputPath = GetUniqueFileName(outputPath, useBatchProcessing);
+
                     Debug.WriteLine($"Unikátna výstupná cesta: {uniqueOutputPath}");
 
                     string targetDirectory = Path.GetDirectoryName(uniqueOutputPath);
@@ -878,11 +1381,11 @@ namespace CountAndSortWinFormsAppNetFr4
 
             // If the file is loaded, reload the data with a new delimiter
             // Ak je súbor načítaný, znovu načítať dáta s novým oddeľovačom
-            if (!string.IsNullOrEmpty(selectedFilePath))
+            if (selectedFilePaths != null && selectedFilePaths.Count > 0)
             {
                 try
                 {
-                    string[] lines = File.ReadAllLines(selectedFilePath);
+                    string[] lines = File.ReadAllLines(selectedFilePaths[0]);
                     LoadDataToGrid(lines);
                 }
                 catch (Exception ex)

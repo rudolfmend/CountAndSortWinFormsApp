@@ -116,8 +116,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataGridViewCheckBoxHeaderCell.cs" />
+    <Compile Include="FileBatchSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileBatchSelectionForm.Designer.cs">
+      <DependentUpon>FileBatchSelectionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HistoryRecord.cs" />
     <Compile Include="LanguageManager.cs" />
+    <Compile Include="ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Strings.uk.Designer.cs">
       <DependentUpon>Strings.uk.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -136,6 +148,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.uk.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.uk.Designer.cs</LastGenOutput>
