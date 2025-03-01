@@ -45,8 +45,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.LabelTotalPoints = new System.Windows.Forms.Label();
             this.DataGridPreview = new System.Windows.Forms.DataGridView();
             this.CheckBoxSelectAll = new System.Windows.Forms.CheckBox();
-            this.LabelDataStructureSeparatorIs = new System.Windows.Forms.Label();
-            this.ComboBoxSeparatorType = new System.Windows.Forms.ComboBox();
+            this.LabelImportDataSeparator = new System.Windows.Forms.Label();
+            this.ComboBoxImportSeparatorType = new System.Windows.Forms.ComboBox();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.LanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.LabelLanguagesChoice = new System.Windows.Forms.Label();
@@ -56,9 +56,10 @@ namespace CountAndSortWinFormsAppNetFr4
             this.NumericUpDownIdColumn = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDownNameColumn = new System.Windows.Forms.NumericUpDown();
             this.LabelNameColumn = new System.Windows.Forms.Label();
-            this.LabeldDColumn = new System.Windows.Forms.Label();
-            this.ComboBoxOutputSeparatorType = new System.Windows.Forms.ComboBox();
-            this.LabelExportDataSeparatorIs = new System.Windows.Forms.Label();
+            this.LabelIdColumn = new System.Windows.Forms.Label();
+            this.ComboBoxExportSeparatorType = new System.Windows.Forms.ComboBox();
+            this.LabelExportDataSeparator = new System.Windows.Forms.Label();
+            this.DataStructureSeparatorToolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownPointsColumn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownIdColumn)).BeginInit();
@@ -124,7 +125,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // ButtonSelectOutputFolder
             // 
             this.ButtonSelectOutputFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.ButtonSelectOutputFolder.Location = new System.Drawing.Point(604, 11);
+            this.ButtonSelectOutputFolder.Location = new System.Drawing.Point(566, 10);
             this.ButtonSelectOutputFolder.Name = "ButtonSelectOutputFolder";
             this.ButtonSelectOutputFolder.Size = new System.Drawing.Size(173, 52);
             this.ButtonSelectOutputFolder.TabIndex = 8;
@@ -138,7 +139,7 @@ namespace CountAndSortWinFormsAppNetFr4
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxSelectOutputFolder.Location = new System.Drawing.Point(783, 22);
             this.TextBoxSelectOutputFolder.Name = "TextBoxSelectOutputFolder";
-            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(659, 27);
+            this.TextBoxSelectOutputFolder.Size = new System.Drawing.Size(642, 27);
             this.TextBoxSelectOutputFolder.TabIndex = 9;
             this.TextBoxSelectOutputFolder.Text = " ";
             // 
@@ -163,7 +164,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ListViewShowPointsValues.Location = new System.Drawing.Point(1211, 219);
             this.ListViewShowPointsValues.Margin = new System.Windows.Forms.Padding(5);
             this.ListViewShowPointsValues.Name = "ListViewShowPointsValues";
-            this.ListViewShowPointsValues.Size = new System.Drawing.Size(534, 675);
+            this.ListViewShowPointsValues.Size = new System.Drawing.Size(406, 676);
             this.ListViewShowPointsValues.TabIndex = 12;
             this.ListViewShowPointsValues.TileSize = new System.Drawing.Size(250, 44);
             this.ListViewShowPointsValues.UseCompatibleStateImageBehavior = false;
@@ -189,8 +190,6 @@ namespace CountAndSortWinFormsAppNetFr4
             // 
             // DataGridPreview
             // 
-            this.DataGridPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.DataGridPreview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DataGridPreview.Location = new System.Drawing.Point(12, 220);
             this.DataGridPreview.Name = "DataGridPreview";
@@ -208,31 +207,31 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSelectAll.UseVisualStyleBackColor = true;
             this.CheckBoxSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxSelectAll_CheckedChanged);
             // 
-            // LabelDataStructureSeparatorIs
+            // LabelImportDataSeparator
             // 
-            this.LabelDataStructureSeparatorIs.AutoSize = true;
-            this.LabelDataStructureSeparatorIs.Location = new System.Drawing.Point(994, 95);
-            this.LabelDataStructureSeparatorIs.Name = "LabelDataStructureSeparatorIs";
-            this.LabelDataStructureSeparatorIs.Size = new System.Drawing.Size(289, 22);
-            this.LabelDataStructureSeparatorIs.TabIndex = 18;
-            this.LabelDataStructureSeparatorIs.Text = "Oddeľovač stĺpcov tabuľky je znak:";
+            this.LabelImportDataSeparator.AutoSize = true;
+            this.LabelImportDataSeparator.Location = new System.Drawing.Point(994, 95);
+            this.LabelImportDataSeparator.Name = "LabelImportDataSeparator";
+            this.LabelImportDataSeparator.Size = new System.Drawing.Size(289, 22);
+            this.LabelImportDataSeparator.TabIndex = 18;
+            this.LabelImportDataSeparator.Text = "Oddeľovač stĺpcov tabuľky je znak:";
             // 
-            // ComboBoxSeparatorType
+            // ComboBoxImportSeparatorType
             // 
-            this.ComboBoxSeparatorType.AutoCompleteCustomSource.AddRange(new string[] {
+            this.ComboBoxImportSeparatorType.AutoCompleteCustomSource.AddRange(new string[] {
             "\"|\"",
             "\";\"",
             "\",\"",
             "\".\"",
             "\" \""});
-            this.ComboBoxSeparatorType.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComboBoxSeparatorType.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.ComboBoxSeparatorType.FormattingEnabled = true;
-            this.ComboBoxSeparatorType.Location = new System.Drawing.Point(1289, 91);
-            this.ComboBoxSeparatorType.Name = "ComboBoxSeparatorType";
-            this.ComboBoxSeparatorType.Size = new System.Drawing.Size(54, 31);
-            this.ComboBoxSeparatorType.TabIndex = 19;
-            this.ComboBoxSeparatorType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSeparatorType_SelectedIndexChanged);
+            this.ComboBoxImportSeparatorType.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComboBoxImportSeparatorType.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ComboBoxImportSeparatorType.FormattingEnabled = true;
+            this.ComboBoxImportSeparatorType.Location = new System.Drawing.Point(1289, 91);
+            this.ComboBoxImportSeparatorType.Name = "ComboBoxImportSeparatorType";
+            this.ComboBoxImportSeparatorType.Size = new System.Drawing.Size(54, 31);
+            this.ComboBoxImportSeparatorType.TabIndex = 19;
+            this.ComboBoxImportSeparatorType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxImportSeparatorType_SelectedIndexChanged);
             // 
             // LanguageComboBox
             // 
@@ -263,18 +262,18 @@ namespace CountAndSortWinFormsAppNetFr4
             // 
             this.LabelLanguagesChoice.AutoSize = true;
             this.LabelLanguagesChoice.Dock = System.Windows.Forms.DockStyle.Right;
-            this.LabelLanguagesChoice.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LabelLanguagesChoice.Location = new System.Drawing.Point(1565, 0);
+            this.LabelLanguagesChoice.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.LabelLanguagesChoice.Location = new System.Drawing.Point(1567, 0);
             this.LabelLanguagesChoice.Margin = new System.Windows.Forms.Padding(0);
             this.LabelLanguagesChoice.Name = "LabelLanguagesChoice";
-            this.LabelLanguagesChoice.Size = new System.Drawing.Size(48, 33);
+            this.LabelLanguagesChoice.Size = new System.Drawing.Size(46, 31);
             this.LabelLanguagesChoice.TabIndex = 21;
             this.LabelLanguagesChoice.Text = "🌐";
             // 
             // LabelPointsColumn
             // 
             this.LabelPointsColumn.AutoSize = true;
-            this.LabelPointsColumn.Location = new System.Drawing.Point(572, 171);
+            this.LabelPointsColumn.Location = new System.Drawing.Point(562, 171);
             this.LabelPointsColumn.Name = "LabelPointsColumn";
             this.LabelPointsColumn.Size = new System.Drawing.Size(185, 22);
             this.LabelPointsColumn.TabIndex = 22;
@@ -334,7 +333,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.NumericUpDownIdColumn.TabIndex = 24;
             this.NumericUpDownIdColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.NumericUpDownIdColumn.Value = new decimal(new int[] {
-            11,
+            3,
             0,
             0,
             0});
@@ -359,7 +358,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.NumericUpDownNameColumn.TabIndex = 25;
             this.NumericUpDownNameColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.NumericUpDownNameColumn.Value = new decimal(new int[] {
-            11,
+            4,
             0,
             0,
             0});
@@ -367,53 +366,58 @@ namespace CountAndSortWinFormsAppNetFr4
             // LabelNameColumn
             // 
             this.LabelNameColumn.AutoSize = true;
-            this.LabelNameColumn.Location = new System.Drawing.Point(572, 95);
+            this.LabelNameColumn.Location = new System.Drawing.Point(562, 95);
             this.LabelNameColumn.Name = "LabelNameColumn";
-            this.LabelNameColumn.Size = new System.Drawing.Size(185, 22);
+            this.LabelNameColumn.Size = new System.Drawing.Size(195, 22);
             this.LabelNameColumn.TabIndex = 26;
-            this.LabelNameColumn.Text = "Stĺpec s bodmi (číslo):";
+            this.LabelNameColumn.Text = "Stĺpec s menom (číslo):";
             this.LabelNameColumn.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // LabeldDColumn
+            // LabelIdColumn
             // 
-            this.LabeldDColumn.AutoSize = true;
-            this.LabeldDColumn.Location = new System.Drawing.Point(572, 133);
-            this.LabeldDColumn.Name = "LabeldDColumn";
-            this.LabeldDColumn.Size = new System.Drawing.Size(185, 22);
-            this.LabeldDColumn.TabIndex = 27;
-            this.LabeldDColumn.Text = "Stĺpec s bodmi (číslo):";
-            this.LabeldDColumn.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.LabelIdColumn.AutoSize = true;
+            this.LabelIdColumn.Location = new System.Drawing.Point(562, 133);
+            this.LabelIdColumn.Name = "LabelIdColumn";
+            this.LabelIdColumn.Size = new System.Drawing.Size(206, 22);
+            this.LabelIdColumn.TabIndex = 27;
+            this.LabelIdColumn.Text = "Stĺpec s Id čislom (číslo):";
+            this.LabelIdColumn.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // ComboBoxOutputSeparatorType
+            // ComboBoxExportSeparatorType
             // 
-            this.ComboBoxOutputSeparatorType.AutoCompleteCustomSource.AddRange(new string[] {
+            this.ComboBoxExportSeparatorType.AutoCompleteCustomSource.AddRange(new string[] {
             "\"|\"",
             "\";\"",
             "\",\"",
             "\".\"",
             "\" \""});
-            this.ComboBoxOutputSeparatorType.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ComboBoxOutputSeparatorType.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.ComboBoxOutputSeparatorType.FormattingEnabled = true;
-            this.ComboBoxOutputSeparatorType.Items.AddRange(new object[] {
+            this.ComboBoxExportSeparatorType.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ComboBoxExportSeparatorType.Font = new System.Drawing.Font("Roboto", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ComboBoxExportSeparatorType.FormattingEnabled = true;
+            this.ComboBoxExportSeparatorType.Items.AddRange(new object[] {
             "|",
             ";",
             ",",
             ".",
             ""});
-            this.ComboBoxOutputSeparatorType.Location = new System.Drawing.Point(1289, 54);
-            this.ComboBoxOutputSeparatorType.Name = "ComboBoxOutputSeparatorType";
-            this.ComboBoxOutputSeparatorType.Size = new System.Drawing.Size(54, 31);
-            this.ComboBoxOutputSeparatorType.TabIndex = 28;
+            this.ComboBoxExportSeparatorType.Location = new System.Drawing.Point(1289, 54);
+            this.ComboBoxExportSeparatorType.Name = "ComboBoxExportSeparatorType";
+            this.ComboBoxExportSeparatorType.Size = new System.Drawing.Size(54, 31);
+            this.ComboBoxExportSeparatorType.TabIndex = 28;
             // 
-            // LabelExportDataSeparatorIs
+            // LabelExportDataSeparator
             // 
-            this.LabelExportDataSeparatorIs.AutoSize = true;
-            this.LabelExportDataSeparatorIs.Location = new System.Drawing.Point(994, 59);
-            this.LabelExportDataSeparatorIs.Name = "LabelExportDataSeparatorIs";
-            this.LabelExportDataSeparatorIs.Size = new System.Drawing.Size(243, 22);
-            this.LabelExportDataSeparatorIs.TabIndex = 29;
-            this.LabelExportDataSeparatorIs.Text = "Oddeľovač na export súboru:";
+            this.LabelExportDataSeparator.AutoSize = true;
+            this.LabelExportDataSeparator.Location = new System.Drawing.Point(994, 59);
+            this.LabelExportDataSeparator.Name = "LabelExportDataSeparator";
+            this.LabelExportDataSeparator.Size = new System.Drawing.Size(243, 22);
+            this.LabelExportDataSeparator.TabIndex = 29;
+            this.LabelExportDataSeparator.Text = "Oddeľovač na export súboru:";
+            // 
+            // DataStructureSeparatorToolTip
+            // 
+            this.DataStructureSeparatorToolTip.ShowAlways = true;
+            this.DataStructureSeparatorToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // SelectFileForm
             // 
@@ -421,9 +425,9 @@ namespace CountAndSortWinFormsAppNetFr4
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1757, 906);
-            this.Controls.Add(this.LabelExportDataSeparatorIs);
-            this.Controls.Add(this.ComboBoxOutputSeparatorType);
-            this.Controls.Add(this.LabeldDColumn);
+            this.Controls.Add(this.LabelExportDataSeparator);
+            this.Controls.Add(this.ComboBoxExportSeparatorType);
+            this.Controls.Add(this.LabelIdColumn);
             this.Controls.Add(this.LabelNameColumn);
             this.Controls.Add(this.NumericUpDownNameColumn);
             this.Controls.Add(this.NumericUpDownIdColumn);
@@ -431,8 +435,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Controls.Add(this.LabelPointsColumn);
             this.Controls.Add(this.LabelLanguagesChoice);
             this.Controls.Add(this.LanguageComboBox);
-            this.Controls.Add(this.ComboBoxSeparatorType);
-            this.Controls.Add(this.LabelDataStructureSeparatorIs);
+            this.Controls.Add(this.ComboBoxImportSeparatorType);
+            this.Controls.Add(this.LabelImportDataSeparator);
             this.Controls.Add(this.CheckBoxSelectAll);
             this.Controls.Add(this.DataGridPreview);
             this.Controls.Add(this.LabelTotalPoints);
@@ -476,8 +480,8 @@ namespace CountAndSortWinFormsAppNetFr4
         private System.Windows.Forms.Label LabelTotalPoints;
         private DataGridView DataGridPreview;
         private CheckBox CheckBoxSelectAll;
-        private Label LabelDataStructureSeparatorIs;
-        private ComboBox ComboBoxSeparatorType;
+        private Label LabelImportDataSeparator;
+        private ComboBox ComboBoxImportSeparatorType;
         private ComboBox LanguageComboBox;
         private ToolTip LanguageToolTip;
         private Label LabelLanguagesChoice;
@@ -487,9 +491,10 @@ namespace CountAndSortWinFormsAppNetFr4
         private NumericUpDown NumericUpDownIdColumn;
         private NumericUpDown NumericUpDownNameColumn;
         private Label LabelNameColumn;
-        private Label LabeldDColumn;
-        private ComboBox ComboBoxOutputSeparatorType;
-        private Label LabelExportDataSeparatorIs;
+        private Label LabelIdColumn;
+        private ComboBox ComboBoxExportSeparatorType;
+        private Label LabelExportDataSeparator;
+        private ToolTip DataStructureSeparatorToolTip;
     }
 }
 

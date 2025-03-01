@@ -141,8 +141,8 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Сортувати за іменем</value>
   </data>
-  <data name="ColumnToCountToolTip" xml:space="preserve">
-    <value>Тут ви встановлюєте, який стовпець потрібно обчислити.</value>
+  <data name="DataStructureSeparatorToolTip" xml:space="preserve">
+    <value>Роздільники для відображення даних у таблиці.</value>
   </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Огляд папки</value>
@@ -177,14 +177,17 @@
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Всього балів:</value>
   </data>
-  <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
-    <value>Роздільник стовпців таблиці:</value>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Тут ви вказуєте, до якого стовпця відображеної таблиці бали мають підраховуватися.</value>
   </data>
   <data name="LabelFileCount" xml:space="preserve">
     <value>Кількість файлів:</value>
   </data>
+  <data name="LabelNameColumn" xml:space="preserve">
+    <value>Колонка "назва" (число)</value>
+  </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Колонка балів (число):</value>
+    <value>Колонка "балів" (число)</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Загальна сума:</value>
@@ -256,5 +259,95 @@
   </data>
   <data name="MessageWarning" xml:space="preserve">
     <value>УВАГА</value>
+  </data>
+  <data name="LabelIdColumn" xml:space="preserve">
+    <value>Колонка "Ідентифікатор"</value>
+  </data>
+  <data name="LabelExportDataSeparator" xml:space="preserve">
+    <value>Роздільник експорту файлу</value>
+  </data>
+  <data name="LabelImportDataSeparator" xml:space="preserve">
+    <value>Розділ. для імпортованих даних</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Налаштування</value>
+  </data>
+  <data name="BatchProcessingResultsTitle" xml:space="preserve">
+    <value>РЕЗУЛЬТАТИ ПАКЕТНОЇ ОБРОБКИ ФАЙЛІВ</value>
+  </data>
+  <data name="DateTimeLabel" xml:space="preserve">
+    <value>Дата і час:</value>
+  </data>
+  <data name="ProcessedFilesCount" xml:space="preserve">
+    <value>Оброблено: {0} з {1} файлів</value>
+  </data>
+  <data name="TotalPointsBefore" xml:space="preserve">
+    <value>Загальна кількість балів до: {0}</value>
+  </data>
+  <data name="TotalPointsAfter" xml:space="preserve">
+    <value>Загальна кількість балів після: {0}</value>
+  </data>
+  <data name="PointsDifference" xml:space="preserve">
+    <value>Різниця балів: {0}</value>
+  </data>
+  <data name="DetailedResultsHeader" xml:space="preserve">
+    <value>ДЕТАЛЬНІ РЕЗУЛЬТАТИ ДЛЯ КОЖНОГО ФАЙЛУ</value>
+  </data>
+  <data name="SuccessfulFilesHeader" xml:space="preserve">
+    <value>УСПІШНО ОБРОБЛЕНІ ФАЙЛИ</value>
+  </data>
+  <data name="OutputFileLabel" xml:space="preserve">
+    <value>Вихідний файл:</value>
+  </data>
+  <data name="PointsBeforeLabel" xml:space="preserve">
+    <value>Кількість балів до:</value>
+  </data>
+  <data name="PointsAfterLabel" xml:space="preserve">
+    <value>Кількість балів після:</value>
+  </data>
+  <data name="PointsDifferenceLabel" xml:space="preserve">
+    <value>Різниця балів:</value>
+  </data>
+  <data name="RowsBeforeLabel" xml:space="preserve">
+    <value>Кількість рядків до:</value>
+  </data>
+  <data name="RowsAfterLabel" xml:space="preserve">
+    <value>Кількість рядків після:</value>
+  </data>
+  <data name="RemovedDuplicatesLabel" xml:space="preserve">
+    <value>Видалені дублікати:</value>
+  </data>
+  <data name="FailedFilesHeader" xml:space="preserve">
+    <value>НЕОБРОБЛЕНІ ФАЙЛИ</value>
+  </data>
+  <data name="FailureReasonLabel" xml:space="preserve">
+    <value>Причина:</value>
+  </data>
+  <data name="ResultsSavedSuccessfully" xml:space="preserve">
+    <value>Результати успішно збережені у файл:\n{0}</value>
+  </data>
+  <data name="ErrorSavingResults" xml:space="preserve">
+    <value>Помилка при збереженні результатів: {0}</value>
+  </data>
+  <data name="ProcessingComplete" xml:space="preserve">
+    <value>Обробка файлів завершена.</value>
+  </data>
+  <data name="AskToSaveResults" xml:space="preserve">
+    <value>Бажаєте зберегти детальні результати у файл?</value>
+  </data>
+  <data name="MessageDoYouWantSaveDetailedResult" xml:space="preserve">
+    <value>Бажаєте зберегти детальний результат у файл?</value>
+  </data>
+  <data name="AFiles" xml:space="preserve">
+    <value>файли</value>
+  </data>
+  <data name="AndOther" xml:space="preserve">
+    <value>- ... та інші </value>
+  </data>
+  <data name="MessageDoYouWantProcessAgain" xml:space="preserve">
+    <value>Ви хочете обробити ці файли знову?</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>від</value>
   </data>
 </root>

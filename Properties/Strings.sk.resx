@@ -141,8 +141,8 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>zoradiť podľa mena</value>
   </data>
-  <data name="ColumnToCountToolTip" xml:space="preserve">
-    <value>Tu nastavíte, ktorý stĺpec sa má počítať.</value>
+  <data name="DataStructureSeparatorToolTip" xml:space="preserve">
+    <value>Oddeľovače pre zobrazenie údajov v tabuľke.</value>
   </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Vyhľadanie priečinka</value>
@@ -177,14 +177,17 @@
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Celkový počet bodov:</value>
   </data>
-  <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
-    <value>Oddeľovač stĺpcov tabuľky je znak:</value>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Tu nastavíte, v ktorom stĺpci zobrazenej tabulľky sa majú spočítať body. </value>
   </data>
   <data name="LabelFileCount" xml:space="preserve">
     <value>Počet súborov:</value>
   </data>
+  <data name="LabelNameColumn" xml:space="preserve">
+    <value>Stĺpec "Meno" (číslo)</value>
+  </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Stĺpec s bodmi (číslo):</value>
+    <value>Stĺpec "Body" (číslo)</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Celkový súčet:</value>
@@ -256,5 +259,95 @@ Body po spracovaní: {5}</value>
   </data>
   <data name="MessageWarning" xml:space="preserve">
     <value>Varovanie</value>
+  </data>
+  <data name="LabelIdColumn" xml:space="preserve">
+    <value>Stĺpec "Identifikátor" (č.)</value>
+  </data>
+  <data name="LabelExportDataSeparator" xml:space="preserve">
+    <value>Oddeľovač pre export súboru</value>
+  </data>
+  <data name="LabelImportDataSeparator" xml:space="preserve">
+    <value>Oddeľovač pre importované údaje</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Nastavenie</value>
+  </data>
+  <data name="BatchProcessingResultsTitle" xml:space="preserve">
+    <value>VÝSLEDKY DÁVKOVÉHO SPRACOVANIA SÚBOROV</value>
+  </data>
+  <data name="DateTimeLabel" xml:space="preserve">
+    <value>Dátum a čas:</value>
+  </data>
+  <data name="ProcessedFilesCount" xml:space="preserve">
+    <value>Spracovaných: {0} z {1} súborov</value>
+  </data>
+  <data name="TotalPointsBefore" xml:space="preserve">
+    <value>Celkový počet bodov pred: {0}</value>
+  </data>
+  <data name="TotalPointsAfter" xml:space="preserve">
+    <value>Celkový počet bodov po: {0}</value>
+  </data>
+  <data name="PointsDifference" xml:space="preserve">
+    <value>Rozdiel bodov: {0}</value>
+  </data>
+  <data name="DetailedResultsHeader" xml:space="preserve">
+    <value>PODROBNÉ VÝSLEDKY PRE KAŽDÝ SÚBOR</value>
+  </data>
+  <data name="SuccessfulFilesHeader" xml:space="preserve">
+    <value>ÚSPEŠNE SPRACOVANÉ SÚBORY</value>
+  </data>
+  <data name="OutputFileLabel" xml:space="preserve">
+    <value>Výstupný súbor:</value>
+  </data>
+  <data name="PointsBeforeLabel" xml:space="preserve">
+    <value>Počet bodov pred:</value>
+  </data>
+  <data name="PointsAfterLabel" xml:space="preserve">
+    <value>Počet bodov po:</value>
+  </data>
+  <data name="PointsDifferenceLabel" xml:space="preserve">
+    <value>Rozdiel bodov:</value>
+  </data>
+  <data name="RowsBeforeLabel" xml:space="preserve">
+    <value>Počet riadkov pred:</value>
+  </data>
+  <data name="RowsAfterLabel" xml:space="preserve">
+    <value>Počet riadkov po:</value>
+  </data>
+  <data name="RemovedDuplicatesLabel" xml:space="preserve">
+    <value>Odstránené duplicity:</value>
+  </data>
+  <data name="FailedFilesHeader" xml:space="preserve">
+    <value>NESPRACOVANÉ SÚBORY</value>
+  </data>
+  <data name="FailureReasonLabel" xml:space="preserve">
+    <value>Dôvod:</value>
+  </data>
+  <data name="ResultsSavedSuccessfully" xml:space="preserve">
+    <value>Výsledky boli úspešne uložené do súboru:\n{0}</value>
+  </data>
+  <data name="ErrorSavingResults" xml:space="preserve">
+    <value>Chyba pri ukladaní výsledkov: {0}</value>
+  </data>
+  <data name="ProcessingComplete" xml:space="preserve">
+    <value>Spracovanie súboru je dokončené.</value>
+  </data>
+  <data name="AskToSaveResults" xml:space="preserve">
+    <value>Chcete uložiť podrobné výsledky do súboru?</value>
+  </data>
+  <data name="MessageDoYouWantSaveDetailedResult" xml:space="preserve">
+    <value>Chcete uložiť podrobný výsledok do súboru?</value>
+  </data>
+  <data name="AFiles" xml:space="preserve">
+    <value>súborov</value>
+  </data>
+  <data name="AndOther" xml:space="preserve">
+    <value>- ... a ďalších </value>
+  </data>
+  <data name="MessageDoYouWantProcessAgain" xml:space="preserve">
+    <value>Chcete tieto súbory spracovať znova?</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>z</value>
   </data>
 </root>

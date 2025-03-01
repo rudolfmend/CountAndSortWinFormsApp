@@ -141,8 +141,8 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Rendezés név szerint</value>
   </data>
-  <data name="ColumnToCountToolTip" xml:space="preserve">
-    <value>Itt állíthatja be, hogy melyik oszlopot kell kiszámítani.</value>
+  <data name="DataStructureSeparatorToolTip" xml:space="preserve">
+    <value>Elválasztók adatok táblázatban való megjelenítéséhez.</value>
   </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Tallózás a mappában</value>
@@ -177,14 +177,17 @@
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Összes pont:</value>
   </data>
-  <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
-    <value>Táblázat oszlop elválasztó jel:</value>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Itt állíthatja be, hogy a megjelenített táblázat melyik oszlopába kell számolni a pontokat.</value>
   </data>
   <data name="LabelFileCount" xml:space="preserve">
     <value>Fájlok száma:</value>
   </data>
+  <data name="LabelNameColumn" xml:space="preserve">
+    <value>"Név" oszlop (szám)</value>
+  </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Pontok oszlopa (szám):</value>
+    <value>"Pontok" oszlop (szám)</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Teljes összeg:</value>
@@ -255,5 +258,95 @@ Pontok a feldolgozás után: {5}</value>
   </data>
   <data name="MessageWarning" xml:space="preserve">
     <value>Figyelmeztetés</value>
+  </data>
+  <data name="LabelIdColumn" xml:space="preserve">
+    <value>"Azonosító" oszlop (szám)</value>
+  </data>
+  <data name="LabelExportDataSeparator" xml:space="preserve">
+    <value>Fájlexport határoló</value>
+  </data>
+  <data name="LabelImportDataSeparator" xml:space="preserve">
+    <value>Elválasztó az importált adatokhoz</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Beállítások elemre</value>
+  </data>
+  <data name="BatchProcessingResultsTitle" xml:space="preserve">
+    <value>KÖTEGELT FÁJLFELDOLGOZÁS EREDMÉNYEI</value>
+  </data>
+  <data name="DateTimeLabel" xml:space="preserve">
+    <value>Dátum és idő:</value>
+  </data>
+  <data name="ProcessedFilesCount" xml:space="preserve">
+    <value>Feldolgozva: {0} / {1} fájl</value>
+  </data>
+  <data name="TotalPointsBefore" xml:space="preserve">
+    <value>Összes pont előtte: {0}</value>
+  </data>
+  <data name="TotalPointsAfter" xml:space="preserve">
+    <value>Összes pont utána: {0}</value>
+  </data>
+  <data name="PointsDifference" xml:space="preserve">
+    <value>Pontkülönbség: {0}</value>
+  </data>
+  <data name="DetailedResultsHeader" xml:space="preserve">
+    <value>RÉSZLETES EREDMÉNYEK MINDEN FÁJLHOZ</value>
+  </data>
+  <data name="SuccessfulFilesHeader" xml:space="preserve">
+    <value>SIKERESEN FELDOLGOZOTT FÁJLOK</value>
+  </data>
+  <data name="OutputFileLabel" xml:space="preserve">
+    <value>Kimeneti fájl:</value>
+  </data>
+  <data name="PointsBeforeLabel" xml:space="preserve">
+    <value>Pontok előtte:</value>
+  </data>
+  <data name="PointsAfterLabel" xml:space="preserve">
+    <value>Pontok utána:</value>
+  </data>
+  <data name="PointsDifferenceLabel" xml:space="preserve">
+    <value>Pontkülönbség:</value>
+  </data>
+  <data name="RowsBeforeLabel" xml:space="preserve">
+    <value>Sorok száma előtte:</value>
+  </data>
+  <data name="RowsAfterLabel" xml:space="preserve">
+    <value>Sorok száma utána:</value>
+  </data>
+  <data name="RemovedDuplicatesLabel" xml:space="preserve">
+    <value>Eltávolított duplikátumok:</value>
+  </data>
+  <data name="FailedFilesHeader" xml:space="preserve">
+    <value>NEM FELDOLGOZOTT FÁJLOK</value>
+  </data>
+  <data name="FailureReasonLabel" xml:space="preserve">
+    <value>Ok:</value>
+  </data>
+  <data name="ResultsSavedSuccessfully" xml:space="preserve">
+    <value>Az eredmények sikeresen mentve a következő fájlba:\n{0}</value>
+  </data>
+  <data name="ErrorSavingResults" xml:space="preserve">
+    <value>Hiba az eredmények mentésekor: {0}</value>
+  </data>
+  <data name="ProcessingComplete" xml:space="preserve">
+    <value>Fájlfeldolgozás befejezve.</value>
+  </data>
+  <data name="AskToSaveResults" xml:space="preserve">
+    <value>Szeretné menteni a részletes eredményeket fájlba?</value>
+  </data>
+  <data name="MessageDoYouWantSaveDetailedResult" xml:space="preserve">
+    <value>Fájlba szeretné menteni a részletes eredményt?</value>
+  </data>
+  <data name="AFiles" xml:space="preserve">
+    <value>fájlokat</value>
+  </data>
+  <data name="AndOther" xml:space="preserve">
+    <value>- ... és egyéb </value>
+  </data>
+  <data name="MessageDoYouWantProcessAgain" xml:space="preserve">
+    <value>Szeretné újra feldolgozni ezeket a fájlokat?</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>alapján</value>
   </data>
 </root>

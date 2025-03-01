@@ -61,6 +61,42 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to files.
+        /// </summary>
+        internal static string AFiles {
+            get {
+                return ResourceManager.GetString("AFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to - ... and other .
+        /// </summary>
+        internal static string AndOther {
+            get {
+                return ResourceManager.GetString("AndOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to save detailed results to a file?.
+        /// </summary>
+        internal static string AskToSaveResults {
+            get {
+                return ResourceManager.GetString("AskToSaveResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BATCH FILE PROCESSING RESULTS.
+        /// </summary>
+        internal static string BatchProcessingResultsTitle {
+            get {
+                return ResourceManager.GetString("BatchProcessingResultsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Process Data.
         /// </summary>
         internal static string ButtonProcessData {
@@ -133,11 +169,38 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Here you set which column needs to be calculated..
+        ///   Looks up a localized string similar to Here you set which column of the displayed table the points should be counted in..
         /// </summary>
         internal static string ColumnToCountToolTip {
             get {
                 return ResourceManager.GetString("ColumnToCountToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Separators for displaying data in a table..
+        /// </summary>
+        internal static string DataStructureSeparatorToolTip {
+            get {
+                return ResourceManager.GetString("DataStructureSeparatorToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date and time:.
+        /// </summary>
+        internal static string DateTimeLabel {
+            get {
+                return ResourceManager.GetString("DateTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DETAILED RESULTS FOR EACH FILE.
+        /// </summary>
+        internal static string DetailedResultsHeader {
+            get {
+                return ResourceManager.GetString("DetailedResultsHeader", resourceCulture);
             }
         }
         
@@ -174,6 +237,42 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string DialogSelectOutputFolder {
             get {
                 return ResourceManager.GetString("DialogSelectOutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error saving results: {0}.
+        /// </summary>
+        internal static string ErrorSavingResults {
+            get {
+                return ResourceManager.GetString("ErrorSavingResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UNPROCESSED FILES.
+        /// </summary>
+        internal static string FailedFilesHeader {
+            get {
+                return ResourceManager.GetString("FailedFilesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reason:.
+        /// </summary>
+        internal static string FailureReasonLabel {
+            get {
+                return ResourceManager.GetString("FailureReasonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to from.
+        /// </summary>
+        internal static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
             }
         }
         
@@ -241,11 +340,11 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Table Column Separator Symbol:.
+        ///   Looks up a localized string similar to File export separator.
         /// </summary>
-        internal static string LabelDataStructureSeparatorIs {
+        internal static string LabelExportDataSeparator {
             get {
-                return ResourceManager.GetString("LabelDataStructureSeparatorIs", resourceCulture);
+                return ResourceManager.GetString("LabelExportDataSeparator", resourceCulture);
             }
         }
         
@@ -259,7 +358,34 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Points column (number):.
+        ///   Looks up a localized string similar to Column &quot;Identificator&quot; (Nr.).
+        /// </summary>
+        internal static string LabelIdColumn {
+            get {
+                return ResourceManager.GetString("LabelIdColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Separator for imported Data.
+        /// </summary>
+        internal static string LabelImportDataSeparator {
+            get {
+                return ResourceManager.GetString("LabelImportDataSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column &quot;Name&quot; (Nr.).
+        /// </summary>
+        internal static string LabelNameColumn {
+            get {
+                return ResourceManager.GetString("LabelNameColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column &quot;Points&quot; (Nr.).
         /// </summary>
         internal static string LabelPointsColumn {
             get {
@@ -309,6 +435,24 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageDone {
             get {
                 return ResourceManager.GetString("MessageDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to process these files again?.
+        /// </summary>
+        internal static string MessageDoYouWantProcessAgain {
+            get {
+                return ResourceManager.GetString("MessageDoYouWantProcessAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to save the detailed result to a file?.
+        /// </summary>
+        internal static string MessageDoYouWantSaveDetailedResult {
+            get {
+                return ResourceManager.GetString("MessageDoYouWantSaveDetailedResult", resourceCulture);
             }
         }
         
@@ -461,6 +605,141 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageWarning {
             get {
                 return ResourceManager.GetString("MessageWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output file:.
+        /// </summary>
+        internal static string OutputFileLabel {
+            get {
+                return ResourceManager.GetString("OutputFileLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points after:.
+        /// </summary>
+        internal static string PointsAfterLabel {
+            get {
+                return ResourceManager.GetString("PointsAfterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points before:.
+        /// </summary>
+        internal static string PointsBeforeLabel {
+            get {
+                return ResourceManager.GetString("PointsBeforeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points difference: {0}.
+        /// </summary>
+        internal static string PointsDifference {
+            get {
+                return ResourceManager.GetString("PointsDifference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points difference:.
+        /// </summary>
+        internal static string PointsDifferenceLabel {
+            get {
+                return ResourceManager.GetString("PointsDifferenceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Processed: {0} of {1} files.
+        /// </summary>
+        internal static string ProcessedFilesCount {
+            get {
+                return ResourceManager.GetString("ProcessedFilesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File processing completed..
+        /// </summary>
+        internal static string ProcessingComplete {
+            get {
+                return ResourceManager.GetString("ProcessingComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed duplicates:.
+        /// </summary>
+        internal static string RemovedDuplicatesLabel {
+            get {
+                return ResourceManager.GetString("RemovedDuplicatesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results were successfully saved to file:\n{0}.
+        /// </summary>
+        internal static string ResultsSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("ResultsSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rows after:.
+        /// </summary>
+        internal static string RowsAfterLabel {
+            get {
+                return ResourceManager.GetString("RowsAfterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rows before:.
+        /// </summary>
+        internal static string RowsBeforeLabel {
+            get {
+                return ResourceManager.GetString("RowsBeforeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SUCCESSFULLY PROCESSED FILES.
+        /// </summary>
+        internal static string SuccessfulFilesHeader {
+            get {
+                return ResourceManager.GetString("SuccessfulFilesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total points after: {0}.
+        /// </summary>
+        internal static string TotalPointsAfter {
+            get {
+                return ResourceManager.GetString("TotalPointsAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total points before: {0}.
+        /// </summary>
+        internal static string TotalPointsBefore {
+            get {
+                return ResourceManager.GetString("TotalPointsBefore", resourceCulture);
             }
         }
     }

@@ -141,8 +141,8 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Sortuj według nazwiska</value>
   </data>
-  <data name="ColumnToCountToolTip" xml:space="preserve">
-    <value>Tutaj ustawiasz, która kolumna ma zostać obliczona.</value>
+  <data name="DataStructureSeparatorToolTip" xml:space="preserve">
+    <value>Separatory służące do wyświetlania danych w tabeli.</value>
   </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Przeglądaj folder</value>
@@ -177,14 +177,17 @@
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Łączna liczba punktów:</value>
   </data>
-  <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
-    <value>Separator kolumn tabeli to znak:</value>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Tutaj ustawiasz, w której kolumnie wyświetlanej tabeli mają być zliczane punkty.</value>
   </data>
   <data name="LabelFileCount" xml:space="preserve">
     <value>Liczba plików:</value>
   </data>
+  <data name="LabelNameColumn" xml:space="preserve">
+    <value>Kolumna „Nazwa” (numer)</value>
+  </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Kolumna punktów (liczba):</value>
+    <value>Kolumna „Punkty” (numer)</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Suma całkowita:</value>
@@ -256,5 +259,95 @@ Punkty po przetworzeniu: {5}</value>
   </data>
   <data name="MessageWarning" xml:space="preserve">
     <value>Ostrzeżenie</value>
+  </data>
+  <data name="LabelIdColumn" xml:space="preserve">
+    <value>Kolumna „Identyfikator”</value>
+  </data>
+  <data name="LabelExportDataSeparator" xml:space="preserve">
+    <value>Ogranicznik eksportu pliku</value>
+  </data>
+  <data name="LabelImportDataSeparator" xml:space="preserve">
+    <value>Ogran. dla importowanych danych</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="BatchProcessingResultsTitle" xml:space="preserve">
+    <value>WYNIKI PRZETWARZANIA WSADOWEGO PLIKÓW</value>
+  </data>
+  <data name="DateTimeLabel" xml:space="preserve">
+    <value>Data i godzina:</value>
+  </data>
+  <data name="ProcessedFilesCount" xml:space="preserve">
+    <value>Przetworzono: {0} z {1} plików</value>
+  </data>
+  <data name="TotalPointsBefore" xml:space="preserve">
+    <value>Całkowita liczba punktów przed: {0}</value>
+  </data>
+  <data name="TotalPointsAfter" xml:space="preserve">
+    <value>Całkowita liczba punktów po: {0}</value>
+  </data>
+  <data name="PointsDifference" xml:space="preserve">
+    <value>Różnica punktów: {0}</value>
+  </data>
+  <data name="DetailedResultsHeader" xml:space="preserve">
+    <value>SZCZEGÓŁOWE WYNIKI DLA KAŻDEGO PLIKU</value>
+  </data>
+  <data name="SuccessfulFilesHeader" xml:space="preserve">
+    <value>POMYŚLNIE PRZETWORZONE PLIKI</value>
+  </data>
+  <data name="OutputFileLabel" xml:space="preserve">
+    <value>Plik wyjściowy:</value>
+  </data>
+  <data name="PointsBeforeLabel" xml:space="preserve">
+    <value>Liczba punktów przed:</value>
+  </data>
+  <data name="PointsAfterLabel" xml:space="preserve">
+    <value>Liczba punktów po:</value>
+  </data>
+  <data name="PointsDifferenceLabel" xml:space="preserve">
+    <value>Różnica punktów:</value>
+  </data>
+  <data name="RowsBeforeLabel" xml:space="preserve">
+    <value>Liczba wierszy przed:</value>
+  </data>
+  <data name="RowsAfterLabel" xml:space="preserve">
+    <value>Liczba wierszy po:</value>
+  </data>
+  <data name="RemovedDuplicatesLabel" xml:space="preserve">
+    <value>Usunięte duplikaty:</value>
+  </data>
+  <data name="FailedFilesHeader" xml:space="preserve">
+    <value>NIEPRZETWORZONE PLIKI</value>
+  </data>
+  <data name="FailureReasonLabel" xml:space="preserve">
+    <value>Powód:</value>
+  </data>
+  <data name="ResultsSavedSuccessfully" xml:space="preserve">
+    <value>Wyniki zostały pomyślnie zapisane do pliku:\n{0}</value>
+  </data>
+  <data name="ErrorSavingResults" xml:space="preserve">
+    <value>Błąd podczas zapisywania wyników: {0}</value>
+  </data>
+  <data name="ProcessingComplete" xml:space="preserve">
+    <value>Przetwarzanie plików zakończone.</value>
+  </data>
+  <data name="AskToSaveResults" xml:space="preserve">
+    <value>Czy chcesz zapisać szczegółowe wyniki do pliku?</value>
+  </data>
+  <data name="MessageDoYouWantSaveDetailedResult" xml:space="preserve">
+    <value>Czy chcesz zapisać szczegółowy wynik do pliku?</value>
+  </data>
+  <data name="AFiles" xml:space="preserve">
+    <value>akta</value>
+  </data>
+  <data name="AndOther" xml:space="preserve">
+    <value>- ... i inne </value>
+  </data>
+  <data name="MessageDoYouWantProcessAgain" xml:space="preserve">
+    <value>Czy chcesz ponownie przetworzyć te pliki?</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>z</value>
   </data>
 </root>

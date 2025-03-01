@@ -141,8 +141,8 @@
   <data name="CheckBoxSortByName" xml:space="preserve">
     <value>Sort by Name</value>
   </data>
-  <data name="ColumnToCountToolTip" xml:space="preserve">
-    <value>Here you set which column needs to be calculated.</value>
+  <data name="DataStructureSeparatorToolTip" xml:space="preserve">
+    <value>Separators for displaying data in a table.</value>
   </data>
   <data name="DialogBrowseFolder" xml:space="preserve">
     <value>Browse Folder</value>
@@ -177,14 +177,17 @@
   <data name="HistoryTotalPoints" xml:space="preserve">
     <value>Total Points:</value>
   </data>
-  <data name="LabelDataStructureSeparatorIs" xml:space="preserve">
-    <value>Table Column Separator Symbol:</value>
+  <data name="ColumnToCountToolTip" xml:space="preserve">
+    <value>Here you set which column of the displayed table the points should be counted in.</value>
   </data>
   <data name="LabelFileCount" xml:space="preserve">
     <value>File Count:</value>
   </data>
+  <data name="LabelNameColumn" xml:space="preserve">
+    <value>Column "Name" (Nr.)</value>
+  </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Points column (number):</value>
+    <value>Column "Points" (Nr.)</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Total Sum:</value>
@@ -257,5 +260,95 @@ Points after processing: {5}</value>
   </data>
   <data name="MessageWarning" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="LabelIdColumn" xml:space="preserve">
+    <value>Column "Identificator" (Nr.)</value>
+  </data>
+  <data name="LabelExportDataSeparator" xml:space="preserve">
+    <value>File export separator</value>
+  </data>
+  <data name="LabelImportDataSeparator" xml:space="preserve">
+    <value>Separator for imported Data</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="BatchProcessingResultsTitle" xml:space="preserve">
+    <value>BATCH FILE PROCESSING RESULTS</value>
+  </data>
+  <data name="DateTimeLabel" xml:space="preserve">
+    <value>Date and time:</value>
+  </data>
+  <data name="ProcessedFilesCount" xml:space="preserve">
+    <value>Processed: {0} of {1} files</value>
+  </data>
+  <data name="TotalPointsBefore" xml:space="preserve">
+    <value>Total points before: {0}</value>
+  </data>
+  <data name="TotalPointsAfter" xml:space="preserve">
+    <value>Total points after: {0}</value>
+  </data>
+  <data name="PointsDifference" xml:space="preserve">
+    <value>Points difference: {0}</value>
+  </data>
+  <data name="DetailedResultsHeader" xml:space="preserve">
+    <value>DETAILED RESULTS FOR EACH FILE</value>
+  </data>
+  <data name="SuccessfulFilesHeader" xml:space="preserve">
+    <value>SUCCESSFULLY PROCESSED FILES</value>
+  </data>
+  <data name="OutputFileLabel" xml:space="preserve">
+    <value>Output file:</value>
+  </data>
+  <data name="PointsBeforeLabel" xml:space="preserve">
+    <value>Points before:</value>
+  </data>
+  <data name="PointsAfterLabel" xml:space="preserve">
+    <value>Points after:</value>
+  </data>
+  <data name="PointsDifferenceLabel" xml:space="preserve">
+    <value>Points difference:</value>
+  </data>
+  <data name="RowsBeforeLabel" xml:space="preserve">
+    <value>Rows before:</value>
+  </data>
+  <data name="RowsAfterLabel" xml:space="preserve">
+    <value>Rows after:</value>
+  </data>
+  <data name="RemovedDuplicatesLabel" xml:space="preserve">
+    <value>Removed duplicates:</value>
+  </data>
+  <data name="FailedFilesHeader" xml:space="preserve">
+    <value>UNPROCESSED FILES</value>
+  </data>
+  <data name="FailureReasonLabel" xml:space="preserve">
+    <value>Reason:</value>
+  </data>
+  <data name="ResultsSavedSuccessfully" xml:space="preserve">
+    <value>Results were successfully saved to file:\n{0}</value>
+  </data>
+  <data name="ErrorSavingResults" xml:space="preserve">
+    <value>Error saving results: {0}</value>
+  </data>
+  <data name="ProcessingComplete" xml:space="preserve">
+    <value>File processing completed.</value>
+  </data>
+  <data name="AskToSaveResults" xml:space="preserve">
+    <value>Do you want to save detailed results to a file?</value>
+  </data>
+  <data name="MessageDoYouWantSaveDetailedResult" xml:space="preserve">
+    <value>Do you want to save the detailed result to a file?</value>
+  </data>
+  <data name="AFiles" xml:space="preserve">
+    <value>files</value>
+  </data>
+  <data name="AndOther" xml:space="preserve">
+    <value>- ... and other </value>
+  </data>
+  <data name="MessageDoYouWantProcessAgain" xml:space="preserve">
+    <value>Do you want to process these files again?</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>from</value>
   </data>
 </root>

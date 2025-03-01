@@ -36,10 +36,10 @@
             // progressBar
             // 
             this.progressBar.BackColor = System.Drawing.SystemColors.Control;
-            this.progressBar.Location = new System.Drawing.Point(20, 50);
-            this.progressBar.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.progressBar.Location = new System.Drawing.Point(15, 50);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(6);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(360, 42);
+            this.progressBar.Size = new System.Drawing.Size(584, 42);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 0;
             this.progressBar.UseWaitCursor = true;
@@ -52,19 +52,20 @@
             this.statusLabel.Size = new System.Drawing.Size(198, 25);
             this.statusLabel.TabIndex = 1;
             this.statusLabel.Text = "Spracovávam súbory...";
+            this.statusLabel.UseWaitCursor = true;
             // 
             // ProgressForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(405, 144);
+            this.ClientSize = new System.Drawing.Size(614, 144);
             this.ControlBox = false;
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.progressBar);
             this.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ProgressForm";
