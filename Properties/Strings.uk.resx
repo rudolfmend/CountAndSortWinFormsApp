@@ -220,7 +220,7 @@
     <value>Вибраний файл не існує.</value>
   </data>
   <data name="MessageHistorySaved" xml:space="preserve">
-    <value>Історія успішно збережена у файл:</value>
+    <value>Історія успішно збережена у файл</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Інформація</value>
@@ -349,5 +349,62 @@
   </data>
   <data name="From" xml:space="preserve">
     <value>від</value>
+  </data>
+  <data name="MessageInfoFileSelection" xml:space="preserve">
+    <value>Інформація про вибір файлу</value>
+  </data>
+  <data name="FileList" xml:space="preserve">
+    <value>Список файлів:</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>вибрані</value>
+  </data>
+  <data name="MessageShowsPreviewAllFilesProcessed" xml:space="preserve">
+    <value>У таблиці показано попередній перегляд першого файлу. Усі файли будуть оброблені після натискання «Обробити дані».</value>
+  </data>
+  <data name="FileProcessing" xml:space="preserve">
+    <value>Обробка файлів</value>
+  </data>
+  <data name="PointsRemoved" xml:space="preserve">
+    <value>балів, видалено</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>рядків</value>
+  </data>
+  <data name="MessageFilesAlreadyBeenProcessed" xml:space="preserve">
+    <value>вибрані файли вже оброблено:</value>
+  </data>
+  <data name="CheckMarkAll" xml:space="preserve">
+    <value>Позначити всіх</value>
+  </data>
+  <data name="UncheckMarkAll" xml:space="preserve">
+    <value>Зніміть позначку з усіх</value>
+  </data>
+  <data name="ProcessSelected" xml:space="preserve">
+    <value>Обробити вибрані</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>скасувати</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>файл</value>
+  </data>
+  <data name="ListViewColumnSize" xml:space="preserve">
+    <value>Розмір</value>
+  </data>
+  <data name="ListViewColumnPath" xml:space="preserve">
+    <value>дорога</value>
+  </data>
+  <data name="TotalFilesSelected" xml:space="preserve">
+    <value>Загальна кількість вибраних файлів:</value>
+  </data>
+  <data name="FileSelection" xml:space="preserve">
+    <value>Вибір файлів для обробки:</value>
+  </data>
+  <data name="FileAccessProblem" xml:space="preserve">
+    <value>проблема доступу до файлу</value>
+  </data>
+  <data name="MessageNoFilesSelected" xml:space="preserve">
+    <value>Файли не вибрано</value>
   </data>
 </root>

@@ -21,7 +21,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             progressBar.Maximum = total;
             progressBar.Value = current;
-            statusLabel.Text = $"Spracovávam súbor {current} z {total}: {fileName}";
+            statusLabel.Text = $"{Properties.Strings.FileProcessing} {current} {Properties.Strings.From} {total}: {fileName}"; // Spracovávam súbor
             this.Update();
         }
     }

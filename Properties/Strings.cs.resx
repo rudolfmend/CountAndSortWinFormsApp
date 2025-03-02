@@ -220,7 +220,7 @@
     <value>Vybraný soubor neexistuje.</value>
   </data>
   <data name="MessageHistorySaved" xml:space="preserve">
-    <value>Historie byla úspěšně uložena do souboru:</value>
+    <value>Historie byla úspěšně uložena do souboru</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Informace</value>
@@ -346,5 +346,62 @@ Body po zpracování: {5}</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>z</value>
+  </data>
+  <data name="MessageInfoFileSelection" xml:space="preserve">
+    <value>Informace o výběru souboru</value>
+  </data>
+  <data name="FileList" xml:space="preserve">
+    <value>Seznam souborů:</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>vybraných</value>
+  </data>
+  <data name="MessageShowsPreviewAllFilesProcessed" xml:space="preserve">
+    <value>Tabulka zobrazuje náhled prvního souboru. Všechny soubory budou zpracovány po kliknutí na "Zpracovat údaje“.</value>
+  </data>
+  <data name="FileProcessing" xml:space="preserve">
+    <value>Zpracování souboru</value>
+  </data>
+  <data name="PointsRemoved" xml:space="preserve">
+    <value>bodů, odstraněných</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>řádků</value>
+  </data>
+  <data name="MessageFilesAlreadyBeenProcessed" xml:space="preserve">
+    <value>vybrané soubory již byly zpracovány:</value>
+  </data>
+  <data name="CheckMarkAll" xml:space="preserve">
+    <value>Označit vše</value>
+  </data>
+  <data name="UncheckMarkAll" xml:space="preserve">
+    <value>Zrušte zaškrtnutí u všech</value>
+  </data>
+  <data name="ProcessSelected" xml:space="preserve">
+    <value>Zpracovat vybrané</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>zrušit</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>soubor</value>
+  </data>
+  <data name="ListViewColumnSize" xml:space="preserve">
+    <value>Velikost</value>
+  </data>
+  <data name="ListViewColumnPath" xml:space="preserve">
+    <value>Cesta</value>
+  </data>
+  <data name="TotalFilesSelected" xml:space="preserve">
+    <value>Celkový počet vybraných souborů:</value>
+  </data>
+  <data name="FileSelection" xml:space="preserve">
+    <value>Výběr souborů ke zpracování:</value>
+  </data>
+  <data name="FileAccessProblem" xml:space="preserve">
+    <value>problém s přístupem k souboru</value>
+  </data>
+  <data name="MessageNoFilesSelected" xml:space="preserve">
+    <value>Nejsou vybrány žádné soubory</value>
   </data>
 </root>

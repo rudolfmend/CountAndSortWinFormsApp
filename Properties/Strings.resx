@@ -220,7 +220,7 @@
     <value>Selected file does not exist.</value>
   </data>
   <data name="MessageHistorySaved" xml:space="preserve">
-    <value>History saved successfully to file:</value>
+    <value>History saved successfully to file</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Information</value>
@@ -350,5 +350,62 @@ Points after processing: {5}</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>from</value>
+  </data>
+  <data name="MessageInfoFileSelection" xml:space="preserve">
+    <value>Information about file selection</value>
+  </data>
+  <data name="FileList" xml:space="preserve">
+    <value>File list:</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>selected</value>
+  </data>
+  <data name="MessageShowsPreviewAllFilesProcessed" xml:space="preserve">
+    <value>The table shows a preview of the first file. All files will be processed after clicking 'Process Data'.</value>
+  </data>
+  <data name="FileProcessing" xml:space="preserve">
+    <value>File processing</value>
+  </data>
+  <data name="PointsRemoved" xml:space="preserve">
+    <value>points, removed</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>lines</value>
+  </data>
+  <data name="MessageFilesAlreadyBeenProcessed" xml:space="preserve">
+    <value>the selected files have already been processed:</value>
+  </data>
+  <data name="CheckMarkAll" xml:space="preserve">
+    <value>Check mark all</value>
+  </data>
+  <data name="UncheckMarkAll" xml:space="preserve">
+    <value>Uncheck mark all</value>
+  </data>
+  <data name="ProcessSelected" xml:space="preserve">
+    <value>Process selected</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>file</value>
+  </data>
+  <data name="ListViewColumnSize" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="ListViewColumnPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="TotalFilesSelected" xml:space="preserve">
+    <value>Total number of files selected:</value>
+  </data>
+  <data name="FileSelection" xml:space="preserve">
+    <value>Selecting files for processing:</value>
+  </data>
+  <data name="FileAccessProblem" xml:space="preserve">
+    <value>file access problem</value>
+  </data>
+  <data name="MessageNoFilesSelected" xml:space="preserve">
+    <value>No files selected</value>
   </data>
 </root>

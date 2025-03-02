@@ -133,6 +133,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to cancel.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove Duplicate Rows.
         /// </summary>
         internal static string CheckBoxRemoveDuplicatesRows {
@@ -165,6 +174,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string CheckBoxSortByName {
             get {
                 return ResourceManager.GetString("CheckBoxSortByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check mark all.
+        /// </summary>
+        internal static string CheckMarkAll {
+            get {
+                return ResourceManager.GetString("CheckMarkAll", resourceCulture);
             }
         }
         
@@ -264,6 +282,51 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string FailureReasonLabel {
             get {
                 return ResourceManager.GetString("FailureReasonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to file.
+        /// </summary>
+        internal static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to file access problem.
+        /// </summary>
+        internal static string FileAccessProblem {
+            get {
+                return ResourceManager.GetString("FileAccessProblem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File list:.
+        /// </summary>
+        internal static string FileList {
+            get {
+                return ResourceManager.GetString("FileList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File processing.
+        /// </summary>
+        internal static string FileProcessing {
+            get {
+                return ResourceManager.GetString("FileProcessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecting files for processing:.
+        /// </summary>
+        internal static string FileSelection {
+            get {
+                return ResourceManager.GetString("FileSelection", resourceCulture);
             }
         }
         
@@ -403,6 +466,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to lines.
+        /// </summary>
+        internal static string Lines {
+            get {
+                return ResourceManager.GetString("Lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         internal static string ListViewColumnDate {
@@ -421,11 +493,29 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path.
+        /// </summary>
+        internal static string ListViewColumnPath {
+            get {
+                return ResourceManager.GetString("ListViewColumnPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Points.
         /// </summary>
         internal static string ListViewColumnPoints {
             get {
                 return ResourceManager.GetString("ListViewColumnPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        internal static string ListViewColumnSize {
+            get {
+                return ResourceManager.GetString("ListViewColumnSize", resourceCulture);
             }
         }
         
@@ -502,7 +592,16 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to History saved successfully to file:.
+        ///   Looks up a localized string similar to the selected files have already been processed:.
+        /// </summary>
+        internal static string MessageFilesAlreadyBeenProcessed {
+            get {
+                return ResourceManager.GetString("MessageFilesAlreadyBeenProcessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History saved successfully to file.
         /// </summary>
         internal static string MessageHistorySaved {
             get {
@@ -516,6 +615,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageInfo {
             get {
                 return ResourceManager.GetString("MessageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information about file selection.
+        /// </summary>
+        internal static string MessageInfoFileSelection {
+            get {
+                return ResourceManager.GetString("MessageInfoFileSelection", resourceCulture);
             }
         }
         
@@ -534,6 +642,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageLanguageChangeError {
             get {
                 return ResourceManager.GetString("MessageLanguageChangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No files selected.
+        /// </summary>
+        internal static string MessageNoFilesSelected {
+            get {
+                return ResourceManager.GetString("MessageNoFilesSelected", resourceCulture);
             }
         }
         
@@ -587,6 +704,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageSelectFile {
             get {
                 return ResourceManager.GetString("MessageSelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The table shows a preview of the first file. All files will be processed after clicking &apos;Process Data&apos;..
+        /// </summary>
+        internal static string MessageShowsPreviewAllFilesProcessed {
+            get {
+                return ResourceManager.GetString("MessageShowsPreviewAllFilesProcessed", resourceCulture);
             }
         }
         
@@ -654,6 +780,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to points, removed.
+        /// </summary>
+        internal static string PointsRemoved {
+            get {
+                return ResourceManager.GetString("PointsRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Processed: {0} of {1} files.
         /// </summary>
         internal static string ProcessedFilesCount {
@@ -668,6 +803,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string ProcessingComplete {
             get {
                 return ResourceManager.GetString("ProcessingComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process selected.
+        /// </summary>
+        internal static string ProcessSelected {
+            get {
+                return ResourceManager.GetString("ProcessSelected", resourceCulture);
             }
         }
         
@@ -708,6 +852,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to selected.
+        /// </summary>
+        internal static string Selected {
+            get {
+                return ResourceManager.GetString("Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string Settings {
@@ -726,6 +879,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total number of files selected:.
+        /// </summary>
+        internal static string TotalFilesSelected {
+            get {
+                return ResourceManager.GetString("TotalFilesSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total points after: {0}.
         /// </summary>
         internal static string TotalPointsAfter {
@@ -740,6 +902,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string TotalPointsBefore {
             get {
                 return ResourceManager.GetString("TotalPointsBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uncheck mark all.
+        /// </summary>
+        internal static string UncheckMarkAll {
+            get {
+                return ResourceManager.GetString("UncheckMarkAll", resourceCulture);
             }
         }
     }

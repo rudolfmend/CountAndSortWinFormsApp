@@ -220,7 +220,7 @@
     <value>A kiválasztott fájl nem létezik.</value>
   </data>
   <data name="MessageHistorySaved" xml:space="preserve">
-    <value>Az előzmények sikeresen mentve a következő fájlba:</value>
+    <value>Az előzmények sikeresen mentve a következő fájlba</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Információ</value>
@@ -348,5 +348,62 @@ Pontok a feldolgozás után: {5}</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>alapján</value>
+  </data>
+  <data name="MessageInfoFileSelection" xml:space="preserve">
+    <value>Információ a fájl kiválasztásáról</value>
+  </data>
+  <data name="FileList" xml:space="preserve">
+    <value>Fájllista:</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>kiválasztott</value>
+  </data>
+  <data name="MessageShowsPreviewAllFilesProcessed" xml:space="preserve">
+    <value>A táblázat az első fájl előnézetét mutatja. Az "Adatok feldolgozása” gombra kattintás után minden fájl feldolgozásra kerül.</value>
+  </data>
+  <data name="FileProcessing" xml:space="preserve">
+    <value>Fájlfeldolgozás</value>
+  </data>
+  <data name="PointsRemoved" xml:space="preserve">
+    <value>pontokat, eltávolították</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>sorok</value>
+  </data>
+  <data name="MessageFilesAlreadyBeenProcessed" xml:space="preserve">
+    <value>a kiválasztott fájlok már feldolgozásra kerültek:</value>
+  </data>
+  <data name="CheckMarkAll" xml:space="preserve">
+    <value>Jelölje meg az összeset</value>
+  </data>
+  <data name="UncheckMarkAll" xml:space="preserve">
+    <value>Törölje az összes kijelölése jelölőnégyzetet</value>
+  </data>
+  <data name="ProcessSelected" xml:space="preserve">
+    <value>A folyamat kiválasztva</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>törölni</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>fájlt</value>
+  </data>
+  <data name="ListViewColumnSize" xml:space="preserve">
+    <value>Méret</value>
+  </data>
+  <data name="ListViewColumnPath" xml:space="preserve">
+    <value>Ösvény</value>
+  </data>
+  <data name="TotalFilesSelected" xml:space="preserve">
+    <value>A kiválasztott fájlok teljes száma:</value>
+  </data>
+  <data name="FileSelection" xml:space="preserve">
+    <value>Fájlok kiválasztása feldolgozásra:</value>
+  </data>
+  <data name="FileAccessProblem" xml:space="preserve">
+    <value>fájl hozzáférési probléma</value>
+  </data>
+  <data name="MessageNoFilesSelected" xml:space="preserve">
+    <value>Nincsenek kiválasztva fájlok</value>
   </data>
 </root>

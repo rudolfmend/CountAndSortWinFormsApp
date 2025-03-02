@@ -324,7 +324,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
                             CheckBoxSelectAll.Checked = false;
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             MessageBox.Show(Properties.Strings.MessageFileError,
                                 Properties.Strings.MessageError,
@@ -348,14 +348,14 @@ namespace CountAndSortWinFormsAppNetFr4
 
             if (selectedFilePaths.Count > 5)
             {
-                filesList.AppendLine($"- ... a ďalších {selectedFilePaths.Count - 5} súborov");
+                filesList.AppendLine($"- {Properties.Strings.AndOther} {selectedFilePaths.Count - 5} {Properties.Strings.AFiles}");  //... a ďalších -- súborov
             }
 
             MessageBox.Show(
-                $"Vybraných {selectedFilePaths.Count} súborov.\n\n" +
-                $"V tabuľke je zobrazený náhľad prvého súboru. Všetky súbory budú spracované po kliknutí na 'Spracovať údaje'.\n\n" +
-                $"Zoznam súborov:\n{filesList}",
-                "Informácia o výbere súborov",
+                $"{Properties.Strings.Selected} {selectedFilePaths.Count} {Properties.Strings.AFiles}.\n\n" +
+                $"{Properties.Strings.MessageShowsPreviewAllFilesProcessed}\n\n" + // V tabuľke je zobrazený náhľad prvého súboru. Všetky súbory budú spracované po kliknutí na 'Spracovať údaje'.
+                $"{Properties.Strings.FileList} \n{filesList}", //$"Zoznam súborov:\n{filesList}",
+                Properties.Strings.MessageInfoFileSelection, // "Informácia o výbere súborov",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
@@ -472,7 +472,7 @@ namespace CountAndSortWinFormsAppNetFr4
             }
 
             // Vytvorenie a zobrazenie progress formulára
-            using (var progressForm = new ProgressForm("Spracovanie súborov"))
+            using (var progressForm = new ProgressForm(Properties.Strings.FileProcessing)) //("Spracovanie súborov"))
             {
                 // Spustenie progress formy
                 progressForm.Show(this);
@@ -760,7 +760,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 for (int i = 0; i < Math.Min(successfulFiles.Count, maxFilesToShow); i++)
                 {
                     var result = successfulFiles[i];
-                    message.AppendLine($"- {result.FileName}: {result.ProcessedPoints:N0} bodov, odstránených {result.RemovedRows} riadkov");
+                    message.AppendLine($"- {result.FileName}: {result.ProcessedPoints:N0} {Properties.Strings.PointsRemoved} {result.RemovedRows} {Properties.Strings.Lines}"); //bodov, odstránených riadkov
                 }
 
                 if (successfulFiles.Count > maxFilesToShow)
@@ -906,7 +906,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             // Pre viac súborov zostavíme zoznam a spýtame sa raz
             var message = new StringBuilder();
-            message.AppendLine($"{alreadyProcessedFiles.Count} {Properties.Strings.From} {filePaths.Count} vybraných súborov už bolo spracovaných:");
+            message.AppendLine($"{alreadyProcessedFiles.Count} {Properties.Strings.From} {filePaths.Count} {Properties.Strings.MessageFilesAlreadyBeenProcessed}");// vybraných súborov už bolo spracovaných:
 
             // Zobraziť prvých 5 súborov v správe
             int showCount = Math.Min(alreadyProcessedFiles.Count, 5);
@@ -1583,6 +1583,22 @@ namespace CountAndSortWinFormsAppNetFr4
             NumericUpDownPointsColumn.Maximum = DataGridPreview.Columns.Count - 1;
 
             ValidatePointsColumn();
+        }
+
+        private void ButtonShowAnalysis_Click(object sender, EventArgs e)
+        {
+            var analyzer = new ClientAnalyzer();
+            var clients = new List<ClientInfo>();
+
+            foreach (var filePath in selectedFilePaths)
+            {
+                clients.AddRange(analyzer.ProcessBatchFile(filePath));
+            }
+
+            var aggregatedClients = analyzer.AggregateClients(clients);
+
+            var analysisForm = new ClientAnalysisForm(aggregatedClients);
+            analysisForm.ShowDialog();
         }
     }
 }

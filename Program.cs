@@ -21,17 +21,17 @@ namespace CountAndSortWinFormsAppNetFr4
 
                 if (!createdNew)
                 {
-                    MessageBox.Show("Aplikácia je už spustená.",
-                        "Upozornenie",
+                    MessageBox.Show("The application is already running.\n\nAplikácia je už spustená.",
+                        "Warning  (Upozornenie)",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     return;
                 }
 
-                if (!CheckDotNetVersion())
+                if (!CheckSystemRequirements())
                 {
-                    MessageBox.Show("Táto aplikácia vyžaduje .NET Framework 4.0 alebo novší.",
-                        "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("This application requires Windows Vista SP2 or later operating system.\n\nTáto aplikácia vyžaduje Windows Vista SP2 alebo novší operačný systém.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -41,8 +41,8 @@ namespace CountAndSortWinFormsAppNetFr4
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Neočakávaná chyba: {ex.Message}",
-                    "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Unexpected error! \n Neočakávaná chyba:\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -54,11 +54,26 @@ namespace CountAndSortWinFormsAppNetFr4
             }
         }
 
-        private static bool CheckDotNetVersion()
+        private static bool CheckSystemRequirements()
         {
             try
             {
-                return Environment.Version.Major >= 4;
+                // Kontrola verzie .NET Framework
+                if (Environment.Version.Major < 4)
+                {
+                    return false;
+                }
+
+                // Kontrola verzie Windows
+                // - Windows Vista = 6.0
+                // - Windows 7 = 6.1
+                // - Windows 8 = 6.2
+                // - Windows 8.1 = 6.3
+                // - Windows 10 = 10.0
+                OperatingSystem os = Environment.OSVersion;
+                Version minimumVersion = new Version(6, 0); // Windows Vista
+
+                return os.Platform == PlatformID.Win32NT && os.Version >= minimumVersion;
             }
             catch
             {

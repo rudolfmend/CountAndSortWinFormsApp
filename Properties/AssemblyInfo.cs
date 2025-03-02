@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Kontrola duplicity a spočítanie bodov dávok do poisťovní")]
+[assembly: AssemblyTitle("CS Data")]
 [assembly: AssemblyDescription("Odstránenie duplicitných riadkov, prečíslovanie poradia záznamov, zoradenie podľa mena, sledovanie histórie spracovaných súborov, zobrazenie štatistík (celkový súčet, počet súborov, priemer), možnosť exportu histórie do textového súboru.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Rudolf Mendzezof Software Development")]
-[assembly: AssemblyProduct("Kontrola duplicity a spočítanie bodov dávok do poisťovní")]
+[assembly: AssemblyProduct("CS Data")]
 [assembly: AssemblyCopyright("Copyright Rudolf Mendzezof©  2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

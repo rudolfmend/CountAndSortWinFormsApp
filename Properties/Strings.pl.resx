@@ -220,7 +220,7 @@
     <value>Wybrany plik nie istnieje.</value>
   </data>
   <data name="MessageHistorySaved" xml:space="preserve">
-    <value>Historia została pomyślnie zapisana do pliku:</value>
+    <value>Historia została pomyślnie zapisana do pliku</value>
   </data>
   <data name="MessageInfo" xml:space="preserve">
     <value>Informacja</value>
@@ -349,5 +349,62 @@ Punkty po przetworzeniu: {5}</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>z</value>
+  </data>
+  <data name="MessageInfoFileSelection" xml:space="preserve">
+    <value>Informacje o wyborze pliku</value>
+  </data>
+  <data name="FileList" xml:space="preserve">
+    <value>Lista plików:</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>wybranych</value>
+  </data>
+  <data name="MessageShowsPreviewAllFilesProcessed" xml:space="preserve">
+    <value>Tabela pokazuje podgląd pierwszego pliku. Wszystkie pliki zostaną przetworzone po kliknięciu „Przetwórz dane”.</value>
+  </data>
+  <data name="FileProcessing" xml:space="preserve">
+    <value>Przetwarzanie plików</value>
+  </data>
+  <data name="PointsRemoved" xml:space="preserve">
+    <value>punktów, usuniętych</value>
+  </data>
+  <data name="Lines" xml:space="preserve">
+    <value>wierszy</value>
+  </data>
+  <data name="MessageFilesAlreadyBeenProcessed" xml:space="preserve">
+    <value>wybrane pliki zostały już przetworzone:</value>
+  </data>
+  <data name="CheckMarkAll" xml:space="preserve">
+    <value>Zaznacz wszystko</value>
+  </data>
+  <data name="UncheckMarkAll" xml:space="preserve">
+    <value>Odznacz wszystkie</value>
+  </data>
+  <data name="ProcessSelected" xml:space="preserve">
+    <value>Przetwórz wybrane</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>anulować</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>plik</value>
+  </data>
+  <data name="ListViewColumnSize" xml:space="preserve">
+    <value>Rozmiar</value>
+  </data>
+  <data name="ListViewColumnPath" xml:space="preserve">
+    <value>Ścieżka</value>
+  </data>
+  <data name="TotalFilesSelected" xml:space="preserve">
+    <value>Łączna liczba wybranych plików:</value>
+  </data>
+  <data name="FileSelection" xml:space="preserve">
+    <value>Wybór plików do przetworzenia:</value>
+  </data>
+  <data name="FileAccessProblem" xml:space="preserve">
+    <value>problem z dostępem do pliku</value>
+  </data>
+  <data name="MessageNoFilesSelected" xml:space="preserve">
+    <value>Nie wybrano plików</value>
   </data>
 </root>

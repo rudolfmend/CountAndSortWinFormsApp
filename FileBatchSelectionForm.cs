@@ -31,7 +31,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
         private void InitializeComponentCustom()
         {
-            this.Text = "Výber súborov na spracovanie";
+            this.Text = $"{Properties.Strings.FileSelection}"; //"Výber súborov na spracovanie";
             this.Size = new System.Drawing.Size(800, 500);
             this.StartPosition = FormStartPosition.CenterParent;
             this.MinimizeBox = false;
@@ -41,7 +41,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // Label pre celkový počet súborov
             lblTotalFiles = new Label
             {
-                Text = $"Celkový počet vybraných súborov: {filePaths.Count}",
+                Text = $"{Properties.Strings.TotalFilesSelected} {filePaths.Count}", //Celkový počet vybraných súborov:
                 Location = new System.Drawing.Point(10, 10),
                 AutoSize = true
             };
@@ -58,14 +58,17 @@ namespace CountAndSortWinFormsAppNetFr4
             };
 
             // Pridanie stĺpcov
-            fileListView.Columns.Add("Súbor", 350);
-            fileListView.Columns.Add("Veľkosť", 100);
-            fileListView.Columns.Add("Cesta", 300);
+            //"Súbor"
+            fileListView.Columns.Add(Properties.Strings.ListViewColumnFile, 350);
+            //"Veľkosť"
+            fileListView.Columns.Add(Properties.Strings.ListViewColumnSize, 100);
+            //"Cesta"
+            fileListView.Columns.Add(Properties.Strings.ListViewColumnPath, 300);
 
             // Tlačidlá
             buttonSelectAll = new Button
             {
-                Text = "Označiť všetko",
+                Text = Properties.Strings.CheckMarkAll, //"Označiť všetko",
                 Location = new System.Drawing.Point(10, 420),
                 Size = new System.Drawing.Size(120, 30)
             };
@@ -73,7 +76,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             buttonUnselectAll = new Button
             {
-                Text = "Odznačiť všetko",
+                Text = Properties.Strings.UncheckMarkAll, //"Odznačiť všetko", 
                 Location = new System.Drawing.Point(140, 420),
                 Size = new System.Drawing.Size(120, 30)
             };
@@ -81,7 +84,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             buttonProcess = new Button
             {
-                Text = "Spracovať vybrané",
+                Text = Properties.Strings.ProcessSelected, //"Spracovať vybrané",
                 Location = new System.Drawing.Point(550, 420),
                 Size = new System.Drawing.Size(120, 30),
                 DialogResult = DialogResult.OK
@@ -90,7 +93,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             buttonCancel = new Button
             {
-                Text = "Zrušiť",
+                Text = Properties.Strings.Cancel, //"Zrušiť",
                 Location = new System.Drawing.Point(680, 420),
                 Size = new System.Drawing.Size(80, 30),
                 DialogResult = DialogResult.Cancel
@@ -129,7 +132,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 {
                     // Ak sa vyskytne problém s prístupom k súboru, stále ho pridáme ale s chybovou správou
                     ListViewItem item = new ListViewItem(Path.GetFileName(filePath));
-                    item.SubItems.Add("Chyba: " + ex.Message);
+                    item.SubItems.Add($"{Properties.Strings.MessageError} {Properties.Strings.FileAccessProblem}  " + ex.Message);//Chyba:
                     item.SubItems.Add(Path.GetDirectoryName(filePath));
                     item.Checked = false;
                     item.Tag = filePath;
@@ -168,7 +171,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private void UpdateSelectedCount()
         {
             int selectedCount = fileListView.CheckedItems.Count;
-            lblTotalFiles.Text = $"Celkový počet vybraných súborov: {filePaths.Count} (označených: {selectedCount})";
+            lblTotalFiles.Text = $"{Properties.Strings.TotalFilesSelected} {filePaths.Count} ({Properties.Strings.Selected}: {selectedCount})"; //Celkový počet vybraných súborov: {filePaths.Count} (označených: {selectedCount})";
 
             // Aktualizácia tlačidla spracovať
             buttonProcess.Enabled = selectedCount > 0;
@@ -188,9 +191,10 @@ namespace CountAndSortWinFormsAppNetFr4
 
             if (SelectedFiles.Count == 0)
             {
-                MessageBox.Show("Nie sú označené žiadne súbory na spracovanie.",
-                    "Upozornenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.DialogResult = DialogResult.None;
+                //MessageBox.Show("Nie sú označené žiadne súbory na spracovanie.",
+                //    "Upozornenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //this.DialogResult = DialogResult.None;
+                MessageBox.Show(Properties.Strings.MessageNoFilesSelected, Properties.Strings.MessageWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

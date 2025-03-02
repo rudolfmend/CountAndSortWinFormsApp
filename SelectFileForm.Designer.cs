@@ -60,6 +60,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ComboBoxExportSeparatorType = new System.Windows.Forms.ComboBox();
             this.LabelExportDataSeparator = new System.Windows.Forms.Label();
             this.DataStructureSeparatorToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ButtonShowAnalysis = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownPointsColumn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownIdColumn)).BeginInit();
@@ -161,10 +162,10 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ListViewShowPointsValues.FullRowSelect = true;
             this.ListViewShowPointsValues.GridLines = true;
             this.ListViewShowPointsValues.HideSelection = false;
-            this.ListViewShowPointsValues.Location = new System.Drawing.Point(1211, 219);
+            this.ListViewShowPointsValues.Location = new System.Drawing.Point(1211, 274);
             this.ListViewShowPointsValues.Margin = new System.Windows.Forms.Padding(5);
             this.ListViewShowPointsValues.Name = "ListViewShowPointsValues";
-            this.ListViewShowPointsValues.Size = new System.Drawing.Size(406, 676);
+            this.ListViewShowPointsValues.Size = new System.Drawing.Size(406, 621);
             this.ListViewShowPointsValues.TabIndex = 12;
             this.ListViewShowPointsValues.TileSize = new System.Drawing.Size(250, 44);
             this.ListViewShowPointsValues.UseCompatibleStateImageBehavior = false;
@@ -191,9 +192,9 @@ namespace CountAndSortWinFormsAppNetFr4
             // DataGridPreview
             // 
             this.DataGridPreview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridPreview.Location = new System.Drawing.Point(12, 220);
+            this.DataGridPreview.Location = new System.Drawing.Point(12, 275);
             this.DataGridPreview.Name = "DataGridPreview";
-            this.DataGridPreview.Size = new System.Drawing.Size(1191, 675);
+            this.DataGridPreview.Size = new System.Drawing.Size(1191, 620);
             this.DataGridPreview.TabIndex = 16;
             // 
             // CheckBoxSelectAll
@@ -419,12 +420,23 @@ namespace CountAndSortWinFormsAppNetFr4
             this.DataStructureSeparatorToolTip.ShowAlways = true;
             this.DataStructureSeparatorToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
+            // ButtonShowAnalysis
+            // 
+            this.ButtonShowAnalysis.Location = new System.Drawing.Point(12, 205);
+            this.ButtonShowAnalysis.Name = "ButtonShowAnalysis";
+            this.ButtonShowAnalysis.Size = new System.Drawing.Size(173, 52);
+            this.ButtonShowAnalysis.TabIndex = 30;
+            this.ButtonShowAnalysis.Text = "Analysis";
+            this.ButtonShowAnalysis.UseVisualStyleBackColor = true;
+            this.ButtonShowAnalysis.Click += new System.EventHandler(this.ButtonShowAnalysis_Click);
+            // 
             // SelectFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1757, 906);
+            this.Controls.Add(this.ButtonShowAnalysis);
             this.Controls.Add(this.LabelExportDataSeparator);
             this.Controls.Add(this.ComboBoxExportSeparatorType);
             this.Controls.Add(this.LabelIdColumn);
@@ -495,6 +507,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private ComboBox ComboBoxExportSeparatorType;
         private Label LabelExportDataSeparator;
         private ToolTip DataStructureSeparatorToolTip;
+        private Button ButtonShowAnalysis;
     }
 }
 
