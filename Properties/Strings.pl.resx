@@ -407,4 +407,13 @@ Punkty po przetworzeniu: {5}</value>
   <data name="MessageNoFilesSelected" xml:space="preserve">
     <value>Nie wybrano plików</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Nie znaleziono pliku:</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Łączna liczba punktów</value>
+  </data>
+  <data name="ViewByPoints" xml:space="preserve">
+    <value>Według punktów</value>
+  </data>
 </root>

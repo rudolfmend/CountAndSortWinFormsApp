@@ -19,7 +19,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 // Kontrola existencie súboru
                 if (!File.Exists(filePath))
                 {
-                    throw new FileNotFoundException($"File not found: {filePath}");
+                    throw new FileNotFoundException($"{Properties.Strings.FileNotFound} {filePath}"); // File not found:
                 }
 
                 string[] lines = File.ReadAllLines(filePath);
@@ -35,7 +35,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 string[] headerParts = headerLine.Split('|');
 
                 // Získanie identifikátora poistovne
-                string insuranceProvider = "2500"; // Predvolená hodnota
+                string insuranceProvider = string.Empty; //- identifikátor poistovne je 4-miestny reťazec ( 2400, 2500, 2700, 25UA)
                 if (headerParts.Length > 4 && !string.IsNullOrEmpty(headerParts[4]))
                 {
                     insuranceProvider = headerParts[4];
@@ -110,8 +110,7 @@ namespace CountAndSortWinFormsAppNetFr4
             }
             catch (Exception ex)
             {
-                // Je dobré tu logovať chybu alebo ju zobraziť užívateľovi
-                System.Diagnostics.Debug.WriteLine($"Error processing file {filePath}: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"{Properties.Strings.MessageProcessingError} {filePath}: {ex.Message}"); // Error processing filee
                 throw; // Preposielame výnimku vyšším vrstvám
             }
 

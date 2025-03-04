@@ -406,4 +406,13 @@ Pontok a feldolgozás után: {5}</value>
   <data name="MessageNoFilesSelected" xml:space="preserve">
     <value>Nincsenek kiválasztva fájlok</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>A fájl nem található:</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Összes pont</value>
+  </data>
+  <data name="ViewByPoints" xml:space="preserve">
+    <value>Pontok szerint</value>
+  </data>
 </root>

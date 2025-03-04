@@ -407,4 +407,13 @@ Punkte nach der Verarbeitung: {5}</value>
   <data name="MessageNoFilesSelected" xml:space="preserve">
     <value>Keine Dateien ausgewählt</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Datei nicht gefunden:</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Gesamtpunktzahl</value>
+  </data>
+  <data name="ViewByPoints" xml:space="preserve">
+    <value>Nach Punkten</value>
+  </data>
 </root>

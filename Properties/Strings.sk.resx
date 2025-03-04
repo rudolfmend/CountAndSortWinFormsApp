@@ -407,4 +407,13 @@ Body po spracovaní: {5}</value>
   <data name="MessageNoFilesSelected" xml:space="preserve">
     <value>Nie sú označené žiadne súbory na spracovanie.</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Súbor nebol nájdený:</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Body celkom</value>
+  </data>
+  <data name="ViewByPoints" xml:space="preserve">
+    <value>Podľa bodov</value>
+  </data>
 </root>

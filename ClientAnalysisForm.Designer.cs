@@ -28,38 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientAnalysisForm));
             this.ViewPanel = new System.Windows.Forms.Panel();
-            this.PointsButton = new System.Windows.Forms.Button();
-            this.ValueButton = new System.Windows.Forms.Button();
-            this.ButtonService = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
+            this.ButtonService = new System.Windows.Forms.Button();
+            this.ValueButton = new System.Windows.Forms.Button();
+            this.PointsButton = new System.Windows.Forms.Button();
             this.ChartPanel = new System.Windows.Forms.Panel();
-            this.BarChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.PieChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.BarChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.DataGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Client = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ServiceCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalPoints = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AveragePointsPerService = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ViewPanel.SuspendLayout();
             this.ChartPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BarChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PieChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BarChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,23 +75,14 @@
             this.ViewPanel.Size = new System.Drawing.Size(1484, 50);
             this.ViewPanel.TabIndex = 0;
             // 
-            // PointsButton
+            // ExportButton
             // 
-            this.PointsButton.Location = new System.Drawing.Point(10, 10);
-            this.PointsButton.Name = "PointsButton";
-            this.PointsButton.Size = new System.Drawing.Size(120, 30);
-            this.PointsButton.TabIndex = 1;
-            this.PointsButton.Text = "View by Points";
-            this.PointsButton.UseVisualStyleBackColor = true;
-            // 
-            // ValueButton
-            // 
-            this.ValueButton.Location = new System.Drawing.Point(140, 10);
-            this.ValueButton.Name = "ValueButton";
-            this.ValueButton.Size = new System.Drawing.Size(120, 30);
-            this.ValueButton.TabIndex = 0;
-            this.ValueButton.Text = "View by Value (€)";
-            this.ValueButton.UseVisualStyleBackColor = true;
+            this.ExportButton.Location = new System.Drawing.Point(894, 10);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(120, 30);
+            this.ExportButton.TabIndex = 2;
+            this.ExportButton.Text = "Export Data";
+            this.ExportButton.UseVisualStyleBackColor = true;
             // 
             // ButtonService
             // 
@@ -102,14 +93,23 @@
             this.ButtonService.Text = "View by Services";
             this.ButtonService.UseVisualStyleBackColor = true;
             // 
-            // ExportButton
+            // ValueButton
             // 
-            this.ExportButton.Location = new System.Drawing.Point(894, 10);
-            this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(120, 30);
-            this.ExportButton.TabIndex = 2;
-            this.ExportButton.Text = "Export Data";
-            this.ExportButton.UseVisualStyleBackColor = true;
+            this.ValueButton.Location = new System.Drawing.Point(140, 10);
+            this.ValueButton.Name = "ValueButton";
+            this.ValueButton.Size = new System.Drawing.Size(120, 30);
+            this.ValueButton.TabIndex = 0;
+            this.ValueButton.Text = "View by Value (€)";
+            this.ValueButton.UseVisualStyleBackColor = true;
+            // 
+            // PointsButton
+            // 
+            this.PointsButton.Location = new System.Drawing.Point(10, 10);
+            this.PointsButton.Name = "PointsButton";
+            this.PointsButton.Size = new System.Drawing.Size(120, 30);
+            this.PointsButton.TabIndex = 1;
+            this.PointsButton.Text = Properties.Strings.ViewByPoints; //"View by Points";
+            this.PointsButton.UseVisualStyleBackColor = true;
             // 
             // ChartPanel
             // 
@@ -121,22 +121,6 @@
             this.ChartPanel.Name = "ChartPanel";
             this.ChartPanel.Size = new System.Drawing.Size(1484, 300);
             this.ChartPanel.TabIndex = 2;
-            // 
-            // BarChart
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.BarChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.BarChart.Legends.Add(legend2);
-            this.BarChart.Location = new System.Drawing.Point(10, 10);
-            this.BarChart.Name = "BarChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.BarChart.Series.Add(series2);
-            this.BarChart.Size = new System.Drawing.Size(500, 280);
-            this.BarChart.TabIndex = 0;
-            this.BarChart.Text = "chart1";
             // 
             // PieChart
             // 
@@ -153,6 +137,22 @@
             this.PieChart.Size = new System.Drawing.Size(500, 280);
             this.PieChart.TabIndex = 1;
             this.PieChart.Text = "chart1";
+            // 
+            // BarChart
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.BarChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.BarChart.Legends.Add(legend2);
+            this.BarChart.Location = new System.Drawing.Point(10, 10);
+            this.BarChart.Name = "BarChart";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.BarChart.Series.Add(series2);
+            this.BarChart.Size = new System.Drawing.Size(500, 280);
+            this.BarChart.TabIndex = 0;
+            this.BarChart.Text = "chart1";
             // 
             // DataGridView
             // 
@@ -174,48 +174,6 @@
             this.DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DataGridView.Size = new System.Drawing.Size(1484, 411);
             this.DataGridView.TabIndex = 3;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 240;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Client";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 240;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Services";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 241;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Total Points";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 240;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Value (€)";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Width = 240;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "Avg. Points/Service";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            this.dataGridViewTextBoxColumn6.Width = 240;
             // 
             // Id
             // 
@@ -253,6 +211,48 @@
             this.AveragePointsPerService.Name = "AveragePointsPerService";
             this.AveragePointsPerService.ReadOnly = true;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 240;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Client";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 240;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Services";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 241;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = Properties.Strings.TotalPoints; // "Total Points"
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 240;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Value (€)";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Width = 240;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "Avg. Points/Service";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 240;
+            // 
             // ClientAnalysisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -264,14 +264,14 @@
             this.Controls.Add(this.ViewPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ClientAnalysisForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Client Analysis";
+            this.Text = " ";
             this.ViewPanel.ResumeLayout(false);
             this.ChartPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.BarChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PieChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BarChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridView)).EndInit();
             this.ResumeLayout(false);
 

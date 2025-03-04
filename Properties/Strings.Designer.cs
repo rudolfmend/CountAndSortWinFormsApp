@@ -313,6 +313,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File not found:.
+        /// </summary>
+        internal static string FileNotFound {
+            get {
+                return ResourceManager.GetString("FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File processing.
         /// </summary>
         internal static string FileProcessing {
@@ -888,6 +897,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Points.
+        /// </summary>
+        internal static string TotalPoints {
+            get {
+                return ResourceManager.GetString("TotalPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total points after: {0}.
         /// </summary>
         internal static string TotalPointsAfter {
@@ -911,6 +929,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string UncheckMarkAll {
             get {
                 return ResourceManager.GetString("UncheckMarkAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View by Points.
+        /// </summary>
+        internal static string ViewByPoints {
+            get {
+                return ResourceManager.GetString("ViewByPoints", resourceCulture);
             }
         }
     }

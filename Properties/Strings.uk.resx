@@ -407,4 +407,13 @@
   <data name="MessageNoFilesSelected" xml:space="preserve">
     <value>Файли не вибрано</value>
   </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Файл не знайдено:</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Всього балів</value>
+  </data>
+  <data name="ViewByPoints" xml:space="preserve">
+    <value>За балами</value>
+  </data>
 </root>
