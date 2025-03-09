@@ -262,7 +262,7 @@ Points after processing: {5}</value>
     <value>Warning</value>
   </data>
   <data name="LabelIdColumn" xml:space="preserve">
-    <value>Column "Identificator" (Nr.)</value>
+    <value>Column "Identifier" (Nr.)</value>
   </data>
   <data name="LabelExportDataSeparator" xml:space="preserve">
     <value>File export separator</value>
@@ -415,6 +415,30 @@ Points after processing: {5}</value>
     <value>Total Points</value>
   </data>
   <data name="ViewByPoints" xml:space="preserve">
-    <value>View by Points</value>
+    <value>By Points</value>
+  </data>
+  <data name="ViewByFinances" xml:space="preserve">
+    <value>By Finances</value>
+  </data>
+  <data name="ViewByServices" xml:space="preserve">
+    <value>By Services</value>
+  </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Identifier</value>
+  </data>
+  <data name="MessageExportDataDialogTitle" xml:space="preserve">
+    <value>Export client data</value>
+  </data>
+  <data name="MessageExportSuccess" xml:space="preserve">
+    <value>Data exported successfully!</value>
+  </data>
+  <data name="MessageExportError" xml:space="preserve">
+    <value>Error exporting data {0}!</value>
+  </data>
+  <data name="MessageUnsupportedFormat" xml:space="preserve">
+    <value>Unsupported file format. Please select .xlsx or .csv.</value>
   </data>
 </root>

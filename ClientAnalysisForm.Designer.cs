@@ -81,8 +81,9 @@
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(120, 30);
             this.ExportButton.TabIndex = 2;
-            this.ExportButton.Text = "Export Data";
+            this.ExportButton.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ExportButton; 
             this.ExportButton.UseVisualStyleBackColor = true;
+            this.ExportButton.Click += ExportButton_Click;
             // 
             // ButtonService
             // 
@@ -90,7 +91,7 @@
             this.ButtonService.Name = "ButtonService";
             this.ButtonService.Size = new System.Drawing.Size(120, 30);
             this.ButtonService.TabIndex = 1;
-            this.ButtonService.Text = "View by Services";
+            this.ButtonService.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ViewByServices; 
             this.ButtonService.UseVisualStyleBackColor = true;
             // 
             // ValueButton
@@ -99,7 +100,7 @@
             this.ValueButton.Name = "ValueButton";
             this.ValueButton.Size = new System.Drawing.Size(120, 30);
             this.ValueButton.TabIndex = 0;
-            this.ValueButton.Text = "View by Value (€)";
+            this.ValueButton.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ViewByFinances;
             this.ValueButton.UseVisualStyleBackColor = true;
             // 
             // PointsButton
@@ -108,7 +109,7 @@
             this.PointsButton.Name = "PointsButton";
             this.PointsButton.Size = new System.Drawing.Size(120, 30);
             this.PointsButton.TabIndex = 1;
-            this.PointsButton.Text = Properties.Strings.ViewByPoints; //"View by Points";
+            this.PointsButton.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ViewByPoints;
             this.PointsButton.UseVisualStyleBackColor = true;
             // 
             // ChartPanel
@@ -128,7 +129,7 @@
             this.PieChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.PieChart.Legends.Add(legend1);
-            this.PieChart.Location = new System.Drawing.Point(520, 10);
+            this.PieChart.Location = new System.Drawing.Point(630, 10);
             this.PieChart.Name = "PieChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -234,7 +235,7 @@
             // 
             // dataGridViewTextBoxColumn4
             // 
-            this.dataGridViewTextBoxColumn4.HeaderText = Properties.Strings.TotalPoints; // "Total Points"
+            this.dataGridViewTextBoxColumn4.HeaderText = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.TotalPoints;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             this.dataGridViewTextBoxColumn4.Width = 240;

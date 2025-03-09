@@ -416,4 +416,28 @@
   <data name="ViewByPoints" xml:space="preserve">
     <value>За балами</value>
   </data>
+  <data name="ViewByFinances" xml:space="preserve">
+    <value>За фінансами</value>
+  </data>
+  <data name="ViewByServices" xml:space="preserve">
+    <value>За послугами</value>
+  </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>Експорт даних</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Ідентифікатор</value>
+  </data>
+  <data name="MessageExportDataDialogTitle" xml:space="preserve">
+    <value>Експорт даних клієнта</value>
+  </data>
+  <data name="MessageExportSuccess" xml:space="preserve">
+    <value>Дані успішно експортовано!</value>
+  </data>
+  <data name="MessageExportError" xml:space="preserve">
+    <value>Помилка експорту даних {0}!</value>
+  </data>
+  <data name="MessageUnsupportedFormat" xml:space="preserve">
+    <value>Непідтримуваний формат файлу. Виберіть .xlsx або .csv.</value>
+  </data>
 </root>

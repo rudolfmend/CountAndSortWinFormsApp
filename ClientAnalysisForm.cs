@@ -1,90 +1,316 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing;
+using System.Text;
+
+// EPPlus pre .NET Framework 4.0
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using OfficeOpenXml.Drawing.Chart;
 
 namespace CountAndSortWinFormsAppNetFr4
 {
-    public partial class ClientAnalysisForm : Form
+    public partial class ClientAnalysisForm
     {
-        private List<ClientInfo> clients;
+        // V starších verziách EPPlus nie je LicenseContext v rovnakom namespace
+        // Použijeme alternatívny spôsob nastavenia licencie, ktorý funguje pre verziu 4.5.3.3
 
-        public ClientAnalysisForm(List<ClientInfo> clients)
+        // Metóda pre export do Excel s EPPlus
+        private void ExportWithEPPlus(string filePath)
         {
-            this.clients = clients;
-            InitializeComponent();
-            InitializeUI();
-            PopulateChartsAndTables();
-        }
-
-        private void InitializeUI()
-        {
-            // Presun PointsButton do ViewPanel
-            ViewPanel.Controls.Add(PointsButton);
-
-            // Pridanie event handlerov pre tlačidlá
-            PointsButton.Click += (s, e) => { viewMode = "points"; UpdateCharts(); };
-            ValueButton.Click += (s, e) => { viewMode = "value"; UpdateCharts(); };
-            ButtonService.Click += (s, e) => { viewMode = "services"; UpdateCharts(); };
-            ExportButton.Click += ExportButton_Click;
-
-            // Pridanie StatusLabel do StatusStrip
-            var statusLabel = new ToolStripStatusLabel();
-            statusLabel.Text = $"Total clients: {clients.Count}";
-            //System.Windows.Forms.StatusStrip.Items.Add(statusLabel);
-        }
-
-        private void PopulateChartsAndTables()
-        {
-            // Implement your logic to populate charts and tables
-            UpdateClientsSummaryTable();
-            UpdatePointsChart();
-            UpdateServiceCountChart();
-        }
-
-        private string viewMode = "points"; // Predvolený režim zobrazenia
-
-        private void UpdateCharts()
-        {
-            // Aktualizácia grafov podľa aktuálneho režimu zobrazenia
-            switch (viewMode)
+            using (var package = new ExcelPackage())
             {
-                case "points":
-                    UpdatePointsChart();
-                    break;
-                case "value":
-                    UpdateValueChart();
-                    break;
-                case "services":
-                    UpdateServiceCountChart();
-                    break;
+                // Hlavný hárok s údajmi
+                var worksheet = package.Workbook.Worksheets.Add("Client Analysis");
+
+                // Nastavenie hlavičky
+                string[] headers = GetColumnHeaders();
+
+                // Vizuálne formátovanie
+                var headerFont = worksheet.Cells[1, 1, 1, headers.Length].Style.Font;
+                headerFont.Bold = true;
+                headerFont.Size = 12;
+
+                // Pozadie hlavičky
+                var headerCells = worksheet.Cells[1, 1, 1, headers.Length];
+                headerCells.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                headerCells.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+                // Ohraničenie hlavičky
+                var headerBorder = headerCells.Style.Border;
+                headerBorder.Top.Style = headerBorder.Right.Style =
+                headerBorder.Bottom.Style = headerBorder.Left.Style = ExcelBorderStyle.Thin;
+
+                // Vloženie názvov stĺpcov
+                for (int i = 0; i < headers.Length; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = headers[i];
+                }
+
+                // Zotriedenie klientov - použijeme lokálnu premennú clients
+                var sortedClients = this.clients.OrderByDescending(c => c.TotalPoints).ToList();
+
+                // Naplnenie dát
+                for (int i = 0; i < sortedClients.Count; i++)
+                {
+                    var client = sortedClients[i];
+                    int row = i + 2; // Začíname od riadku 2 (po hlavičke)
+
+                    worksheet.Cells[row, 1].Value = i + 1; // ID
+                    worksheet.Cells[row, 2].Value = $"{client.Name} ({client.PersonalId})"; // Klient
+                    worksheet.Cells[row, 3].Value = client.ServiceCount; // Služby
+                    worksheet.Cells[row, 4].Value = client.TotalPoints; // Body
+                    worksheet.Cells[row, 5].Value = client.TotalValue; // Hodnota
+                    worksheet.Cells[row, 6].Value = client.AveragePointsPerService; // Priemer
+
+                    // Formátovanie čísel
+                    worksheet.Cells[row, 3].Style.Numberformat.Format = "#,##0";
+                    worksheet.Cells[row, 4].Style.Numberformat.Format = "#,##0";
+                    worksheet.Cells[row, 5].Style.Numberformat.Format = "#,##0.00 €";
+                    worksheet.Cells[row, 6].Style.Numberformat.Format = "#,##0.0";
+                }
+
+                // Pridanie súhrnného riadku
+                //int totalRow = sortedClients.Count + 2;
+                int totalRow = sortedClients.Count() + 2;
+
+                // Formátovanie súhrnného riadku
+                var totalRowCells = worksheet.Cells[totalRow, 1, totalRow, headers.Length];
+                totalRowCells.Style.Font.Bold = true;
+                totalRowCells.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                totalRowCells.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+
+                worksheet.Cells[totalRow, 2].Value = Properties.Strings.LabelTotalSum ?? "SPOLU";
+                worksheet.Cells[totalRow, 3].Value = clients.Sum(c => c.ServiceCount);
+                worksheet.Cells[totalRow, 4].Value = clients.Sum(c => c.TotalPoints);
+                worksheet.Cells[totalRow, 5].Value = clients.Sum(c => c.TotalValue);
+
+                // Formátovanie súhrnného riadku
+                worksheet.Cells[totalRow, 3].Style.Numberformat.Format = "#,##0";
+                worksheet.Cells[totalRow, 4].Style.Numberformat.Format = "#,##0";
+                worksheet.Cells[totalRow, 5].Style.Numberformat.Format = "#,##0.00 €";
+
+                // Automatické prispôsobenie šírky stĺpcov
+                worksheet.Cells.AutoFitColumns();
+
+                // Hárok s údajmi pre grafy
+                var chartDataSheet = package.Workbook.Worksheets.Add("Chart Data");
+
+                // Vloženie dát pre grafy
+                var top10Clients = sortedClients.Take(10).ToList();
+
+                // Hlavička pre dáta grafu
+                chartDataSheet.Cells[1, 1].Value = "Client";
+                chartDataSheet.Cells[1, 2].Value = "Points";
+                chartDataSheet.Cells[1, 3].Value = "Value (€)";
+                chartDataSheet.Cells[1, 4].Value = "Services";
+
+                // Vloženie dát pre top 10 klientov
+                for (int i = 0; i < top10Clients.Count; i++)
+                {
+                    var client = top10Clients[i];
+                    int row = i + 2;
+
+                    // Skrátený názov pre lepšiu čitateľnosť v grafe
+                    string shortName = client.Name.Length > 15
+                        ? client.Name.Substring(0, 12) + "..."
+                        : client.Name;
+
+                    chartDataSheet.Cells[row, 1].Value = shortName;
+                    chartDataSheet.Cells[row, 2].Value = client.TotalPoints;
+                    chartDataSheet.Cells[row, 3].Value = client.TotalValue;
+                    chartDataSheet.Cells[row, 4].Value = client.ServiceCount;
+                }
+
+                // Automatické prispôsobenie stĺpcov pre dáta grafu
+                chartDataSheet.Cells.AutoFitColumns();
+
+                try
+                {
+                    // Vytvorenie hárku pre grafy
+                    var chartsSheet = package.Workbook.Worksheets.Add("Charts");
+
+                    // Vytvorenie stĺpcového grafu pre body
+                    var pointsChart = chartsSheet.Drawings.AddChart("PointsChart", eChartType.ColumnClustered);
+                    pointsChart.SetPosition(1, 0, 0, 0);
+                    pointsChart.SetSize(700, 400);
+
+                    // Názov grafu
+                    pointsChart.Title.Text = "Top 10 Clients by Points";
+                    pointsChart.Title.Font.Size = 14;
+                    pointsChart.Title.Font.Bold = true;
+
+                    // Dáta pre graf
+                    var pointsSeries = pointsChart.Series.Add(
+                        chartDataSheet.Cells[2, 2, Math.Min(11, sortedClients.Count + 1), 2],
+                        chartDataSheet.Cells[2, 1, Math.Min(11, sortedClients.Count + 1), 1]
+                    );
+                    pointsSeries.Header = "Total Points";
+
+                    // Vytvorenie koláčového grafu
+                    var pieChart = chartsSheet.Drawings.AddChart("PieChart", eChartType.Pie);
+                    pieChart.SetPosition(25, 0, 0, 0);  // Pod stĺpcovým grafom
+                    pieChart.SetSize(500, 400);
+
+                    // Názov grafu
+                    pieChart.Title.Text = "Points Distribution";
+                    pieChart.Title.Font.Size = 14;
+                    pieChart.Title.Font.Bold = true;
+
+                    // Dáta pre koláčový graf
+
+                    int clientsCount = sortedClients.Count(); // Explicitne voláme metódu Count() // Explicitne získame počet
+                    var pieSeries = pieChart.Series.Add(
+                        chartDataSheet.Cells[2, 2, Math.Min(11, clientsCount + 1), 2],
+                        chartDataSheet.Cells[2, 1, Math.Min(11, clientsCount + 1), 1]
+                    );
+
+                    // Nastavenia pre koláčový graf - opatrne s API, ktoré nemusí existovať v starších verziách
+                    try
+                    {
+                        var dataLabel = pieChart.DataLabel;
+                        if (dataLabel != null)
+                        {
+                            dataLabel.ShowPercent = true;
+                        }
+                    }
+                    catch { /* Ignorujeme chyby s DataLabel, ak API nefunguje */ }
+
+                    try
+                    {
+                        pieChart.Legend.Position = eLegendPosition.Right;
+                    }
+                    catch { /* Ignorujeme chyby s legendou, ak API nefunguje */ }
+
+                    // Vytvorenie stĺpcového grafu pre hodnoty
+                    var valueChart = chartsSheet.Drawings.AddChart("ValueChart", eChartType.ColumnClustered);
+                    valueChart.SetPosition(50, 0, 0, 0);  // Pod koláčovým grafom
+                    valueChart.SetSize(700, 400);
+
+                    // Názov grafu
+                    valueChart.Title.Text = "Top 10 Clients by Value (€)";
+                    valueChart.Title.Font.Size = 14;
+                    valueChart.Title.Font.Bold = true;
+
+                    // Dáta pre graf
+                    var valueSeries = valueChart.Series.Add(
+                        chartDataSheet.Cells[2, 3, Math.Min(11, sortedClients.Count + 1), 3],
+                        chartDataSheet.Cells[2, 1, Math.Min(11, sortedClients.Count + 1), 1]
+                    );
+                    valueSeries.Header = "Total Value (€)";
+                }
+                catch (Exception graphEx)
+                {
+                    // Ak sa vyskytne chyba pri vytváraní grafov, len ju zaznamenáme, ale pokračujeme v exporte
+                    System.Diagnostics.Debug.WriteLine("Chyba pri vytváraní grafov: " + graphEx.Message);
+                }
+
+                // Uloženie súboru
+                package.SaveAs(new FileInfo(filePath));
             }
         }
 
-        private void UpdateClientsSummaryTable()
+        // Aktualizovaná metóda ExportButton_Click pre použitie s EPPlus
+        private void ExportButton_Click(object sender, EventArgs e)
         {
-            DataGridView.Rows.Clear();
+            using (SaveFileDialog saveDialog = new SaveFileDialog())
+            {
+                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx|CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                saveDialog.FilterIndex = 1;
+                saveDialog.RestoreDirectory = true;
+                saveDialog.Title = Properties.Strings.MessageExportDataDialogTitle;
+                saveDialog.FileName = $"ClientAnalysis_{DateTime.Now:yyyy-MM-dd}";
 
-            // Zotriedenie klientov podľa počtu bodov (zostupne)
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveDialog.FileName;
+                    this.Cursor = Cursors.WaitCursor; // Správny spôsob nastavenia kurzora na formulári
+
+                    try
+                    {
+                        string extension = Path.GetExtension(filePath).ToLower();
+
+                        switch (extension)
+                        {
+                            case ".xlsx":
+                                // Kontrola, či je dostupný EPPlus
+                                Type excelPackageType = Type.GetType("OfficeOpenXml.ExcelPackage, EPPlus", false);
+
+                                if (excelPackageType != null)
+                                {
+                                    // Použiť EPPlus implementáciu
+                                    ExportWithEPPlus(filePath);
+                                }
+                                else
+                                {
+                                    MessageBox.Show(
+                                        "Knižnica EPPlus pre Excel export nie je dostupná. Údaje budú exportované do CSV formátu.",
+                                        "Informácia",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    // Fallback na CSV
+                                    ExportToCsv(Path.ChangeExtension(filePath, ".csv"));
+                                }
+                                break;
+                            case ".csv":
+                                ExportToCsv(filePath);
+                                break;
+                            default:
+                                MessageBox.Show(
+                                    Properties.Strings.MessageUnsupportedFormat ??
+                                    "Nepodporovaný formát súboru. Prosím, vyberte .xlsx alebo .csv.",
+                                    Properties.Strings.MessageWarning ?? "Upozornenie",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                        }
+
+                        MessageBox.Show(
+                            Properties.Strings.MessageExportSuccess ?? "Údaje boli úspešne exportované!",
+                            Properties.Strings.MessageInfo ?? "Informácia",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            string.Format(Properties.Strings.MessageExportError ?? "Chyba pri exporte údajov: {0}", ex.Message),
+                            Properties.Strings.MessageError ?? "Chyba",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        this.Cursor = Cursors.Default; // Obnovenie kurzora
+                    }
+                }
+            }
+        }
+
+        // Metóda pre export do CSV
+        private void ExportToCsv(string filePath)
+        {
+            // Použijeme StringBuilder pre efektívne budovanie CSV obsahu
+            StringBuilder csvContent = new StringBuilder();
+
+            // Pridanie hlavičky s oddeľovačom ";"
+            string[] headers = GetColumnHeaders();
+            csvContent.AppendLine(string.Join(";", headers));
+
+            // Získanie zotriedených klientov - použijeme premennú clients
             var sortedClients = clients.OrderByDescending(c => c.TotalPoints).ToList();
 
+            // Pridanie riadkov pre každého klienta
             int id = 1;
             foreach (var client in sortedClients)
             {
-                DataGridView.Rows.Add(
+                csvContent.AppendLine(string.Format("{0};{1};{2};{3};{4:F2};{5}",
                     id++,
                     $"{client.Name} ({client.PersonalId})",
                     client.ServiceCount,
                     client.TotalPoints,
-                    $"{client.TotalValue:F2} €",
-                    $"{client.AveragePointsPerService:F0}"
-                );
+                    client.TotalValue,
+                    client.AveragePointsPerService));
             }
 
             // Pridanie súhrnného riadku
@@ -92,202 +318,28 @@ namespace CountAndSortWinFormsAppNetFr4
             int totalPoints = clients.Sum(c => c.TotalPoints);
             decimal totalValue = clients.Sum(c => c.TotalValue);
 
-            // Špeciálny riadok pre súhrn
-            int rowIndex = DataGridView.Rows.Add(
-                "",
-                "TOTAL",
+            csvContent.AppendLine(string.Format(";{0};{1};{2};{3:F2};",
+                Properties.Strings.LabelTotalSum ?? "SPOLU",
                 totalServices,
                 totalPoints,
-                $"{totalValue:F2} €",
-                ""
-            );
+                totalValue));
 
-            // Zvýraznenie súhrnného riadku
-            DataGridView.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightGray;
-            DataGridView.Rows[rowIndex].DefaultCellStyle.Font = new Font(DataGridView.Font, FontStyle.Bold);
+            // Uloženie do súboru s kódovaním UTF-8
+            File.WriteAllText(filePath, csvContent.ToString(), Encoding.UTF8);
         }
 
-        private void UpdatePointsChart()
+        // Pomocná metóda pre získanie názvov stĺpcov
+        private string[] GetColumnHeaders()
         {
-            // Tu by ste implementovali vytvorenie stĺpcového grafu pre body
-            BarChart.Series.Clear();
-
-            var series = new Series("Total Points");
-            series.ChartType = SeriesChartType.Column;
-
-            // Získame top 10 klientov podľa bodov
-            var topClients = clients
-                .OrderByDescending(c => c.TotalPoints)
-                .Take(10)
-                .ToList();
-
-            foreach (var client in topClients)
+            return new string[]
             {
-                // Získanie skráteného mena pre graf
-                string shortName = client.Name.Length > 15
-                    ? client.Name.Substring(0, 12) + "..."
-                    : client.Name;
-
-                series.Points.AddXY(shortName, client.TotalPoints);
-            }
-
-            BarChart.Series.Add(series);
-            BarChart.Titles.Clear();
-            BarChart.Titles.Add("Top 10 Clients by Points");
-
-            // Konfigurácia koláčového grafu pre podiel bodov
-            UpdatePieChart(topClients, c => c.TotalPoints, "Points Distribution");
-        }
-
-        private void UpdateValueChart()
-        {
-            // Implementácia podobná ako UpdatePointsChart, ale pre hodnoty v eurách
-            BarChart.Series.Clear();
-
-            var series = new Series("Total Value (€)");
-            series.ChartType = SeriesChartType.Column;
-
-            // Získame top 10 klientov podľa hodnoty
-            var topClients = clients
-                .OrderByDescending(c => c.TotalValue)
-                .Take(10)
-                .ToList();
-
-            foreach (var client in topClients)
-            {
-                string shortName = client.Name.Length > 15
-                    ? client.Name.Substring(0, 12) + "..."
-                    : client.Name;
-
-                series.Points.AddXY(shortName, (double)client.TotalValue);
-            }
-
-            BarChart.Series.Add(series);
-            BarChart.Titles.Clear();
-            BarChart.Titles.Add("Top 10 Clients by Value (€)");
-
-            // Konfigurácia koláčového grafu pre podiel hodnôt
-            UpdatePieChart(topClients, c => c.TotalValue, "Value Distribution (€)");
-        }
-
-        private void UpdateServiceCountChart()
-        {
-            // Implementácia pre počty služieb
-            BarChart.Series.Clear();
-
-            var series = new Series("Service Count");
-            series.ChartType = SeriesChartType.Column;
-
-            // Získame top 10 klientov podľa počtu služieb
-            var topClients = clients
-                .OrderByDescending(c => c.ServiceCount)
-                .Take(10)
-                .ToList();
-
-            foreach (var client in topClients)
-            {
-                string shortName = client.Name.Length > 15
-                    ? client.Name.Substring(0, 12) + "..."
-                    : client.Name;
-
-                series.Points.AddXY(shortName, client.ServiceCount);
-            }
-
-            BarChart.Series.Add(series);
-            BarChart.Titles.Clear();
-            BarChart.Titles.Add("Top 10 Clients by Services");
-
-            // Konfigurácia koláčového grafu pre podiel služieb
-            UpdatePieChart(topClients, c => c.ServiceCount, "Services Distribution");
-        }
-
-        private void ExportToCsv(string filePath)
-        {
-            // Implementácia exportu do CSV
-            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
-            {
-                // Hlavička
-                writer.WriteLine("ID;Client;Personal ID;Services;Total Points;Value (€);Average Points");
-
-                // Zotriedenie klientov podľa počtu bodov (zostupne)
-                var sortedClients = clients.OrderByDescending(c => c.TotalPoints).ToList();
-
-                int id = 1;
-                foreach (var client in sortedClients)
-                {
-                    writer.WriteLine($"{id};{client.Name};{client.PersonalId};{client.ServiceCount};{client.TotalPoints};{client.TotalValue:F2};{client.AveragePointsPerService:F0}");
-                    id++;
-                }
-
-                // Súhrnný riadok
-                int totalServices = clients.Sum(c => c.ServiceCount);
-                int totalPoints = clients.Sum(c => c.TotalPoints);
-                decimal totalValue = clients.Sum(c => c.TotalValue);
-
-                writer.WriteLine($";TOTAL;;{totalServices};{totalPoints};{totalValue:F2};");
-            }
-        }
-
-        private void ExportToExcel(string filePath)
-        {
-            // Pre úplnú implementáciu exportu do Excelu by ste potrebovali referenciu na Excel knižnicu
-            // Toto je zjednodušená verzia, ktorá uloží súbor ako CSV, ktorý Excel dokáže otvoriť
-            ExportToCsv(filePath);
-            MessageBox.Show("Excel export requires Excel library. CSV file was created instead, which can be opened in Excel.",
-                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void UpdatePieChart<T>(List<ClientInfo> topClients, Func<ClientInfo, T> valueSelector, string title)
-        {
-            PieChart.Series.Clear();
-
-            var series = new Series("Distribution");
-            series.ChartType = SeriesChartType.Pie;
-
-            foreach (var client in topClients)
-            {
-                string shortName = client.Name.Length > 15
-                    ? client.Name.Substring(0, 12) + "..."
-                    : client.Name;
-
-                var point = series.Points.AddXY(shortName, Convert.ToDouble(valueSelector(client)));
-            }
-
-            PieChart.Series.Add(series);
-            PieChart.Titles.Clear();
-            PieChart.Titles.Add(title);
-        }
-
-        private void ExportButton_Click(object sender, EventArgs e)
-        {
-            // Implementácia exportu dát
-            using (SaveFileDialog saveDialog = new SaveFileDialog())
-            {
-                saveDialog.Filter = "CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
-                saveDialog.FilterIndex = 1;
-                saveDialog.RestoreDirectory = true;
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = saveDialog.FileName;
-                    try
-                    {
-                        if (Path.GetExtension(filePath).ToLower() == ".csv")
-                        {
-                            ExportToCsv(filePath);
-                        }
-                        else if (Path.GetExtension(filePath).ToLower() == ".xlsx")
-                        {
-                            ExportToExcel(filePath);
-                        }
-                        MessageBox.Show("Data exported successfully!", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error exporting data: {ex.Message}", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
+                "ID",
+                Properties.Strings.ListViewColumnFile ?? "Klient",
+                Properties.Strings.ListViewColumnPoints ?? "Služby",
+                Properties.Strings.HistoryTotalPoints ?? "Celkové body",
+                "Hodnota (€)",
+                Properties.Strings.HistoryAveragePoints ?? "Priemerné body"
+            };
         }
     }
 }

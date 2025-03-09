@@ -416,4 +416,28 @@ Body po spracovaní: {5}</value>
   <data name="ViewByPoints" xml:space="preserve">
     <value>Podľa bodov</value>
   </data>
+  <data name="ViewByFinances" xml:space="preserve">
+    <value>Podľa financií</value>
+  </data>
+  <data name="ViewByServices" xml:space="preserve">
+    <value>Podľa výkonov</value>
+  </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>Exportovať dáta</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Identifikátor</value>
+  </data>
+  <data name="MessageExportDataDialogTitle" xml:space="preserve">
+    <value>Export údajov o klientoch</value>
+  </data>
+  <data name="MessageExportSuccess" xml:space="preserve">
+    <value>Údaje boli úspešne exportované!</value>
+  </data>
+  <data name="MessageExportError" xml:space="preserve">
+    <value>Chyba pri exporte údajov {0}!</value>
+  </data>
+  <data name="MessageUnsupportedFormat" xml:space="preserve">
+    <value>Nepodporovaný formát súboru. Prosím, vyberte .xlsx alebo .csv.</value>
+  </data>
 </root>

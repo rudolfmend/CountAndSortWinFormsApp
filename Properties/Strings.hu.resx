@@ -415,4 +415,28 @@ Pontok a feldolgozás után: {5}</value>
   <data name="ViewByPoints" xml:space="preserve">
     <value>Pontok szerint</value>
   </data>
+  <data name="ViewByFinances" xml:space="preserve">
+    <value>Pénzügyek szerint</value>
+  </data>
+  <data name="ViewByServices" xml:space="preserve">
+    <value>Szolgáltatások szerint</value>
+  </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>Adatok exportálása</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Azonosító</value>
+  </data>
+  <data name="MessageExportDataDialogTitle" xml:space="preserve">
+    <value>Ügyféladatok exportálása</value>
+  </data>
+  <data name="MessageExportSuccess" xml:space="preserve">
+    <value>Az adatok exportálása sikeres volt!</value>
+  </data>
+  <data name="MessageExportError" xml:space="preserve">
+    <value>Hiba az adatok exportálása során: {0}!</value>
+  </data>
+  <data name="MessageUnsupportedFormat" xml:space="preserve">
+    <value>Nem támogatott fájlformátum. Kérjük, válasszon .xlsx vagy .csv fájlt.</value>
+  </data>
 </root>

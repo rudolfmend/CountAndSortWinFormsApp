@@ -416,4 +416,28 @@ Punkte nach der Verarbeitung: {5}</value>
   <data name="ViewByPoints" xml:space="preserve">
     <value>Nach Punkten</value>
   </data>
+  <data name="ViewByFinances" xml:space="preserve">
+    <value>Nach Finanzen</value>
+  </data>
+  <data name="ViewByServices" xml:space="preserve">
+    <value>Nach Diensten</value>
+  </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>Daten exportieren</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Kennung</value>
+  </data>
+  <data name="MessageExportDataDialogTitle" xml:space="preserve">
+    <value>Kundendaten exportieren</value>
+  </data>
+  <data name="MessageExportSuccess" xml:space="preserve">
+    <value>Die Daten wurden erfolgreich exportiert!</value>
+  </data>
+  <data name="MessageExportError" xml:space="preserve">
+    <value>Fehler beim Exportieren der Daten {0}!</value>
+  </data>
+  <data name="MessageUnsupportedFormat" xml:space="preserve">
+    <value>Nicht unterstütztes Dateiformat. Bitte wählen Sie .xlsx oder .csv.</value>
+  </data>
 </root>

@@ -416,4 +416,28 @@ Punkty po przetworzeniu: {5}</value>
   <data name="ViewByPoints" xml:space="preserve">
     <value>Według punktów</value>
   </data>
+  <data name="ViewByFinances" xml:space="preserve">
+    <value>Według finansów</value>
+  </data>
+  <data name="ViewByServices" xml:space="preserve">
+    <value>Według usług</value>
+  </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>Eksportuj dane</value>
+  </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>Identyfikator</value>
+  </data>
+  <data name="MessageExportDataDialogTitle" xml:space="preserve">
+    <value>Eksportuj dane klienta</value>
+  </data>
+  <data name="MessageExportSuccess" xml:space="preserve">
+    <value>Dane wyeksportowano pomyślnie!</value>
+  </data>
+  <data name="MessageExportError" xml:space="preserve">
+    <value>Błąd podczas eksportowania danych {0}!</value>
+  </data>
+  <data name="MessageUnsupportedFormat" xml:space="preserve">
+    <value>Nieobsługiwany format pliku. Proszę wybrać format .xlsx lub .csv.</value>
+  </data>
 </root>

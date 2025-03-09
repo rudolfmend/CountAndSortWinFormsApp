@@ -268,6 +268,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export data.
+        /// </summary>
+        internal static string ExportButton {
+            get {
+                return ResourceManager.GetString("ExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UNPROCESSED FILES.
         /// </summary>
         internal static string FailedFilesHeader {
@@ -412,6 +421,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identifier.
+        /// </summary>
+        internal static string Identifier {
+            get {
+                return ResourceManager.GetString("Identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File export separator.
         /// </summary>
         internal static string LabelExportDataSeparator {
@@ -430,7 +448,7 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Column &quot;Identificator&quot; (Nr.).
+        ///   Looks up a localized string similar to Column &quot;Identifier&quot; (Nr.).
         /// </summary>
         internal static string LabelIdColumn {
             get {
@@ -570,6 +588,33 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageErrorSavingHistory {
             get {
                 return ResourceManager.GetString("MessageErrorSavingHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export client data.
+        /// </summary>
+        internal static string MessageExportDataDialogTitle {
+            get {
+                return ResourceManager.GetString("MessageExportDataDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error exporting data {0}!.
+        /// </summary>
+        internal static string MessageExportError {
+            get {
+                return ResourceManager.GetString("MessageExportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data exported successfully!.
+        /// </summary>
+        internal static string MessageExportSuccess {
+            get {
+                return ResourceManager.GetString("MessageExportSuccess", resourceCulture);
             }
         }
         
@@ -731,6 +776,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageStatisticsError {
             get {
                 return ResourceManager.GetString("MessageStatisticsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported file format. Please select .xlsx or .csv..
+        /// </summary>
+        internal static string MessageUnsupportedFormat {
+            get {
+                return ResourceManager.GetString("MessageUnsupportedFormat", resourceCulture);
             }
         }
         
@@ -933,11 +987,29 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View by Points.
+        ///   Looks up a localized string similar to By Finances.
+        /// </summary>
+        internal static string ViewByFinances {
+            get {
+                return ResourceManager.GetString("ViewByFinances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By Points.
         /// </summary>
         internal static string ViewByPoints {
             get {
                 return ResourceManager.GetString("ViewByPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By Services.
+        /// </summary>
+        internal static string ViewByServices {
+            get {
+                return ResourceManager.GetString("ViewByServices", resourceCulture);
             }
         }
     }
