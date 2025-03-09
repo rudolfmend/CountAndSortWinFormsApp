@@ -55,6 +55,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ColumnToCountToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.NumericUpDownIdColumn = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDownNameColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownServiceCodeColumn = new System.Windows.Forms.NumericUpDown();
+            this.LabelServiceCodeColumn = new System.Windows.Forms.Label();
             this.LabelNameColumn = new System.Windows.Forms.Label();
             this.LabelIdColumn = new System.Windows.Forms.Label();
             this.ComboBoxExportSeparatorType = new System.Windows.Forms.ComboBox();
@@ -363,6 +365,43 @@ namespace CountAndSortWinFormsAppNetFr4
             0,
             0,
             0});
+            //
+            // NumericUpDownServiceCodeColumn
+            //
+            this.NumericUpDownServiceCodeColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownServiceCodeColumn.AutoSize = true;
+            this.NumericUpDownServiceCodeColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            this.NumericUpDownServiceCodeColumn.Location = new System.Drawing.Point(783, 207);
+            this.NumericUpDownServiceCodeColumn.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.NumericUpDownServiceCodeColumn.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NumericUpDownServiceCodeColumn.Name = "NumericUpDownServiceCodeColumn";
+            this.NumericUpDownServiceCodeColumn.Size = new System.Drawing.Size(68, 27);
+            this.NumericUpDownServiceCodeColumn.TabIndex = 31;
+            this.NumericUpDownServiceCodeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownServiceCodeColumn.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            //
+            // LabelServiceCodeColumn
+            //
+            this.LabelServiceCodeColumn = new System.Windows.Forms.Label();
+            this.LabelServiceCodeColumn.AutoSize = true;
+            this.LabelServiceCodeColumn.Location = new System.Drawing.Point(562, 209);
+            this.LabelServiceCodeColumn.Name = "LabelServiceCodeColumn";
+            this.LabelServiceCodeColumn.Size = new System.Drawing.Size(199, 22);
+            this.LabelServiceCodeColumn.TabIndex = 32;
+            this.LabelServiceCodeColumn.Text = "Stĺpec s kódom výkonu:";
+            this.LabelServiceCodeColumn.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // LabelNameColumn
             // 
@@ -444,6 +483,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Controls.Add(this.NumericUpDownNameColumn);
             this.Controls.Add(this.NumericUpDownIdColumn);
             this.Controls.Add(this.NumericUpDownPointsColumn);
+            this.Controls.Add(this.NumericUpDownServiceCodeColumn);
+            this.Controls.Add(this.LabelServiceCodeColumn);
             this.Controls.Add(this.LabelPointsColumn);
             this.Controls.Add(this.LabelLanguagesChoice);
             this.Controls.Add(this.LanguageComboBox);
@@ -502,6 +543,8 @@ namespace CountAndSortWinFormsAppNetFr4
         private ToolTip ColumnToCountToolTip;
         private NumericUpDown NumericUpDownIdColumn;
         private NumericUpDown NumericUpDownNameColumn;
+        private NumericUpDown NumericUpDownServiceCodeColumn;
+        private Label LabelServiceCodeColumn;
         private Label LabelNameColumn;
         private Label LabelIdColumn;
         private ComboBox ComboBoxExportSeparatorType;

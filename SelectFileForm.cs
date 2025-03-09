@@ -165,6 +165,7 @@ namespace CountAndSortWinFormsAppNetFr4
             Properties.Settings.Default.PointsColumnIndex = (int)NumericUpDownPointsColumn.Value;
             Properties.Settings.Default.NameColumnIndex = (int)NumericUpDownNameColumn.Value;
             Properties.Settings.Default.IdColumnIndex = (int)NumericUpDownIdColumn.Value;
+            Properties.Settings.Default.ServiceCodeColumnIndex = (int)NumericUpDownServiceCodeColumn.Value;
             Properties.Settings.Default.Save();
         }
 
@@ -616,14 +617,116 @@ namespace CountAndSortWinFormsAppNetFr4
 
         private List<string> RemoveDuplicateRows(List<string> lines)
         {
-            return lines
+            // Odfiltrujeme hlavičku a informácie o dávke (prvé dva riadky)
+            var headerLines = lines.Take(2).ToList();
+            var dataLines = lines.Skip(2).ToList();
+
+            // Výsledný zoznam začneme hlavičkou
+            var result = new List<string>(headerLines);
+
+            // Aktualizujeme hodnotu počtu záznamov v hlavičke, ak existuje
+            if (headerLines.Count > 0)
+            {
+                string headerLine = headerLines[0];
+                string[] headerParts = headerLine.Split(new[] { columnSeparator }, StringSplitOptions.None);
+
+                if (headerParts.Length > 4 && int.TryParse(headerParts[4], out int recordCount))
+                {
+                    // Odstránené duplicity počítame neskôr
+                    int originalRecordCount = recordCount;
+                    int duplicatesCount = 0;
+
+                    // Spracované záznamy
+                    var processedRecords = dataLines
+                        .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None))
+                        .Where(parts => parts.Length > MIN_COLUMNS_REQUIRED)
+                        .ToList();
+
+                    // Identifikácia a odstránenie duplicít
+                    var uniqueRecords = new Dictionary<string, string[]>();
+
+                    foreach (var parts in processedRecords)
+                    {
+                        // Vytvorenie kľúča z kombinácie dňa (index 1), rodného čísla (index 2) a kódu výkonu (nastaviteľný index)
+                        // Zabezpečíme, aby indexy boli v rozsahu poľa
+                        string day = parts.Length > 1 ? parts[1] : "";
+                        string personalId = parts.Length > 2 ? parts[2] : "";
+
+                        // Použijeme nastaviteľný index pre kód výkonu
+                        string serviceCode = "";
+                        if (parts.Length > ColumnServiceCodeIndex && ColumnServiceCodeIndex >= 0)
+                        {
+                            serviceCode = parts[ColumnServiceCodeIndex];
+                        }
+
+                        string uniqueKey = $"{day}|{personalId}|{serviceCode}";
+
+                        if (!uniqueRecords.ContainsKey(uniqueKey))
+                        {
+                            uniqueRecords[uniqueKey] = parts;
+                        }
+                        else
+                        {
+                            duplicatesCount++;
+                        }
+                    }
+
+                    // Aktualizácia počtu záznamov v hlavičke a uloženie počtu odstránených duplicít
+                    int newRecordCount = originalRecordCount - duplicatesCount;
+                    if (newRecordCount < 0) newRecordCount = 0; // Zabraňujeme záporným hodnotám
+
+                    headerParts[4] = newRecordCount.ToString();
+                    result[0] = string.Join(columnSeparator, headerParts);
+
+                    // Uložíme počet odstránených duplicít pre informáciu používateľovi
+                    duplicatesRemoved = duplicatesCount;
+
+                    // Zoraďujeme a prečíslujeme unikátne záznamy
+                    var sortedRecords = uniqueRecords.Values
+                        .OrderBy(parts => parts.Length > ColumnNameIndex && ColumnNameIndex >= 0 ? parts[ColumnNameIndex] : "")
+                        .ToList();
+
+                    // Prečíslovanie a pridanie záznamov do výsledku
+                    for (int i = 0; i < sortedRecords.Count; i++)
+                    {
+                        sortedRecords[i][0] = (i + 1).ToString();
+                        result.Add(string.Join(columnSeparator, sortedRecords[i]));
+                    }
+
+                    return result;
+                }
+            }
+
+            // Ak nemáme hlavičku alebo je neplatná, použijeme pôvodný spôsob
+            var uniqueLines = dataLines
                 .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None))
                 .Where(parts => parts.Length > MIN_COLUMNS_REQUIRED && int.TryParse(parts[0], out _))
-                .GroupBy(parts => $"{parts[ColumnIdIndex]}|{parts[2]}|{parts[5]}")
-                .Select(group => group.First())  // Vybrať prvý záznam z každej skupiny
-                .OrderBy(parts => parts[ColumnNameIndex]) // Použite vlastnosť namiesto ovládacieho prvku
-                .Select((parts, index) => $"{index + 1}|{string.Join(columnSeparator, parts.Skip(1))}") // Prečíslovať
+                .GroupBy(parts =>
+                {
+                    string day = parts.Length > 1 ? parts[1] : "";
+                    string personalId = parts.Length > 2 ? parts[2] : "";
+
+                    // Použijeme nastaviteľný index pre kód výkonu
+                    string serviceCode = "";
+                    if (parts.Length > ColumnServiceCodeIndex && ColumnServiceCodeIndex >= 0)
+                    {
+                        serviceCode = parts[ColumnServiceCodeIndex];
+                    }
+
+                    return $"{day}|{personalId}|{serviceCode}";
+                })
+                .Select(group => group.First())  // Vyberieme prvý záznam z každej skupiny
+                .OrderBy(parts => parts.Length > ColumnNameIndex && ColumnNameIndex >= 0 ? parts[ColumnNameIndex] : "")
+                .Select((parts, index) => $"{index + 1}{columnSeparator}{string.Join(columnSeparator, parts.Skip(1))}")
                 .ToList();
+
+            // Uložíme počet odstránených duplicít
+            duplicatesRemoved = dataLines.Count - uniqueLines.Count;
+
+            // Pridáme spracované riadky k hlavičke
+            result.AddRange(uniqueLines);
+
+            return result;
         }
 
         /// <summary>

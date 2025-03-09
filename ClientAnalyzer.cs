@@ -11,7 +11,7 @@ namespace CountAndSortWinFormsAppNetFr4
     public class ClientAnalyzer
     {
         public List<ClientInfo> ProcessBatchFile(string filePath)
-        {
+        { 
             var clients = new Dictionary<string, ClientInfo>();
 
             try

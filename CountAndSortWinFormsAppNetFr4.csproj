@@ -200,6 +200,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchFileProcessor.cs" />
     <Compile Include="ClientAnalysisForm.cs" />
     <Compile Include="ClientAnalysisForm.Designer.cs">
       <DependentUpon>ClientAnalysisForm.cs</DependentUpon>
