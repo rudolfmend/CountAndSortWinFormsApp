@@ -49,7 +49,7 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int NameColumnIndex {
             get {
                 return ((int)(this["NameColumnIndex"]));
@@ -61,13 +61,49 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int IdColumnIndex {
             get {
                 return ((int)(this["IdColumnIndex"]));
             }
             set {
                 this["IdColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int DayColumnIndex {
+            get {
+                return ((int)(this["DayColumnIndex"]));
+            }
+            set {
+                this["DayColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int ServiceCodeColumnIndex {
+            get {
+                return ((int)(this["ServiceCodeColumnIndex"]));
+            }
+            set {
+                this["ServiceCodeColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int DiagnosisColumnIndex {
+            get {
+                return ((int)(this["DiagnosisColumnIndex"]));
+            }
+            set {
+                this["DiagnosisColumnIndex"] = value;
             }
         }
     }

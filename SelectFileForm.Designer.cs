@@ -56,6 +56,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.NumericUpDownIdColumn = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDownNameColumn = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDownServiceCodeColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownDayColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownDiagnosisColumn = new System.Windows.Forms.NumericUpDown();
             this.LabelServiceCodeColumn = new System.Windows.Forms.Label();
             this.LabelNameColumn = new System.Windows.Forms.Label();
             this.LabelIdColumn = new System.Windows.Forms.Label();
@@ -366,6 +368,32 @@ namespace CountAndSortWinFormsAppNetFr4
             0,
             0});
             //
+            // NumericUpDownDayColumn
+            //
+            this.NumericUpDownDayColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownDayColumn.AutoSize = true;
+            this.NumericUpDownDayColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            this.NumericUpDownDayColumn.Location = new System.Drawing.Point(783, 245);
+            this.NumericUpDownDayColumn.Maximum = new decimal(new int[] {
+                50,
+                0,
+                0,
+                0});
+            this.NumericUpDownDayColumn.Minimum = new decimal(new int[] {
+                1,
+                0,
+                0,
+                0});
+            this.NumericUpDownDayColumn.Name = "NumericUpDownDayColumn";
+            this.NumericUpDownDayColumn.Size = new System.Drawing.Size(68, 27);
+            this.NumericUpDownDayColumn.TabIndex = 31;
+            this.NumericUpDownDayColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownDayColumn.Value = new decimal(new int[] {
+                1,
+                0,
+                0,
+                0});
+            //
             // NumericUpDownServiceCodeColumn
             //
             this.NumericUpDownServiceCodeColumn = new System.Windows.Forms.NumericUpDown();
@@ -391,6 +419,32 @@ namespace CountAndSortWinFormsAppNetFr4
             0,
             0,
             0});
+            //
+            // NumericUpDownDiagnosisColumn
+            //
+            this.NumericUpDownDiagnosisColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownDiagnosisColumn.AutoSize = true;
+            this.NumericUpDownDiagnosisColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            this.NumericUpDownDiagnosisColumn.Location = new System.Drawing.Point(783, 169);
+            this.NumericUpDownDiagnosisColumn.Maximum = new decimal(new int[] {
+                50,
+                0,
+                0,
+                0});
+            this.NumericUpDownDiagnosisColumn.Minimum = new decimal(new int[] {
+                1,
+                0,
+                0,
+                0});
+            this.NumericUpDownDiagnosisColumn.Name = "NumericUpDownDiagnosisColumn";
+            this.NumericUpDownDiagnosisColumn.Size = new System.Drawing.Size(68, 27);
+            this.NumericUpDownDiagnosisColumn.TabIndex = 31;
+            this.NumericUpDownDiagnosisColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownDiagnosisColumn.Value = new decimal(new int[] {
+                6,
+                0,
+                0,
+                0});
             //
             // LabelServiceCodeColumn
             //
@@ -484,6 +538,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Controls.Add(this.NumericUpDownIdColumn);
             this.Controls.Add(this.NumericUpDownPointsColumn);
             this.Controls.Add(this.NumericUpDownServiceCodeColumn);
+            this.Controls.Add(this.NumericUpDownDayColumn);
+            this.Controls.Add(this.NumericUpDownDiagnosisColumn);
             this.Controls.Add(this.LabelServiceCodeColumn);
             this.Controls.Add(this.LabelPointsColumn);
             this.Controls.Add(this.LabelLanguagesChoice);
@@ -544,6 +600,8 @@ namespace CountAndSortWinFormsAppNetFr4
         private NumericUpDown NumericUpDownIdColumn;
         private NumericUpDown NumericUpDownNameColumn;
         private NumericUpDown NumericUpDownServiceCodeColumn;
+        private NumericUpDown NumericUpDownDayColumn;
+        private NumericUpDown NumericUpDownDiagnosisColumn;
         private Label LabelServiceCodeColumn;
         private Label LabelNameColumn;
         private Label LabelIdColumn;

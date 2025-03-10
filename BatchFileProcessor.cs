@@ -3,59 +3,131 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CountAndSortWinFormsAppNetFr4
 {
     /// <summary>
-    /// Trieda na odstránenie duplicitných záznamov z dávkových súborov
+    /// Trieda na spracovanie dávkových súborov, odstránenie duplicít, 
+    /// prečíslovanie a zoradenie záznamov
     /// </summary>
     public class BatchFileProcessor
     {
-        // Vlastnosti pre sledovanie počtu odstránených duplicít a štatistík
+        #region Properties
+
+        // Konfiguračné parametre
+        private readonly string columnSeparator;
+        private readonly int dayColumnIndex;
+        private readonly int idColumnIndex;
+        private readonly int serviceCodeColumnIndex;
+        private readonly int nameColumnIndex;
+        private readonly int pointsColumnIndex;
+        private readonly bool sortByName;
+        private readonly bool renumberRows;
+        private readonly bool removeDuplicates;
+
+        // Výsledky spracovania
         public int DuplicatesRemoved { get; private set; }
         public List<string> ProcessingLog { get; private set; } = new List<string>();
 
+        #endregion
+
+        #region Constructor
+
         /// <summary>
-        /// Spracuje dávkový súbor a odstráni duplicitné riadky
+        /// Vytvorí novú inštanciu procesora dávkových súborov s definovanými parametrami
         /// </summary>
-        /// <param name="inputFilePath">Cesta k vstupnému súboru</param>
-        /// <param name="outputFilePath">Cesta pre výstupný súbor (voliteľné)</param>
-        /// <returns>True ak bolo spracovanie úspešné</returns>
-        public bool ProcessBatchFileAndRemoveDuplicates(string inputFilePath, string outputFilePath = null)
+        public BatchFileProcessor(
+            string separator,
+            int dayColIndex,
+            int idColIndex,
+            int serviceCodeColIndex,
+            int nameColIndex = -1,
+            int pointsColIndex = -1,
+            bool sortByName = true,
+            bool renumberRows = true,
+            bool removeDuplicates = true)
+        {
+            columnSeparator = separator;
+            dayColumnIndex = dayColIndex;
+            idColumnIndex = idColIndex;
+            serviceCodeColumnIndex = serviceCodeColIndex;
+            nameColumnIndex = nameColIndex;
+            pointsColumnIndex = pointsColIndex;
+            this.sortByName = sortByName;
+            this.renumberRows = renumberRows;
+            this.removeDuplicates = removeDuplicates;
+
+            ProcessingLog = new List<string>();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Asynchrónne spracuje dávkový súbor podľa nakonfigurovaných parametrov
+        /// </summary>
+        public async Task<ProcessingResult> ProcessBatchFileAsync(string inputFilePath, string outputFilePath = null)
+        {
+            return await Task.Run(() => ProcessBatchFile(inputFilePath, outputFilePath));
+        }
+
+        /// <summary>
+        /// Spracuje dávkový súbor podľa nakonfigurovaných parametrov
+        /// </summary>
+        public ProcessingResult ProcessBatchFile(string inputFilePath, string outputFilePath = null)
         {
             DuplicatesRemoved = 0;
             ProcessingLog.Clear();
+
+            var result = new ProcessingResult
+            {
+                InputFilePath = inputFilePath,
+                FileName = Path.GetFileName(inputFilePath),
+                ProcessingLog = new List<string>()
+            };
 
             // Ak nie je zadaný výstupný súbor, vytvoríme nový názov
             if (string.IsNullOrEmpty(outputFilePath))
             {
                 outputFilePath = Path.Combine(
                     Path.GetDirectoryName(inputFilePath),
-                    Path.GetFileNameWithoutExtension(inputFilePath) + "_noDuplicates" + Path.GetExtension(inputFilePath));
+                    "processed_" + Path.GetFileName(inputFilePath));
             }
+            result.OutputFilePath = outputFilePath;
 
             try
             {
                 // Kontrola existencie súboru
                 if (!File.Exists(inputFilePath))
                 {
-                    ProcessingLog.Add($"Súbor sa nenašiel: {inputFilePath}");
-                    return false;
+                    LogMessage($"Súbor sa nenašiel: {inputFilePath}", result);
+                    result.Success = false;
+                    return result;
                 }
 
                 // Načítanie všetkých riadkov zo súboru
                 string[] lines = File.ReadAllLines(inputFilePath);
-                ProcessingLog.Add($"Načítaných {lines.Length} riadkov zo súboru");
+                LogMessage($"Načítaných {lines.Length} riadkov zo súboru", result);
 
                 if (lines.Length < 3)
                 {
-                    ProcessingLog.Add("Súbor neobsahuje dostatok riadkov na spracovanie");
-                    return false;
+                    LogMessage("Súbor neobsahuje dostatok riadkov na spracovanie", result);
+                    result.Success = false;
+                    return result;
                 }
 
-                // Extrakcia hlavičky (prvý riadok)
+                // Počítanie pôvodných bodov (ešte pred akýmkoľvek spracovaním)
+                if (pointsColumnIndex >= 0)
+                {
+                    result.OriginalPointsCount = CalculateTotalPoints(lines);
+                    LogMessage($"Celkový počet bodov v pôvodnom súbore: {result.OriginalPointsCount}", result);
+                }
+
+                // Extrakcia hlavičky (prvý riadok) a počtu záznamov
                 string headerLine = lines[0];
-                string[] headerParts = headerLine.Split('|');
+                string[] headerParts = headerLine.Split(new[] { columnSeparator }, StringSplitOptions.None);
 
                 // Extrakcia počtu položiek v hlavičke (na 5. pozícii, index 4)
                 int recordCount = 0;
@@ -63,100 +135,147 @@ namespace CountAndSortWinFormsAppNetFr4
                 {
                     int.TryParse(headerParts[4], out recordCount);
                 }
-                ProcessingLog.Add($"Pôvodný počet záznamov v hlavičke: {recordCount}");
+                result.OriginalRecordCount = recordCount;
+                LogMessage($"Pôvodný počet záznamov v hlavičke: {recordCount}", result);
 
                 // Druhý riadok obsahuje údaje o dávke, necháme ho bez zmeny
                 string batchInfoLine = lines[1];
 
-                // Spracovanie riadkov s údajmi klientov (od 3. riadku)
-                var uniqueRecords = new Dictionary<string, int>(); // Kľúč -> index riadku
-                var duplicateIndices = new List<int>();
+                // Extrakcia skutočného počtu dátových riadkov
+                int actualDataRowCount = lines.Length - 2;
+                LogMessage($"Skutočný počet dátových riadkov: {actualDataRowCount}", result);
 
-                // Vytvoríme zoznam duplicít podľa kombinácie dňa, rodného čísla a kódu výkonu
+                // Spracovanie riadkov s údajmi (od 3. riadku)
+                List<string> processedLines = new List<string>();
+                processedLines.Add(headerLine);  // Pridáme hlavičku (aktualizujeme ju neskôr)
+                processedLines.Add(batchInfoLine); // Pridáme informácie o dávke
+
+                // Spracovanie dátových riadkov
+                List<string[]> dataRows = new List<string[]>();
                 for (int i = 2; i < lines.Length; i++)
                 {
                     string line = lines[i].Trim();
                     if (string.IsNullOrEmpty(line)) continue;
 
-                    string[] parts = line.Split('|');
-                    if (parts.Length < 6) continue; // Potrebujeme minimálne 6 častí
-
-                    // Vytvorenie kľúča z kombinácie dňa, rodného čísla a kódu výkonu
-                    string day = parts[1];           // Deň (index 1)
-                    string personalId = parts[2];    // Rodné číslo (index 2) 
-                    string serviceCode = parts[5];   // Kód výkonu (index 5)
-
-                    string uniqueKey = $"{day}|{personalId}|{serviceCode}";
-
-                    // Kontrola, či tento kľúč už bol zaznamenaný
-                    if (uniqueRecords.ContainsKey(uniqueKey))
+                    string[] parts = line.Split(new[] { columnSeparator }, StringSplitOptions.None);
+                    if (parts.Length < Math.Max(Math.Max(dayColumnIndex, idColumnIndex), serviceCodeColumnIndex) + 1)
                     {
-                        // Našli sme duplicitu
-                        duplicateIndices.Add(i);
-                        DuplicatesRemoved++;
+                        LogMessage($"Riadok {i + 1} nemá dostatok stĺpcov, preskakujem", result);
+                        continue;
+                    }
 
-                        int originalLineIndex = uniqueRecords[uniqueKey];
-                        ProcessingLog.Add($"Nájdená duplicita: Riadok {i - 1} je duplikát riadku {originalLineIndex - 1}, kľúč: {uniqueKey}");
-                    }
-                    else
-                    {
-                        // Unikátny záznam, pridáme ho do slovníka
-                        uniqueRecords[uniqueKey] = i;
-                    }
+                    dataRows.Add(parts);
                 }
 
-                ProcessingLog.Add($"Celkový počet nájdených duplicít: {DuplicatesRemoved}");
+                // Spracovanie dátových riadkov podľa nakonfigurovaných nastavení
+                List<string[]> processedDataRows;
 
-                // Ak nemáme žiadne duplicity, nemusíme vytvárať nový súbor
-                if (DuplicatesRemoved == 0)
+                // 1. Odstránenie duplicít (ak je nastavené)
+                if (removeDuplicates)
                 {
-                    ProcessingLog.Add("Žiadne duplicity neboli nájdené, súbor zostáva nezmenený.");
-                    return true;
+                    processedDataRows = RemoveDuplicates(dataRows, result);
+                }
+                else
+                {
+                    processedDataRows = dataRows;
+                }
+
+                // 2. Zoradenie podľa mena (ak je nastavené)
+                if (sortByName && nameColumnIndex >= 0)
+                {
+                    processedDataRows = SortByName(processedDataRows, result);
+                }
+
+                // 3. Prečíslovanie riadkov (ak je nastavené)
+                if (renumberRows)
+                {
+                    processedDataRows = RenumberRows(processedDataRows, result);
                 }
 
                 // Aktualizácia počtu záznamov v hlavičke
-                int newRecordCount = recordCount - DuplicatesRemoved;
-                headerParts[4] = newRecordCount.ToString();
-                string newHeaderLine = string.Join("|", headerParts);
-                ProcessingLog.Add($"Aktualizovaný počet záznamov v hlavičke: {newRecordCount}");
+                int newRecordCount = processedDataRows.Count;
+                result.ProcessedRecordCount = newRecordCount;
 
-                // Vytvorenie nového zoznamu riadkov bez duplicít a s prečíslovaním
-                var outputLines = new List<string>();
-                outputLines.Add(newHeaderLine);   // Aktualizovaná hlavička
-                outputLines.Add(batchInfoLine);   // Informácie o dávke
-
-                int newLineNumber = 1;
-                for (int i = 2; i < lines.Length; i++)
+                if (headerParts.Length > 4)
                 {
-                    // Ak je tento index v zozname duplicít, preskočíme ho
-                    if (duplicateIndices.Contains(i))
-                        continue;
+                    headerParts[4] = newRecordCount.ToString();
+                    string newHeaderLine = string.Join(columnSeparator, headerParts);
+                    processedLines[0] = newHeaderLine;
+                    LogMessage($"Aktualizovaný počet záznamov v hlavičke: {newRecordCount}", result);
+                }
 
-                    string line = lines[i];
-                    string[] parts = line.Split('|');
+                // Konverzia spracovaných dátových riadkov späť na reťazce
+                foreach (var parts in processedDataRows)
+                {
+                    processedLines.Add(string.Join(columnSeparator, parts));
+                }
 
-                    // Prečíslovanie riadkov - prvý stĺpec je poradové číslo
-                    if (parts.Length > 0)
-                    {
-                        parts[0] = newLineNumber.ToString();
-                        line = string.Join("|", parts);
-                        newLineNumber++;
-                    }
-
-                    outputLines.Add(line);
+                // Počítanie nových bodov (po spracovaní)
+                if (pointsColumnIndex >= 0)
+                {
+                    result.ProcessedPointsCount = CalculateTotalPoints(processedLines.ToArray());
+                    LogMessage($"Celkový počet bodov po spracovaní: {result.ProcessedPointsCount}", result);
                 }
 
                 // Zápis výsledku do súboru
-                File.WriteAllLines(outputFilePath, outputLines);
-                ProcessingLog.Add($"Výsledný súbor uložený do: {outputFilePath}");
+                File.WriteAllLines(outputFilePath, processedLines);
+                LogMessage($"Výsledný súbor uložený do: {outputFilePath}", result);
 
-                return true;
+                result.Success = true;
+                return result;
             }
             catch (Exception ex)
             {
-                ProcessingLog.Add($"Chyba pri spracovaní súboru: {ex.Message}");
-                return false;
+                LogMessage($"Chyba pri spracovaní súboru: {ex.Message}", result);
+                result.Success = false;
+                result.ErrorMessage = ex.Message;
+                return result;
             }
+        }
+
+        /// <summary>
+        /// Vypočíta celkový počet bodov v súbore na základe určeného stĺpca
+        /// </summary>
+        public int CalculateTotalPoints(string[] lines)
+        {
+            if (pointsColumnIndex < 0) return 0;
+
+            int totalPoints = 0;
+            int errorCount = 0;
+
+            // Prechádzame všetky riadky okrem prvých dvoch (hlavička a info o dávke)
+            for (int i = 2; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (string.IsNullOrEmpty(line)) continue;
+
+                string[] parts = line.Split(new[] { columnSeparator }, StringSplitOptions.None);
+
+                if (parts.Length <= pointsColumnIndex)
+                {
+                    errorCount++;
+                    continue;
+                }
+
+                string pointsValue = parts[pointsColumnIndex].Trim();
+                if (string.IsNullOrEmpty(pointsValue))
+                {
+                    errorCount++;
+                    continue;
+                }
+
+                if (int.TryParse(pointsValue, out int points))
+                {
+                    totalPoints += points;
+                }
+                else
+                {
+                    errorCount++;
+                }
+            }
+
+            LogMessage($"Celkový počet bodov: {totalPoints}, chybných riadkov: {errorCount}");
+            return totalPoints;
         }
 
         /// <summary>
@@ -166,5 +285,112 @@ namespace CountAndSortWinFormsAppNetFr4
         {
             return string.Join(Environment.NewLine, ProcessingLog);
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private List<string[]> RemoveDuplicates(List<string[]> rows, ProcessingResult result)
+        {
+            var uniqueRecords = new Dictionary<string, string[]>();
+            int duplicateCount = 0;
+
+            foreach (var parts in rows)
+            {
+                // Kontrola, či má riadok dostatočný počet stĺpcov
+                if (parts.Length <= Math.Max(Math.Max(dayColumnIndex, idColumnIndex), serviceCodeColumnIndex))
+                {
+                    LogMessage("Preskakujem riadok s nedostatočným počtom stĺpcov", result);
+                    continue;
+                }
+
+                // Vytvorenie kľúča z kombinácie dňa, rodného čísla a kódu výkonu
+                string day = parts.Length > dayColumnIndex ? parts[dayColumnIndex] : "";
+                string personalId = parts.Length > idColumnIndex ? parts[idColumnIndex] : "";
+                string serviceCode = parts.Length > serviceCodeColumnIndex ? parts[serviceCodeColumnIndex] : "";
+
+                string uniqueKey = $"{day}|{personalId}|{serviceCode}";
+
+                if (!uniqueRecords.ContainsKey(uniqueKey))
+                {
+                    uniqueRecords[uniqueKey] = parts;
+                }
+                else
+                {
+                    duplicateCount++;
+                }
+            }
+
+            DuplicatesRemoved = duplicateCount;
+            LogMessage($"Odstránených duplicít: {duplicateCount}", result);
+
+            return uniqueRecords.Values.ToList();
+        }
+
+        private List<string[]> SortByName(List<string[]> rows, ProcessingResult result)
+        {
+            if (nameColumnIndex < 0 || rows.Count == 0)
+            {
+                LogMessage("Neplatný index mena alebo prázdny zoznam, zoradenie preskočené", result);
+                return rows;
+            }
+
+            // Zoradenie podľa mena a potom podľa ID
+            var sortedRows = rows
+                .OrderBy(parts => parts.Length > nameColumnIndex ? parts[nameColumnIndex] : "")
+                .ThenBy(parts => parts.Length > idColumnIndex && idColumnIndex >= 0 ?
+                    (int.TryParse(parts[idColumnIndex], out int id) ? id : 0) : 0)
+                .ToList();
+
+            LogMessage($"Riadky zoradené podľa mena (stĺpec {nameColumnIndex + 1})", result);
+            return sortedRows;
+        }
+
+        private List<string[]> RenumberRows(List<string[]> rows, ProcessingResult result)
+        {
+            int newNumber = 1;
+            var renumberedRows = new List<string[]>();
+
+            foreach (var parts in rows)
+            {
+                if (parts.Length > 0)
+                {
+                    parts[0] = newNumber++.ToString();
+                }
+                renumberedRows.Add(parts);
+            }
+
+            LogMessage("Riadky prečíslované", result);
+            return renumberedRows;
+        }
+
+        private void LogMessage(string message, ProcessingResult result = null)
+        {
+            ProcessingLog.Add(message);
+            if (result != null)
+            {
+                result.ProcessingLog.Add(message);
+            }
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Trieda pre výsledky spracovania dávkového súboru
+    /// </summary>
+    public class ProcessingResult
+    {
+        public bool Success { get; set; }
+        public string InputFilePath { get; set; }
+        public string OutputFilePath { get; set; }
+        public string FileName { get; set; }
+        public int DuplicatesRemoved { get; set; }
+        public int OriginalRecordCount { get; set; }
+        public int ProcessedRecordCount { get; set; }
+        public int OriginalPointsCount { get; set; }
+        public int ProcessedPointsCount { get; set; }
+        public string ErrorMessage { get; set; }
+        public List<string> ProcessingLog { get; set; } = new List<string>();
     }
 }
