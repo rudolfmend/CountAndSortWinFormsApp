@@ -1034,6 +1034,20 @@ namespace CountAndSortWinFormsAppNetFr4
                 }
             }
 
+            // Konverzia ProcessingResult na FileProcessingResult
+            var fileResults = results.Select(r => new FileProcessingResult
+            {
+                FileName = r.FileName,
+                Success = r.Success,
+                OutputPath = r.OutputFilePath,
+                RemovedRows = r.OriginalRecordCount - r.ProcessedRecordCount,
+                OriginalRows = r.OriginalRecordCount,
+                ProcessedRows = r.ProcessedRecordCount,
+                OriginalPoints = r.OriginalPointsCount,
+                ProcessedPoints = r.ProcessedPointsCount,
+                ErrorMessage = r.ErrorMessage
+            }).ToList();
+
             // Asking the user if they want to save the results to a file
             var dialogResult = MessageBox.Show(
                 message.ToString() + $"(\n\n {Properties.Strings.MessageDoYouWantSaveDetailedResult}",
@@ -1043,7 +1057,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             if (dialogResult == DialogResult.Yes)
             {
-                SaveProcessingResults(results, totalFilesProcessed, totalOriginalPoints, totalProcessedPoints);
+                SaveProcessingResults(fileResults, totalFilesProcessed, totalOriginalPoints, totalProcessedPoints);
             }
         }
 

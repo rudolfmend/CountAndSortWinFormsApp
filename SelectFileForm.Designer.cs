@@ -55,20 +55,23 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ColumnToCountToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.NumericUpDownIdColumn = new System.Windows.Forms.NumericUpDown();
             this.NumericUpDownNameColumn = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDownServiceCodeColumn = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDownDayColumn = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDownDiagnosisColumn = new System.Windows.Forms.NumericUpDown();
-            this.LabelServiceCodeColumn = new System.Windows.Forms.Label();
             this.LabelNameColumn = new System.Windows.Forms.Label();
             this.LabelIdColumn = new System.Windows.Forms.Label();
             this.ComboBoxExportSeparatorType = new System.Windows.Forms.ComboBox();
             this.LabelExportDataSeparator = new System.Windows.Forms.Label();
             this.DataStructureSeparatorToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ButtonShowAnalysis = new System.Windows.Forms.Button();
+            this.NumericUpDownDayColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownServiceCodeColumn = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownDiagnosisColumn = new System.Windows.Forms.NumericUpDown();
+            this.LabelServiceCodeColumn = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownPointsColumn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownIdColumn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNameColumn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDayColumn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownServiceCodeColumn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDiagnosisColumn)).BeginInit();
             this.SuspendLayout();
             // 
             // ButtonSelectAFile
@@ -367,95 +370,6 @@ namespace CountAndSortWinFormsAppNetFr4
             0,
             0,
             0});
-            //
-            // NumericUpDownDayColumn
-            //
-            this.NumericUpDownDayColumn = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDownDayColumn.AutoSize = true;
-            this.NumericUpDownDayColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
-            this.NumericUpDownDayColumn.Location = new System.Drawing.Point(783, 245);
-            this.NumericUpDownDayColumn.Maximum = new decimal(new int[] {
-                50,
-                0,
-                0,
-                0});
-            this.NumericUpDownDayColumn.Minimum = new decimal(new int[] {
-                1,
-                0,
-                0,
-                0});
-            this.NumericUpDownDayColumn.Name = "NumericUpDownDayColumn";
-            this.NumericUpDownDayColumn.Size = new System.Drawing.Size(68, 27);
-            this.NumericUpDownDayColumn.TabIndex = 31;
-            this.NumericUpDownDayColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NumericUpDownDayColumn.Value = new decimal(new int[] {
-                1,
-                0,
-                0,
-                0});
-            //
-            // NumericUpDownServiceCodeColumn
-            //
-            this.NumericUpDownServiceCodeColumn = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDownServiceCodeColumn.AutoSize = true;
-            this.NumericUpDownServiceCodeColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
-            this.NumericUpDownServiceCodeColumn.Location = new System.Drawing.Point(783, 207);
-            this.NumericUpDownServiceCodeColumn.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.NumericUpDownServiceCodeColumn.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NumericUpDownServiceCodeColumn.Name = "NumericUpDownServiceCodeColumn";
-            this.NumericUpDownServiceCodeColumn.Size = new System.Drawing.Size(68, 27);
-            this.NumericUpDownServiceCodeColumn.TabIndex = 31;
-            this.NumericUpDownServiceCodeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NumericUpDownServiceCodeColumn.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            //
-            // NumericUpDownDiagnosisColumn
-            //
-            this.NumericUpDownDiagnosisColumn = new System.Windows.Forms.NumericUpDown();
-            this.NumericUpDownDiagnosisColumn.AutoSize = true;
-            this.NumericUpDownDiagnosisColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
-            this.NumericUpDownDiagnosisColumn.Location = new System.Drawing.Point(783, 169);
-            this.NumericUpDownDiagnosisColumn.Maximum = new decimal(new int[] {
-                50,
-                0,
-                0,
-                0});
-            this.NumericUpDownDiagnosisColumn.Minimum = new decimal(new int[] {
-                1,
-                0,
-                0,
-                0});
-            this.NumericUpDownDiagnosisColumn.Name = "NumericUpDownDiagnosisColumn";
-            this.NumericUpDownDiagnosisColumn.Size = new System.Drawing.Size(68, 27);
-            this.NumericUpDownDiagnosisColumn.TabIndex = 31;
-            this.NumericUpDownDiagnosisColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.NumericUpDownDiagnosisColumn.Value = new decimal(new int[] {
-                6,
-                0,
-                0,
-                0});
-            //
-            // LabelServiceCodeColumn
-            //
-            this.LabelServiceCodeColumn = new System.Windows.Forms.Label();
-            this.LabelServiceCodeColumn.AutoSize = true;
-            this.LabelServiceCodeColumn.Location = new System.Drawing.Point(562, 209);
-            this.LabelServiceCodeColumn.Name = "LabelServiceCodeColumn";
-            this.LabelServiceCodeColumn.Size = new System.Drawing.Size(199, 22);
-            this.LabelServiceCodeColumn.TabIndex = 32;
-            this.LabelServiceCodeColumn.Text = "Stĺpec s kódom výkonu:";
-            this.LabelServiceCodeColumn.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // LabelNameColumn
             // 
@@ -523,6 +437,91 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ButtonShowAnalysis.UseVisualStyleBackColor = true;
             this.ButtonShowAnalysis.Click += new System.EventHandler(this.ButtonShowAnalysis_Click);
             // 
+            // NumericUpDownDayColumn
+            // 
+            this.NumericUpDownDayColumn.AutoSize = true;
+            this.NumericUpDownDayColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            this.NumericUpDownDayColumn.Location = new System.Drawing.Point(783, 245);
+            this.NumericUpDownDayColumn.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.NumericUpDownDayColumn.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NumericUpDownDayColumn.Name = "NumericUpDownDayColumn";
+            this.NumericUpDownDayColumn.Size = new System.Drawing.Size(68, 27);
+            this.NumericUpDownDayColumn.TabIndex = 31;
+            this.NumericUpDownDayColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownDayColumn.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // NumericUpDownServiceCodeColumn
+            // 
+            this.NumericUpDownServiceCodeColumn.AutoSize = true;
+            this.NumericUpDownServiceCodeColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            this.NumericUpDownServiceCodeColumn.Location = new System.Drawing.Point(783, 207);
+            this.NumericUpDownServiceCodeColumn.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.NumericUpDownServiceCodeColumn.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NumericUpDownServiceCodeColumn.Name = "NumericUpDownServiceCodeColumn";
+            this.NumericUpDownServiceCodeColumn.Size = new System.Drawing.Size(68, 27);
+            this.NumericUpDownServiceCodeColumn.TabIndex = 31;
+            this.NumericUpDownServiceCodeColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownServiceCodeColumn.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // NumericUpDownDiagnosisColumn
+            // 
+            this.NumericUpDownDiagnosisColumn.AutoSize = true;
+            this.NumericUpDownDiagnosisColumn.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            this.NumericUpDownDiagnosisColumn.Location = new System.Drawing.Point(783, 169);
+            this.NumericUpDownDiagnosisColumn.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.NumericUpDownDiagnosisColumn.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NumericUpDownDiagnosisColumn.Name = "NumericUpDownDiagnosisColumn";
+            this.NumericUpDownDiagnosisColumn.Size = new System.Drawing.Size(68, 27);
+            this.NumericUpDownDiagnosisColumn.TabIndex = 31;
+            this.NumericUpDownDiagnosisColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownDiagnosisColumn.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            // 
+            // LabelServiceCodeColumn
+            // 
+            this.LabelServiceCodeColumn.AutoSize = true;
+            this.LabelServiceCodeColumn.Location = new System.Drawing.Point(562, 209);
+            this.LabelServiceCodeColumn.Name = "LabelServiceCodeColumn";
+            this.LabelServiceCodeColumn.Size = new System.Drawing.Size(199, 22);
+            this.LabelServiceCodeColumn.TabIndex = 32;
+            this.LabelServiceCodeColumn.Text = "Stĺpec s kódom výkonu:";
+            this.LabelServiceCodeColumn.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // SelectFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -570,6 +569,10 @@ namespace CountAndSortWinFormsAppNetFr4
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownPointsColumn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownIdColumn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNameColumn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDayColumn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownServiceCodeColumn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDiagnosisColumn)).EndInit();
+
             this.ResumeLayout(false);
             this.PerformLayout();
 

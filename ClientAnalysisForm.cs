@@ -13,10 +13,18 @@ using OfficeOpenXml.Drawing.Chart;
 
 namespace CountAndSortWinFormsAppNetFr4
 {
-    public partial class ClientAnalysisForm
+    public partial class ClientAnalysisForm : Form
     {
+        private List<ClientInfo> clients = new List<ClientInfo>();
+
         // V starších verziách EPPlus nie je LicenseContext v rovnakom namespace
         // Použijeme alternatívny spôsob nastavenia licencie, ktorý funguje pre verziu 4.5.3.3
+
+        public ClientAnalysisForm(List<ClientInfo> clientsList)
+        {
+            InitializeComponent();
+            this.clients = clientsList ?? new List<ClientInfo>();
+        }
 
         // Metóda pre export do Excel s EPPlus
         private void ExportWithEPPlus(string filePath)
@@ -169,21 +177,25 @@ namespace CountAndSortWinFormsAppNetFr4
                     );
 
                     // Nastavenia pre koláčový graf - opatrne s API, ktoré nemusí existovať v starších verziách
+                    // Nastavenia pre koláčový graf - opatrne s API, ktoré nemusí existovať v starších verziách
                     try
                     {
-                        var dataLabel = pieChart.DataLabel;
-                        if (dataLabel != null)
+                        // Skúsime dynamicky pristúpiť k vlastnosti DataLabel pomocou reflexie
+                        var dataLabelProperty = pieChart.GetType().GetProperty("DataLabel");
+                        if (dataLabelProperty != null)
                         {
-                            dataLabel.ShowPercent = true;
+                            var dataLabel = dataLabelProperty.GetValue(pieChart, null);
+                            if (dataLabel != null)
+                            {
+                                var showPercentProperty = dataLabel.GetType().GetProperty("ShowPercent");
+                                if (showPercentProperty != null)
+                                {
+                                    showPercentProperty.SetValue(dataLabel, true, null);
+                                }
+                            }
                         }
                     }
                     catch { /* Ignorujeme chyby s DataLabel, ak API nefunguje */ }
-
-                    try
-                    {
-                        pieChart.Legend.Position = eLegendPosition.Right;
-                    }
-                    catch { /* Ignorujeme chyby s legendou, ak API nefunguje */ }
 
                     // Vytvorenie stĺpcového grafu pre hodnoty
                     var valueChart = chartsSheet.Drawings.AddChart("ValueChart", eChartType.ColumnClustered);

@@ -70,7 +70,7 @@ namespace CountAndSortWinFormsAppNetFr4
         /// </summary>
         public async Task<ProcessingResult> ProcessBatchFileAsync(string inputFilePath, string outputFilePath = null)
         {
-            return await Task.Run(() => ProcessBatchFile(inputFilePath, outputFilePath));
+            return await Task.Factory.StartNew(() => ProcessBatchFile(inputFilePath, outputFilePath));
         }
 
         /// <summary>
