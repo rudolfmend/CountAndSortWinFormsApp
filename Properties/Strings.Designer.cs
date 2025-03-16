@@ -142,7 +142,16 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cancel.
+        ///   Looks up a localized string similar to Table settings.
+        /// </summary>
+        internal static string ButtonTableSettings {
+            get {
+                return ResourceManager.GetString("ButtonTableSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string Cancel {
             get {
@@ -264,6 +273,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string DialogSelectOutputFolder {
             get {
                 return ResourceManager.GetString("DialogSelectOutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error saving file.
+        /// </summary>
+        internal static string ErrorSavingFile {
+            get {
+                return ResourceManager.GetString("ErrorSavingFile", resourceCulture);
             }
         }
         
@@ -444,6 +462,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string LabelDateOfServiceColumn {
             get {
                 return ResourceManager.GetString("LabelDateOfServiceColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column &quot;Diagnosis&quot;.
+        /// </summary>
+        internal static string LabelDiagnosisColumn {
+            get {
+                return ResourceManager.GetString("LabelDiagnosisColumn", resourceCulture);
             }
         }
         
@@ -727,6 +754,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You do not have write access to the folder.
+        /// </summary>
+        internal static string MessageNoAccessToFolder {
+            get {
+                return ResourceManager.GetString("MessageNoAccessToFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No files selected.
         /// </summary>
         internal static string MessageNoFilesSelected {
@@ -938,6 +974,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string RowsBeforeLabel {
             get {
                 return ResourceManager.GetString("RowsBeforeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         

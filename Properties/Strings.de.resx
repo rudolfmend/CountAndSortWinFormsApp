@@ -261,7 +261,7 @@ Punkte nach der Verarbeitung: {5}</value>
     <value>Warnung</value>
   </data>
   <data name="LabelIdColumn" xml:space="preserve">
-    <value>Spaltennummer "Identifikator" (Nr.)</value>
+    <value>Spaltennummer "Identifikator"</value>
   </data>
   <data name="LabelExportDataSeparator" xml:space="preserve">
     <value>Trennzeichen für den Dateiexport</value>
@@ -384,7 +384,7 @@ Punkte nach der Verarbeitung: {5}</value>
     <value>Ausgewählte verarbeiten</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>abbrechen</value>
+    <value>Abbrechen</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>Datei</value>
@@ -444,9 +444,24 @@ Punkte nach der Verarbeitung: {5}</value>
     <value>Spaltennummer "Leistung"</value>
   </data>
   <data name="LabelDateOfServiceColumn" xml:space="preserve">
-    <value>Spaltennummer "Datum der Leistung"</value>
+    <value>Spalte. "Datum der Leistung"</value>
   </data>
   <data name="Analysis" xml:space="preserve">
     <value>Analyse</value>
+  </data>
+  <data name="MessageNoAccessToFolder" xml:space="preserve">
+    <value>Sie haben keinen Schreibzugriff auf den Ordner.</value>
+  </data>
+  <data name="ErrorSavingFile" xml:space="preserve">
+    <value>Fehler beim Speichern der Datei</value>
+  </data>
+  <data name="ButtonTableSettings" xml:space="preserve">
+    <value>Tabellen einstellungen</value>
+  </data>
+  <data name="LabelDiagnosisColumn" xml:space="preserve">
+    <value>Spaltennummer "Diagnose"</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
   </data>
 </root>

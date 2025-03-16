@@ -384,7 +384,7 @@ Punkty po przetworzeniu: {5}</value>
     <value>Przetwórz wybrane</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>anulować</value>
+    <value>Anulować</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>plik</value>
@@ -448,5 +448,20 @@ Punkty po przetworzeniu: {5}</value>
   </data>
   <data name="Analysis" xml:space="preserve">
     <value>Analiza</value>
+  </data>
+  <data name="MessageNoAccessToFolder" xml:space="preserve">
+    <value>Nie masz uprawnień do zapisu w folderze.</value>
+  </data>
+  <data name="ErrorSavingFile" xml:space="preserve">
+    <value>Błąd podczas zapisywania pliku</value>
+  </data>
+  <data name="ButtonTableSettings" xml:space="preserve">
+    <value>Ustawienia tabeli</value>
+  </data>
+  <data name="LabelDiagnosisColumn" xml:space="preserve">
+    <value>Kolumna „Diagnoza”</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Ratować</value>
   </data>
 </root>

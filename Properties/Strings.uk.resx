@@ -384,7 +384,7 @@
     <value>Обробити вибрані</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>скасувати</value>
+    <value>Cкасувати</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>файл</value>
@@ -448,5 +448,20 @@
   </data>
   <data name="Analysis" xml:space="preserve">
     <value>Аналіз</value>
+  </data>
+  <data name="MessageNoAccessToFolder" xml:space="preserve">
+    <value>Ви не маєте прав на запис до папки.</value>
+  </data>
+  <data name="ErrorSavingFile" xml:space="preserve">
+    <value>Помилка збереження файлу</value>
+  </data>
+  <data name="ButtonTableSettings" xml:space="preserve">
+    <value>Параметри таблиці</value>
+  </data>
+  <data name="LabelDiagnosisColumn" xml:space="preserve">
+    <value>Колонка ""Діагноз""</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>зберегти</value>
   </data>
 </root>

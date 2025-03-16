@@ -383,7 +383,7 @@ Pontok a feldolgozás után: {5}</value>
     <value>A folyamat kiválasztva</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>törölni</value>
+    <value>Törölni</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>fájlt</value>
@@ -447,5 +447,20 @@ Pontok a feldolgozás után: {5}</value>
   </data>
   <data name="Analysis" xml:space="preserve">
     <value>Elemzés</value>
+  </data>
+  <data name="MessageNoAccessToFolder" xml:space="preserve">
+    <value>Nincs írási jogosultsága a mappához.</value>
+  </data>
+  <data name="ErrorSavingFile" xml:space="preserve">
+    <value>Hiba a fájl mentése közben</value>
+  </data>
+  <data name="ButtonTableSettings" xml:space="preserve">
+    <value>Táblázat beállítások</value>
+  </data>
+  <data name="LabelDiagnosisColumn" xml:space="preserve">
+    <value>"Diagnózis" Oszlopszám</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Megtakarítás</value>
   </data>
 </root>

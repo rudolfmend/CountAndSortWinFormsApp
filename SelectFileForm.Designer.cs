@@ -43,9 +43,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSortByName = new System.Windows.Forms.CheckBox();
             this.CheckBoxRemoveDuplicatesRows = new System.Windows.Forms.CheckBox();
             this.CheckBoxSelectAll = new System.Windows.Forms.CheckBox();
-            this.DataStructureSeparatorToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.LanguageToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.ColumnToCountToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.DataGridPreview = new System.Windows.Forms.DataGridView();
             this.TextBoxSelectOutputFolder = new System.Windows.Forms.TextBox();
             this.ListViewShowPointsValues = new System.Windows.Forms.ListView();
@@ -108,7 +106,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // 
             // ButtonTableSettings
             // 
-            this.ButtonTableSettings.Location = new System.Drawing.Point(368, 205);
+            this.ButtonTableSettings.Location = new System.Drawing.Point(566, 68);
             this.ButtonTableSettings.Name = "ButtonTableSettings";
             this.ButtonTableSettings.Size = new System.Drawing.Size(173, 52);
             this.ButtonTableSettings.TabIndex = 34;
@@ -140,7 +138,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxRenumberTheOrder.AutoSize = true;
             this.CheckBoxRenumberTheOrder.Checked = true;
             this.CheckBoxRenumberTheOrder.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckBoxRenumberTheOrder.Location = new System.Drawing.Point(235, 43);
+            this.CheckBoxRenumberTheOrder.Location = new System.Drawing.Point(234, 129);
             this.CheckBoxRenumberTheOrder.Name = "CheckBoxRenumberTheOrder";
             this.CheckBoxRenumberTheOrder.Size = new System.Drawing.Size(181, 26);
             this.CheckBoxRenumberTheOrder.TabIndex = 4;
@@ -152,7 +150,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSortByName.AutoSize = true;
             this.CheckBoxSortByName.Checked = true;
             this.CheckBoxSortByName.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckBoxSortByName.Location = new System.Drawing.Point(235, 75);
+            this.CheckBoxSortByName.Location = new System.Drawing.Point(234, 161);
             this.CheckBoxSortByName.Name = "CheckBoxSortByName";
             this.CheckBoxSortByName.Size = new System.Drawing.Size(183, 26);
             this.CheckBoxSortByName.TabIndex = 5;
@@ -164,7 +162,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxRemoveDuplicatesRows.AutoSize = true;
             this.CheckBoxRemoveDuplicatesRows.Checked = true;
             this.CheckBoxRemoveDuplicatesRows.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckBoxRemoveDuplicatesRows.Location = new System.Drawing.Point(235, 107);
+            this.CheckBoxRemoveDuplicatesRows.Location = new System.Drawing.Point(234, 193);
             this.CheckBoxRemoveDuplicatesRows.Name = "CheckBoxRemoveDuplicatesRows";
             this.CheckBoxRemoveDuplicatesRows.Size = new System.Drawing.Size(233, 26);
             this.CheckBoxRemoveDuplicatesRows.TabIndex = 7;
@@ -174,7 +172,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // CheckBoxSelectAll
             // 
             this.CheckBoxSelectAll.AutoSize = true;
-            this.CheckBoxSelectAll.Location = new System.Drawing.Point(235, 139);
+            this.CheckBoxSelectAll.Location = new System.Drawing.Point(234, 225);
             this.CheckBoxSelectAll.Name = "CheckBoxSelectAll";
             this.CheckBoxSelectAll.Size = new System.Drawing.Size(195, 26);
             this.CheckBoxSelectAll.TabIndex = 17;
@@ -182,24 +180,11 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSelectAll.UseVisualStyleBackColor = true;
             this.CheckBoxSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxSelectAll_CheckedChanged);
             // 
-            // DataStructureSeparatorToolTip
-            // 
-            this.DataStructureSeparatorToolTip.ShowAlways = true;
-            this.DataStructureSeparatorToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            // 
             // LanguageToolTip
             // 
             this.LanguageToolTip.ShowAlways = true;
             this.LanguageToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.LanguageToolTip.ToolTipTitle = "Výber jazyka / Language selection / Sprachauswahl";
-            // 
-            // ColumnToCountToolTip
-            // 
-            this.ColumnToCountToolTip.AutoPopDelay = 5000;
-            this.ColumnToCountToolTip.InitialDelay = 500;
-            this.ColumnToCountToolTip.ReshowDelay = 100;
-            this.ColumnToCountToolTip.ShowAlways = true;
-            this.ColumnToCountToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // DataGridPreview
             // 
@@ -239,11 +224,20 @@ namespace CountAndSortWinFormsAppNetFr4
             // LabelFileCount
             // 
             this.LabelFileCount.AutoSize = true;
-            this.LabelFileCount.Location = new System.Drawing.Point(994, 133);
+            this.LabelFileCount.Location = new System.Drawing.Point(583, 161);
             this.LabelFileCount.Name = "LabelFileCount";
             this.LabelFileCount.Size = new System.Drawing.Size(131, 22);
             this.LabelFileCount.TabIndex = 14;
             this.LabelFileCount.Text = "LabelFileCount";
+            // 
+            // LabelTotalPoints
+            // 
+            this.LabelTotalPoints.AutoSize = true;
+            this.LabelTotalPoints.Location = new System.Drawing.Point(583, 199);
+            this.LabelTotalPoints.Name = "LabelTotalPoints";
+            this.LabelTotalPoints.Size = new System.Drawing.Size(145, 22);
+            this.LabelTotalPoints.TabIndex = 15;
+            this.LabelTotalPoints.Text = "LabelTotalPoints";
             // 
             // LabelLanguagesChoice
             // 
@@ -256,15 +250,6 @@ namespace CountAndSortWinFormsAppNetFr4
             this.LabelLanguagesChoice.Size = new System.Drawing.Size(46, 31);
             this.LabelLanguagesChoice.TabIndex = 21;
             this.LabelLanguagesChoice.Text = "🌐";
-            // 
-            // LabelTotalPoints
-            // 
-            this.LabelTotalPoints.AutoSize = true;
-            this.LabelTotalPoints.Location = new System.Drawing.Point(994, 171);
-            this.LabelTotalPoints.Name = "LabelTotalPoints";
-            this.LabelTotalPoints.Size = new System.Drawing.Size(145, 22);
-            this.LabelTotalPoints.TabIndex = 15;
-            this.LabelTotalPoints.Text = "LabelTotalPoints";
             // 
             // SelectFileForm
             // 
@@ -318,11 +303,9 @@ namespace CountAndSortWinFormsAppNetFr4
         private Button ButtonShowAnalysis;
         private DataGridView DataGridPreview;
         private CheckBox CheckBoxSelectAll;
-        private ToolTip LanguageToolTip;
-        private ToolTip ColumnToCountToolTip;
-        private ToolTip DataStructureSeparatorToolTip;
         private ComboBox LanguageComboBox;
         private Label LabelLanguagesChoice;
+        private ToolTip LanguageToolTip;
     }
 }
 

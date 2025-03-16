@@ -292,6 +292,9 @@
       <DependentUpon>SelectFileForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="TableSettingsForm.resx">
+      <DependentUpon>TableSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="CountAndSortWinFormsAppNetFr4_TemporaryKey.pfx" />

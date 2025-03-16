@@ -381,7 +381,7 @@ Body po zpracování: {5}</value>
     <value>Zpracovat vybrané</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>zrušit</value>
+    <value>Zrušit</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>soubor</value>
@@ -445,5 +445,20 @@ Body po zpracování: {5}</value>
   </data>
   <data name="Analysis" xml:space="preserve">
     <value>Analýza</value>
+  </data>
+  <data name="MessageNoAccessToFolder" xml:space="preserve">
+    <value>Nemáte přístup pro zápis do složky</value>
+  </data>
+  <data name="ErrorSavingFile" xml:space="preserve">
+    <value>Chyba při ukládání souboru</value>
+  </data>
+  <data name="ButtonTableSettings" xml:space="preserve">
+    <value>Nastavení tabulky</value>
+  </data>
+  <data name="LabelDiagnosisColumn" xml:space="preserve">
+    <value>Č. sloupce "Diagnóza"</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Uložit</value>
   </data>
 </root>

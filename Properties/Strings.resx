@@ -385,7 +385,7 @@ Points after processing: {5}</value>
     <value>Process selected</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>cancel</value>
+    <value>Cancel</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>file</value>
@@ -450,5 +450,20 @@ Points after processing: {5}</value>
   </data>
   <data name="Analysis" xml:space="preserve">
     <value>Analysis</value>
+  </data>
+  <data name="MessageNoAccessToFolder" xml:space="preserve">
+    <value>You do not have write access to the folder</value>
+  </data>
+  <data name="ErrorSavingFile" xml:space="preserve">
+    <value>Error saving file</value>
+  </data>
+  <data name="ButtonTableSettings" xml:space="preserve">
+    <value>Table settings</value>
+  </data>
+  <data name="LabelDiagnosisColumn" xml:space="preserve">
+    <value>Column "Diagnosis"</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>
