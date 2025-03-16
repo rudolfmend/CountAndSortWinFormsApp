@@ -184,10 +184,10 @@
     <value>Počet súborov:</value>
   </data>
   <data name="LabelNameColumn" xml:space="preserve">
-    <value>Stĺpec "Meno" (číslo)</value>
+    <value>Č. stĺpca "Meno"</value>
   </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Stĺpec "Body" (číslo)</value>
+    <value>Č. stĺpca "Body"</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Celkový súčet:</value>
@@ -261,7 +261,7 @@ Body po spracovaní: {5}</value>
     <value>Varovanie</value>
   </data>
   <data name="LabelIdColumn" xml:space="preserve">
-    <value>Stĺpec "Identifikátor" (č.)</value>
+    <value>Č. stĺpca "Rodné č."</value>
   </data>
   <data name="LabelExportDataSeparator" xml:space="preserve">
     <value>Oddeľovač pre export súboru</value>
@@ -439,5 +439,14 @@ Body po spracovaní: {5}</value>
   </data>
   <data name="MessageUnsupportedFormat" xml:space="preserve">
     <value>Nepodporovaný formát súboru. Prosím, vyberte .xlsx alebo .csv.</value>
+  </data>
+  <data name="LabelServiceCodeColumn" xml:space="preserve">
+    <value>Č. stĺpca "Výkon"</value>
+  </data>
+  <data name="LabelDateOfServiceColumn" xml:space="preserve">
+    <value>Č. stĺpca "Dátum výkonu"</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>Analýza</value>
   </data>
 </root>

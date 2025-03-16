@@ -1655,26 +1655,6 @@ namespace CountAndSortWinFormsAppNetFr4
             });
         }
 
-        private void ComboBoxImportSeparatorType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            columnSeparator = ComboBoxImportSeparatorType.SelectedItem.ToString();
-
-            // If the file is loaded, reload the data with a new delimiter
-            // Ak je súbor načítaný, znovu načítať dáta s novým oddeľovačom
-            if (selectedFilePaths != null && selectedFilePaths.Count > 0)
-            {
-                try
-                {
-                    string[] lines = File.ReadAllLines(selectedFilePaths[0]);
-                    LoadDataToGrid(lines);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Chyba pri načítaní súboru: {ex.Message}",
-                        "Chyba", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
 
         private void ComboBoxImportSeparatorType_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -1730,6 +1710,7 @@ namespace CountAndSortWinFormsAppNetFr4
             ButtonProcessData.Text = Properties.Strings.ButtonProcessData;
             ButtonSelectOutputFolder.Text = Properties.Strings.ButtonSelectOutputFolder;
             ButtonSaveHistory.Text = Properties.Strings.ButtonSaveHistory;
+            ButtonShowAnalysis.Text = Properties.Strings.Analysis;
 
             CheckBoxRenumberTheOrder.Text = Properties.Strings.CheckBoxRenumberTheOrder;
             CheckBoxSortByName.Text = Properties.Strings.CheckBoxSortByName;
@@ -1741,7 +1722,8 @@ namespace CountAndSortWinFormsAppNetFr4
             LabelPointsColumn.Text = Properties.Strings.LabelPointsColumn ?? "Stĺpec s bodmi (číslo):";
             LabelNameColumn.Text = Properties.Strings.LabelNameColumn ?? "Stĺpec s menom:";
             LabelIdColumn.Text = Properties.Strings.LabelIdColumn ?? "Stĺpec s ID:";
-
+            LabelServiceCodeColumn.Text = Properties.Strings.LabelServiceCodeColumn ?? "Stĺpec s kódom služby:";
+            LabelDateOfServiceColumn.Text = Properties.Strings.LabelDateOfServiceColumn ?? "Stĺpec s dátumom služby:";
 
             // Získame aktuálne hodnoty
             int totalPoints = CalculateTotalPointsFromListView();
@@ -1858,6 +1840,11 @@ namespace CountAndSortWinFormsAppNetFr4
 
             var analysisForm = new ClientAnalysisForm(aggregatedClients);
             analysisForm.ShowDialog();
+        }
+
+        private void ButtonTableSettings_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

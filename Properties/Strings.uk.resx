@@ -184,10 +184,10 @@
     <value>Кількість файлів:</value>
   </data>
   <data name="LabelNameColumn" xml:space="preserve">
-    <value>Колонка "назва" (число)</value>
+    <value>Колонка "назва"</value>
   </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Колонка "балів" (число)</value>
+    <value>Колонка "балів"</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Загальна сума:</value>
@@ -439,5 +439,14 @@
   </data>
   <data name="MessageUnsupportedFormat" xml:space="preserve">
     <value>Непідтримуваний формат файлу. Виберіть .xlsx або .csv.</value>
+  </data>
+  <data name="LabelServiceCodeColumn" xml:space="preserve">
+    <value>Колонка  "медична процедура"</value>
+  </data>
+  <data name="LabelDateOfServiceColumn" xml:space="preserve">
+    <value>Колонка "Дата процедури"</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>Аналіз</value>
   </data>
 </root>

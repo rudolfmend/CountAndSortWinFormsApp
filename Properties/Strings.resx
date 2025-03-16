@@ -184,10 +184,10 @@
     <value>File Count:</value>
   </data>
   <data name="LabelNameColumn" xml:space="preserve">
-    <value>Column "Name" (Nr.)</value>
+    <value>Column "Name"</value>
   </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Column "Points" (Nr.)</value>
+    <value>Column "Points"</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Total Sum:</value>
@@ -262,7 +262,7 @@ Points after processing: {5}</value>
     <value>Warning</value>
   </data>
   <data name="LabelIdColumn" xml:space="preserve">
-    <value>Column "Identifier" (Nr.)</value>
+    <value>Column "Birth Identifier"</value>
   </data>
   <data name="LabelExportDataSeparator" xml:space="preserve">
     <value>File export separator</value>
@@ -440,5 +440,15 @@ Points after processing: {5}</value>
   </data>
   <data name="MessageUnsupportedFormat" xml:space="preserve">
     <value>Unsupported file format. Please select .xlsx or .csv.</value>
+  </data>
+  <data name="LabelServiceCodeColumn" xml:space="preserve">
+    <value>Column "Medical procedure"</value>
+    <comment>Service code column number</comment>
+  </data>
+  <data name="LabelDateOfServiceColumn" xml:space="preserve">
+    <value>Column "Date of Procedure"</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>Analysis</value>
   </data>
 </root>

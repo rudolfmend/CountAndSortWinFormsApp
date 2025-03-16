@@ -184,10 +184,10 @@
     <value>Anzahl der Dateien:</value>
   </data>
   <data name="LabelNameColumn" xml:space="preserve">
-    <value>Spalte "Name" (Nr.)</value>
+    <value>Spaltennummer "Name"</value>
   </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Spalte "Punkte" (Nr.)</value>
+    <value>Spaltennummer "Punkte"</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Gesamtsumme:</value>
@@ -261,7 +261,7 @@ Punkte nach der Verarbeitung: {5}</value>
     <value>Warnung</value>
   </data>
   <data name="LabelIdColumn" xml:space="preserve">
-    <value>Spalte "Identifikator" (Nr.)</value>
+    <value>Spaltennummer "Identifikator" (Nr.)</value>
   </data>
   <data name="LabelExportDataSeparator" xml:space="preserve">
     <value>Trennzeichen für den Dateiexport</value>
@@ -439,5 +439,14 @@ Punkte nach der Verarbeitung: {5}</value>
   </data>
   <data name="MessageUnsupportedFormat" xml:space="preserve">
     <value>Nicht unterstütztes Dateiformat. Bitte wählen Sie .xlsx oder .csv.</value>
+  </data>
+  <data name="LabelServiceCodeColumn" xml:space="preserve">
+    <value>Spaltennummer "Leistung"</value>
+  </data>
+  <data name="LabelDateOfServiceColumn" xml:space="preserve">
+    <value>Spaltennummer "Datum der Leistung"</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>Analyse</value>
   </data>
 </root>

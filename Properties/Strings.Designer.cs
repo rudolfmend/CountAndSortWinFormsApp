@@ -70,6 +70,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analysis.
+        /// </summary>
+        internal static string Analysis {
+            get {
+                return ResourceManager.GetString("Analysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to - ... and other .
         /// </summary>
         internal static string AndOther {
@@ -430,6 +439,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Column &quot;Date of Procedure&quot;.
+        /// </summary>
+        internal static string LabelDateOfServiceColumn {
+            get {
+                return ResourceManager.GetString("LabelDateOfServiceColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File export separator.
         /// </summary>
         internal static string LabelExportDataSeparator {
@@ -448,7 +466,7 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Column &quot;Identifier&quot; (Nr.).
+        ///   Looks up a localized string similar to Column &quot;Birth Identifier&quot;.
         /// </summary>
         internal static string LabelIdColumn {
             get {
@@ -466,7 +484,7 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Column &quot;Name&quot; (Nr.).
+        ///   Looks up a localized string similar to Column &quot;Name&quot;.
         /// </summary>
         internal static string LabelNameColumn {
             get {
@@ -475,11 +493,20 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Column &quot;Points&quot; (Nr.).
+        ///   Looks up a localized string similar to Column &quot;Points&quot;.
         /// </summary>
         internal static string LabelPointsColumn {
             get {
                 return ResourceManager.GetString("LabelPointsColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column &quot;Medical procedure&quot;.
+        /// </summary>
+        internal static string LabelServiceCodeColumn {
+            get {
+                return ResourceManager.GetString("LabelServiceCodeColumn", resourceCulture);
             }
         }
         

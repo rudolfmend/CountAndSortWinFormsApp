@@ -184,10 +184,10 @@
     <value>Liczba plików:</value>
   </data>
   <data name="LabelNameColumn" xml:space="preserve">
-    <value>Kolumna „Nazwa” (numer)</value>
+    <value>Kolumna „Nazwa”</value>
   </data>
   <data name="LabelPointsColumn" xml:space="preserve">
-    <value>Kolumna „Punkty” (numer)</value>
+    <value>Kolumna „Punkty”</value>
   </data>
   <data name="LabelTotalSum" xml:space="preserve">
     <value>Suma całkowita:</value>
@@ -439,5 +439,14 @@ Punkty po przetworzeniu: {5}</value>
   </data>
   <data name="MessageUnsupportedFormat" xml:space="preserve">
     <value>Nieobsługiwany format pliku. Proszę wybrać format .xlsx lub .csv.</value>
+  </data>
+  <data name="LabelServiceCodeColumn" xml:space="preserve">
+    <value>Kolumna „Zabieg medyczny”</value>
+  </data>
+  <data name="LabelDateOfServiceColumn" xml:space="preserve">
+    <value>Kolumna "Data zabiegu"</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>Analiza</value>
   </data>
 </root>
