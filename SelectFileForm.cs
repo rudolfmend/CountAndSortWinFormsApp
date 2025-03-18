@@ -10,6 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CountAndSortWinFormsAppNetFr4.Properties;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Security.Cryptography.Xml;
+
+// Doplnenie referencií pre grafy
+// Aby grafy fungovali, je potrebné pridať referenciu na assembly System.Windows.Forms.DataVisualization v projekte.
+// V súbore CountAndSortWinFormsAppNetFr4.csproj je potrebné pridať:
+//   <Reference Include="System.Windows.Forms.DataVisualization" />     
 
 namespace CountAndSortWinFormsAppNetFr4
 {
@@ -56,7 +63,7 @@ namespace CountAndSortWinFormsAppNetFr4
         public int ColumnDayIndex => _dayColumnIndex;
         public int ColumnServiceCodeIndex => _serviceCodeColumnIndex;
         public int ColumnDiagnosisIndex => _diagnosisColumnIndex;
-        public string columnSeparator
+        public string ColumnSeparator
         {
             get { return _importSeparator; }
             set { _importSeparator = value; }
@@ -207,10 +214,149 @@ namespace CountAndSortWinFormsAppNetFr4
 
             // property for duplicate count
             public int RemovedDuplicates { get; set; }
-            public int DuplicatesRemoved { get; set; }           
+            public int DuplicatesRemoved { get; set; }
 
-            public ProcessedFileInfo(string fileName, string fullPath, DateTime time = default, int points = 0, string sourceDirectory = "")
+            // Nové vlastnosti pre rozšírenú štatistiku
+            public Dictionary<string, int> DiagnosisCounts { get; set; } = new Dictionary<string, int>();
+            public Dictionary<string, int> ServiceCounts { get; set; } = new Dictionary<string, int>();
+            public Dictionary<string, int> DoctorCounts { get; set; } = new Dictionary<string, int>();
+            public Dictionary<string, int> FacilityCounts { get; set; } = new Dictionary<string, int>();
+
+            // Hodnota v EUR (kalkulovaná z bodov)
+            public decimal TotalValue { get; set; }
+
+            // Rozšírený konštruktor
+            public ProcessedFileInfo(string fileName, string fullPath, DateTime time = default, int points = 0,
+                string sourceDirectory = "", decimal value = 0)
             {
+                FileName = fileName;
+                FullPath = Path.GetFullPath(fullPath);
+                ProcessedTime = time == default ? DateTime.Now : time;
+                Points = points;
+                SourceDirectory = sourceDirectory;
+                TotalValue = value;
+
+                // Inicializácia slovníkov
+                DiagnosisCounts = new Dictionary<string, int>();
+                ServiceCounts = new Dictionary<string, int>();
+                DoctorCounts = new Dictionary<string, int>();
+                FacilityCounts = new Dictionary<string, int>();
+
+                try
+                {
+                    var fileInfo = new FileInfo(FullPath);
+                    FileCreationTime = fileInfo.CreationTime;
+                    FileSize = fileInfo.Length;
+                    UniqueIdentifier = $"{fileName}_{FileCreationTime.Ticks}_{FileSize}";
+                }
+                catch (Exception)
+                {
+                    FileCreationTime = DateTime.Now;
+                    FileSize = 0;
+                    UniqueIdentifier = $"{fileName}_{DateTime.Now.Ticks}";
+                }
+            }
+
+            // Metóda pre analýzu obsahu súboru a extrakciu štatistík
+            public void AnalyzeContent(string filePath, int pointsColumnIndex, int diagnosisColumnIndex,
+                int serviceColumnIndex, int doctorColumnIndex, int facilityColumnIndex, int pointPriceColumnIndex)
+            {
+                if (!File.Exists(filePath))
+                    return;
+
+                try
+                {
+                    string[] lines = File.ReadAllLines(filePath);
+                    string separator = "|"; // Použite správny oddeľovač
+
+                    foreach (string line in lines.Skip(2)) // Preskočiť prvé dva riadky (hlavičku)
+                    {
+                        string[] parts = line.Split(new[] { separator }, StringSplitOptions.None);
+
+                        // Kontrola, či má riadok dostatok stĺpcov
+                        if (parts.Length <= Math.Max(pointsColumnIndex,
+                            Math.Max(diagnosisColumnIndex,
+                            Math.Max(serviceColumnIndex,
+                            Math.Max(doctorColumnIndex, facilityColumnIndex)))))
+                            continue;
+
+                        // Extrakcia diagnózy
+                        if (diagnosisColumnIndex >= 0 && parts.Length > diagnosisColumnIndex)
+                        {
+                            string diagnosis = parts[diagnosisColumnIndex].Trim();
+                            if (!string.IsNullOrEmpty(diagnosis))
+                            {
+                                if (DiagnosisCounts.ContainsKey(diagnosis))
+                                    DiagnosisCounts[diagnosis]++;
+                                else
+                                    DiagnosisCounts[diagnosis] = 1;
+                            }
+                        }
+
+                        // Extrakcia kódu služby
+                        if (serviceColumnIndex >= 0 && parts.Length > serviceColumnIndex)
+                        {
+                            string service = parts[serviceColumnIndex].Trim();
+                            if (!string.IsNullOrEmpty(service))
+                            {
+                                if (ServiceCounts.ContainsKey(service))
+                                    ServiceCounts[service]++;
+                                else
+                                    ServiceCounts[service] = 1;
+                            }
+                        }
+
+                        // Extrakcia lekára
+                        if (doctorColumnIndex >= 0 && parts.Length > doctorColumnIndex)
+                        {
+                            string doctor = parts[doctorColumnIndex].Trim();
+                            if (!string.IsNullOrEmpty(doctor))
+                            {
+                                if (DoctorCounts.ContainsKey(doctor))
+                                    DoctorCounts[doctor]++;
+                                else
+                                    DoctorCounts[doctor] = 1;
+                            }
+                        }
+
+                        // Extrakcia zariadenia
+                        if (facilityColumnIndex >= 0 && parts.Length > facilityColumnIndex)
+                        {
+                            string facility = parts[facilityColumnIndex].Trim();
+                            if (!string.IsNullOrEmpty(facility))
+                            {
+                                if (FacilityCounts.ContainsKey(facility))
+                                    FacilityCounts[facility]++;
+                                else
+                                    FacilityCounts[facility] = 1;
+                            }
+                        }
+
+                        // Výpočet hodnoty
+                        if (pointsColumnIndex >= 0 && pointPriceColumnIndex >= 0 &&
+                            parts.Length > Math.Max(pointsColumnIndex, pointPriceColumnIndex))
+                        {
+                            if (int.TryParse(parts[pointsColumnIndex].Trim(), out int points) &&
+                                decimal.TryParse(parts[pointPriceColumnIndex].Trim().Replace(',', '.'),
+                                System.Globalization.NumberStyles.Any,
+                                System.Globalization.CultureInfo.InvariantCulture,
+                                out decimal pointPrice))
+                            {
+                                // Pridanie hodnoty k celkovej sume
+                                TotalValue += points * pointPrice;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Chyba pri analýze súboru {filePath}: {ex.Message}");
+                }
+            }
+        
+
+        public ProcessedFileInfo(string fileName, string fullPath, DateTime time = default, int points = 0, string sourceDirectory = "")
+        {
                 FileName = fileName;
                 FullPath = Path.GetFullPath(fullPath); // Convert to absolute path
                 ProcessedTime = time == default ? DateTime.Now : time;
@@ -266,7 +412,18 @@ namespace CountAndSortWinFormsAppNetFr4
             string fullPath = Path.GetFullPath(filePath);
             DateTime now = DateTime.Now;
 
+            // Vytvorenie inštancie s rozšírenými vlastnosťami
             var newFileInfo = new ProcessedFileInfo(fileName, fullPath, now, points, sourceDirectory);
+
+            // Analýza obsahu súboru pre rozšírené štatistiky
+            newFileInfo.AnalyzeContent(filePath,
+                _pointsColumnIndex,
+                _diagnosisColumnIndex,
+                _serviceCodeColumnIndex,
+                19, // Stĺpec pre lekára (z vášho formulára nastavení)
+                18, // Stĺpec pre zariadenie
+                33  // Stĺpec pre cenu za bod
+            );
 
             // Pridáme nový súbor ak ešte neexistuje
             if (!processedFiles.Any(f => f.UniqueIdentifier == newFileInfo.UniqueIdentifier))
@@ -611,11 +768,11 @@ namespace CountAndSortWinFormsAppNetFr4
         private List<string> SortLinesByName(List<string> lines)
         {
             return lines
-                .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None))
+                .Select(line => line.Split(new[] { ColumnSeparator }, StringSplitOptions.None))
                 .Where(parts => parts.Length > 4 && int.TryParse(parts[0], out _))
                 .OrderBy(parts => parts[ColumnNameIndex])      // Použite vlastnosť namiesto ovládacieho prvku
                 .ThenBy(parts => int.Parse(parts[ColumnIdIndex])) // Použite vlastnosť namiesto ovládacieho prvku
-                .Select(parts => string.Join(columnSeparator, parts))
+                .Select(parts => string.Join(ColumnSeparator, parts))
                 .ToList();
         }
 
@@ -625,11 +782,11 @@ namespace CountAndSortWinFormsAppNetFr4
             return lines
                 .Select(line =>
                 {
-                    var parts = line.Split(new[] { columnSeparator }, StringSplitOptions.None);
+                    var parts = line.Split(new[] { ColumnSeparator }, StringSplitOptions.None);
                     if (parts.Length > 4 && int.TryParse(parts[0], out _))
                     {
                         parts[0] = newNumber++.ToString();
-                        return string.Join(columnSeparator, parts);
+                        return string.Join(ColumnSeparator, parts);
                     }
                     return line;
                 })
@@ -649,7 +806,7 @@ namespace CountAndSortWinFormsAppNetFr4
             if (headerLines.Count > 0)
             {
                 string headerLine = headerLines[0];
-                string[] headerParts = headerLine.Split(new[] { columnSeparator }, StringSplitOptions.None);
+                string[] headerParts = headerLine.Split(new[] { ColumnSeparator }, StringSplitOptions.None);
 
                 if (headerParts.Length > 4 && int.TryParse(headerParts[4], out int recordCount))
                 {
@@ -659,7 +816,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
                     // Spracované záznamy
                     var processedRecords = dataLines
-                        .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None))
+                        .Select(line => line.Split(new[] { ColumnSeparator }, StringSplitOptions.None))
                         .Where(parts => parts.Length > MIN_COLUMNS_REQUIRED)
                         .ToList();
 
@@ -697,7 +854,7 @@ namespace CountAndSortWinFormsAppNetFr4
                     if (newRecordCount < 0) newRecordCount = 0; // Zabraňujeme záporným hodnotám
 
                     headerParts[4] = newRecordCount.ToString();
-                    result[0] = string.Join(columnSeparator, headerParts);
+                    result[0] = string.Join(ColumnSeparator, headerParts);
 
                     // Uložíme počet odstránených duplicít pre informáciu používateľovi
                     duplicatesRemoved = duplicatesCount;
@@ -711,7 +868,7 @@ namespace CountAndSortWinFormsAppNetFr4
                     for (int i = 0; i < sortedRecords.Count; i++)
                     {
                         sortedRecords[i][0] = (i + 1).ToString();
-                        result.Add(string.Join(columnSeparator, sortedRecords[i]));
+                        result.Add(string.Join(ColumnSeparator, sortedRecords[i]));
                     }
 
                     return result;
@@ -720,7 +877,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             // Ak nemáme hlavičku alebo je neplatná, použijeme pôvodný spôsob
             var uniqueLines = dataLines
-                .Select(line => line.Split(new[] { columnSeparator }, StringSplitOptions.None))
+                .Select(line => line.Split(new[] { ColumnSeparator }, StringSplitOptions.None))
                 .Where(parts => parts.Length > MIN_COLUMNS_REQUIRED && int.TryParse(parts[0], out _))
                 .GroupBy(parts =>
                 {
@@ -738,7 +895,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 })
                 .Select(group => group.First())  // Vyberieme prvý záznam z každej skupiny
                 .OrderBy(parts => parts.Length > ColumnNameIndex && ColumnNameIndex >= 0 ? parts[ColumnNameIndex] : "")
-                .Select((parts, index) => $"{index + 1}{columnSeparator}{string.Join(columnSeparator, parts.Skip(1))}")
+                .Select((parts, index) => $"{index + 1}{ColumnSeparator}{string.Join(ColumnSeparator, parts.Skip(1))}")
                 .ToList();
 
             // Uložíme počet odstránených duplicít
@@ -790,7 +947,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
                 // Vytvorenie inštancie BatchFileProcessor s nastaveniami z formulára
                 var processor = new BatchFileProcessor(
-                    separator: columnSeparator,
+                    separator: ColumnSeparator,
                     dayColIndex: ColumnDayIndex,
                     idColIndex: ColumnIdIndex,
                   //serviceCodeColIndex: (int)NumericUpDownServiceCodeColumn.Value - 1,
@@ -1198,7 +1355,7 @@ namespace CountAndSortWinFormsAppNetFr4
                     var cells = row.Cells.Cast<DataGridViewCell>()
                                    .Skip(1)
                                    .Select(c => c.Value?.ToString() ?? "");
-                    unselectedRows.Add(string.Join(columnSeparator, cells));
+                    unselectedRows.Add(string.Join(ColumnSeparator, cells));
                 }
             }
             return unselectedRows;
@@ -1424,17 +1581,20 @@ namespace CountAndSortWinFormsAppNetFr4
             try
             {
                 // Počítame len súčet z ListView - to sú naše aktuálne spracované súbory
+                // Spočítame základné štatistiky
                 int totalPoints = 0;
+                decimal totalValue = 0m;
                 int fileCount = ListViewShowPointsValues.Items.Count;
+                int totalDiagnoses = 0;
+                int totalServices = 0;
 
-                // Prechádzame cez položky v ListView
-                foreach (ListViewItem item in ListViewShowPointsValues.Items)
+                // Agregujeme všetky údaje zo všetkých súborov
+                foreach (var file in processedFiles)
                 {
-                    string pointsText = item.SubItems[1].Text;
-                    if (int.TryParse(pointsText.Replace(" ", ""), out int points))  // Odstránime všetky medzery
-                    {
-                        totalPoints += points;
-                    }
+                    totalPoints += file.Points;
+                    totalValue += file.TotalValue;
+                    totalDiagnoses += file.DiagnosisCounts.Keys.Count;
+                    totalServices += file.ServiceCounts.Keys.Count;
                 }
 
                 Debug.WriteLine($"Aktualizujem štatistiky - Celkové body: {totalPoints}");
@@ -1442,14 +1602,19 @@ namespace CountAndSortWinFormsAppNetFr4
                 Debug.WriteLine($"Jazyk: {LanguageComboBox.SelectedItem}, Body: {totalPoints}");
 
                 // Aktualizujeme všetky labely s rovnakými hodnotami
-                string pointsFormat = totalPoints.ToString("N0");  // Formátujeme číslo len raz
-              //  LabelTotalPoints.Text = Strings.LabelTotalPoints + $" {pointsFormat}";
+                // Aktualizujeme všetky labely s novými hodnotami
+                string pointsFormat = totalPoints.ToString("N0");
                 LabelFileCount.Text = Strings.LabelFileCount + $" {fileCount}";
                 LabelTotalPoints.Text = Strings.HistoryTotalPoints + $" {pointsFormat}";
+
+                // Ak máte ďalšie labely pre rozšírené štatistiky, aktualizujte ich tu
+                // LabelTotalValue.Text = "Celková hodnota: " + totalValue.ToString("N2") + " €";
+                // LabelTotalDiagnoses.Text = "Počet diagnóz: " + totalDiagnoses.ToString("N0");
+                // LabelTotalServices.Text = "Počet služieb: " + totalServices.ToString("N0");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Chyba pri aktualizácii štatistík: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Chyba pri aktualizácii štatistík: {ex.Message}");
                 MessageBox.Show(Strings.MessageStatisticsError,
                     Strings.MessageError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -1466,7 +1631,7 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 if (!string.IsNullOrEmpty(line))
                 {
-                    int separatorCount = line.Count(c => c == columnSeparator[0]);
+                    int separatorCount = line.Count(c => c == ColumnSeparator[0]);
                     maxColumnCount = Math.Max(maxColumnCount, separatorCount);
                 }
             }
@@ -1507,7 +1672,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 // Prechádzame cez každý oddeľovač v riadku
                 for (int i = 0; i < line.Length && columnIndex < maxColumnCount; i++)
                 {
-                    if (line[i] == columnSeparator[0])
+                    if (line[i] == ColumnSeparator[0])
                     {
                         if (startIndex < i)
                         {
@@ -1569,7 +1734,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 {
                     var cells = row.Cells.Cast<DataGridViewCell>()
                                    .Skip(1)  // Skip checkbox column / Preskočiť checkbox stĺpec
-                                   .Select(c => (c.Value?.ToString() ?? "") + columnSeparator); // We add a separator to each value / Pridáme oddeľovač ku každej hodnote
+                                   .Select(c => (c.Value?.ToString() ?? "") + ColumnSeparator); // We add a separator to each value / Pridáme oddeľovač ku každej hodnote
 
                     selectedRows.Add(string.Join("", cells)); // no column separator, because it is already part of each column / Žiadny oddeľovač stĺpcov, pretože je už súčasťou každého stĺpca
                 }
@@ -1618,11 +1783,11 @@ namespace CountAndSortWinFormsAppNetFr4
                     }
 
                     // Prevod riadkov s pôvodným oddeľovačom na riadky s novým oddeľovačom (len raz)
-                    if (outputSeparator != columnSeparator)
+                    if (outputSeparator != ColumnSeparator)
                     {
                         processedLines = processedLines.Select(line =>
                             string.Join(outputSeparator,
-                                       line.Split(new[] { columnSeparator }, StringSplitOptions.None)))
+                                       line.Split(new[] { ColumnSeparator }, StringSplitOptions.None)))
                                        .ToList();
                     }
 
@@ -1842,6 +2007,32 @@ namespace CountAndSortWinFormsAppNetFr4
                             Strings.MessageError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+
+        private void ButtonShowExtendedStatistics_Click(object sender, EventArgs e)
+        {
+            // Kontrola, či máme dáta na zobrazenie
+            if (processedFiles.Count == 0)
+            {
+                MessageBox.Show(Strings.MessageNoHistoryToSave,
+                    Strings.MessageWarning,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Vytvorenie a zobrazenie formulára s rozšírenou štatistikou
+                using (var statisticsForm = new ExtendedStatisticsForm(processedFiles.ToList()))
+                {
+                    statisticsForm.ShowDialog(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format(Strings.MessageErrorShowingStatistics, ex.Message),
+                    Strings.MessageError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
