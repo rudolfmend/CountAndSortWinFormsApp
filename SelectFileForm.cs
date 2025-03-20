@@ -2031,7 +2031,7 @@ namespace CountAndSortWinFormsAppNetFr4
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format(Strings.MessageErrorShowingStatistics, ex.Message),
+                MessageBox.Show(string.Format(Strings.MessageStatisticsError, ex.Message),
                     Strings.MessageError, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

@@ -106,5 +106,65 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
                 this["DiagnosisColumnIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("18")]
+        public int FacilityColumnIndex {
+            get {
+                return ((int)(this["FacilityColumnIndex"]));
+            }
+            set {
+                this["FacilityColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("19")]
+        public int DoctorColumnIndex {
+            get {
+                return ((int)(this["DoctorColumnIndex"]));
+            }
+            set {
+                this["DoctorColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("17")]
+        public int TypeColumnIndex {
+            get {
+                return ((int)(this["TypeColumnIndex"]));
+            }
+            set {
+                this["TypeColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("33")]
+        public int PointPriceColumnIndex {
+            get {
+                return ((int)(this["PointPriceColumnIndex"]));
+            }
+            set {
+                this["PointPriceColumnIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("34")]
+        public int ServicePriceColumnIndex {
+            get {
+                return ((int)(this["ServicePriceColumnIndex"]));
+            }
+            set {
+                this["ServicePriceColumnIndex"] = value;
+            }
+        }
     }
 }
