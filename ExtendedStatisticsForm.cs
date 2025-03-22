@@ -10,102 +10,26 @@ namespace CountAndSortWinFormsAppNetFr4
 {
     public partial class ExtendedStatisticsForm : Form
     {
-        private StatisticsModule statisticsModule;
-        private List<ProcessedFileInfo> files;
+        private readonly StatisticsModule statisticsModule;
+        private readonly List<ProcessedFileInfo> files;
         private Dictionary<string, object> statistics;
-        private TabControl tabControl;
-        private Chart mainChart;
-        private Chart trendChart;
 
         public ExtendedStatisticsForm(List<ProcessedFileInfo> processedFiles)
         {
-            InitializeControls(); // Zmeníme na InitializeControls namiesto InitializeComponent
+            InitializeComponent();
             this.files = processedFiles;
             this.statisticsModule = new StatisticsModule(null);
-            this.Text = "Rozšírená štatistika";
-            this.Size = new Size(900, 600);
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = Strings.ExtendedStatistics;
 
-            InitializeComponents();
             LoadStatistics();
-        }
-
-        private void InitializeControls()
-        {
-            // Prázdna implementácia namiesto InitializeComponent
-            // Všetky komponenty vytvoríme dynamicky v InitializeComponents
-        }
-
-        private void InitializeComponents()
-        {
-            // Vytvorenie záložiek
-            tabControl = new TabControl
-            {
-                Dock = DockStyle.Fill,
-                Font = new Font(Font.FontFamily, 10)
-            };
-
-            TabPage summaryTab = new TabPage("Súhrn");
-            TabPage chartsTab = new TabPage("Grafy");
-            TabPage trendTab = new TabPage("Trendy");
-            TabPage comparisonTab = new TabPage("Porovnanie");
-
-            tabControl.TabPages.Add(summaryTab);
-            tabControl.TabPages.Add(chartsTab);
-            tabControl.TabPages.Add(trendTab);
-            tabControl.TabPages.Add(comparisonTab);
-
-            // Vytvorenie grafov
-            mainChart = new Chart
-            {
-                Dock = DockStyle.Fill,
-                BackColor = Color.WhiteSmoke
-            };
-
-            // Nastavenie grafu
-            ChartArea chartArea = new ChartArea("MainArea");
-            mainChart.ChartAreas.Add(chartArea);
-            mainChart.Legends.Add(new Legend("MainLegend"));
-
-            // Pridanie grafu do záložky
-            chartsTab.Controls.Add(mainChart);
-
-            // Vytvorenie grafu trendov
-            trendChart = new Chart
-            {
-                Dock = DockStyle.Fill,
-                BackColor = Color.WhiteSmoke
-            };
-
-            // Nastavenie grafu trendov
-            ChartArea trendArea = new ChartArea("TrendArea");
-            trendChart.ChartAreas.Add(trendArea);
-            trendChart.Legends.Add(new Legend("TrendLegend"));
-
-            // Pridanie grafu trendov do záložky
-            trendTab.Controls.Add(trendChart);
-
-            // Tlačidlo exportu
-            Button exportButton = new Button
-            {
-                Text = "Exportovať štatistiku",
-                Dock = DockStyle.Bottom,
-                Height = 40,
-                Font = new Font(Font.FontFamily, 10, FontStyle.Bold)
-            };
-
-            exportButton.Click += ExportButton_Click;
-
-            this.Controls.Add(tabControl);
-            this.Controls.Add(exportButton);
         }
 
         private void LoadStatistics()
         {
             if (files == null || files.Count == 0)
             {
-                MessageBox.Show("Nie sú k dispozícii žiadne dáta pre štatistiku.",
-                    "Upozornenie", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Strings.NoDataAvailableForStatistics,
+                    Strings.MessageWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -113,32 +37,22 @@ namespace CountAndSortWinFormsAppNetFr4
             statistics = statisticsModule.GenerateExtendedStatistics(files);
 
             // Naplnenie súhrnnej záložky
-            TabPage summaryTab = tabControl.TabPages[0];
-
-            TableLayoutPanel summaryPanel = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                RowCount = 6,
-                ColumnCount = 2
-            };
-
-            // Definícia šírky stĺpcov
-            summaryPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
-            summaryPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-
-            // Pridanie súhrnných údajov
-            AddLabelPair(summaryPanel, "Celkový počet súborov:", statistics["TotalFiles"].ToString(), 0);
+            AddLabelPair(summaryPanel, Strings.TotalFilesSelected, statistics["TotalFiles"].ToString(), 0);
             int totalPoints = (int)statistics["TotalPoints"];
-            AddLabelPair(summaryPanel, "Celkový počet bodov:", totalPoints.ToString("#,##0"), 1);
+            AddLabelPair(summaryPanel, Strings.HistoryTotalPoints, totalPoints.ToString("#,##0"), 1);
             double averagePoints = (double)statistics["AveragePoints"];
-            AddLabelPair(summaryPanel, "Priemerný počet bodov:", averagePoints.ToString("#,##0.0"), 2);
+            AddLabelPair(summaryPanel, Strings.HistoryAveragePoints, averagePoints.ToString("#,##0.0"), 2);
             int maxPoints = (int)statistics["MaxPoints"];
-            AddLabelPair(summaryPanel, "Maximálny počet bodov:", maxPoints.ToString("#,##0"), 3);
+            AddLabelPair(summaryPanel, Strings.MaximumPoints, maxPoints.ToString("#,##0"), 3);
             int minPoints = (int)statistics["MinPoints"];
-            AddLabelPair(summaryPanel, "Minimálny počet bodov:", minPoints.ToString("#,##0"), 4);
-
-            summaryTab.Controls.Add(summaryPanel);
+            AddLabelPair(summaryPanel, Strings.MinimumPoints, minPoints.ToString("#,##0"), 4);
+            //nové volania po existujúcich funkciách
+            //FillDoctorsTab();
+            //FillFacilitiesTab();
+            //FillDiagnosisTab();
+            AddLabelPair(summaryPanel, Strings.Doctors, statistics["Doctors"].ToString(), 5);
+            AddLabelPair(summaryPanel, Strings.Facilities, statistics["Facilities"].ToString(), 6);
+            AddLabelPair(summaryPanel, Strings.Diagnoses, statistics["Diagnosis"].ToString(), 7);
 
             // Naplnenie grafov
             FillMainChart();
@@ -246,7 +160,6 @@ namespace CountAndSortWinFormsAppNetFr4
                     Color = Color.Red
                 };
 
-                var predictions = trends["Predictions"] as List<Dictionary<string, object>>;
 
                 // Pridanie posledného skutočného bodu pre kontinuitu grafu
                 if (monthlyData != null && monthlyData.Count > 0)
@@ -256,7 +169,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 }
 
                 // Pridanie predikovaných bodov
-                if (predictions != null)
+                if (trends["Predictions"] is List<Dictionary<string, object>> predictions)
                 {
                     foreach (var pred in predictions)
                     {
@@ -280,8 +193,6 @@ namespace CountAndSortWinFormsAppNetFr4
 
         private void FillComparisonTab()
         {
-            TabPage comparisonTab = tabControl.TabPages[3];
-
             // Kontrola, či máme aspoň dva súbory pre porovnanie
             if (files.Count < 2)
             {
@@ -376,9 +287,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // Naplnenie mriežky dátami
             if (comparison.ContainsKey("Comparison"))
             {
-                var comparisonData = comparison["Comparison"] as List<Dictionary<string, object>>;
-
-                if (comparisonData != null)
+                if (comparison["Comparison"] is List<Dictionary<string, object>> comparisonData)
                 {
                     foreach (var item in comparisonData)
                     {
@@ -433,21 +342,5 @@ namespace CountAndSortWinFormsAppNetFr4
                 }
             }
         }
-
-        // Implementácia rozhrania IDisposable
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (mainChart != null)
-                    mainChart.Dispose();
-                if (trendChart != null)
-                    trendChart.Dispose();
-                if (tabControl != null)
-                    tabControl.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
-

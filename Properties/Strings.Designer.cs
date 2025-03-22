@@ -241,6 +241,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diagnoses.
+        /// </summary>
+        internal static string Diagnoses {
+            get {
+                return ResourceManager.GetString("Diagnoses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse Folder.
         /// </summary>
         internal static string DialogBrowseFolder {
@@ -277,6 +286,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doctors.
+        /// </summary>
+        internal static string Doctors {
+            get {
+                return ResourceManager.GetString("Doctors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error saving file.
         /// </summary>
         internal static string ErrorSavingFile {
@@ -300,6 +318,24 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string ExportButton {
             get {
                 return ResourceManager.GetString("ExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extended Statistics.
+        /// </summary>
+        internal static string ExtendedStatistics {
+            get {
+                return ResourceManager.GetString("ExtendedStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Facilities.
+        /// </summary>
+        internal static string Facilities {
+            get {
+                return ResourceManager.GetString("Facilities", resourceCulture);
             }
         }
         
@@ -601,6 +637,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum number of points:.
+        /// </summary>
+        internal static string MaximumPoints {
+            get {
+                return ResourceManager.GetString("MaximumPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Done.
         /// </summary>
         internal static string MessageDone {
@@ -857,6 +902,24 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string MessageWarning {
             get {
                 return ResourceManager.GetString("MessageWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum number of points:.
+        /// </summary>
+        internal static string MinimumPoints {
+            get {
+                return ResourceManager.GetString("MinimumPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No data is available for statistics..
+        /// </summary>
+        internal static string NoDataAvailableForStatistics {
+            get {
+                return ResourceManager.GetString("NoDataAvailableForStatistics", resourceCulture);
             }
         }
         

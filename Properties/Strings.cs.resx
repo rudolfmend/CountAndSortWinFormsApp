@@ -461,4 +461,25 @@ Body po zpracování: {5}</value>
   <data name="Save" xml:space="preserve">
     <value>Uložit</value>
   </data>
+  <data name="ExtendedStatistics" xml:space="preserve">
+    <value>Rozšířená statistika</value>
+  </data>
+  <data name="NoDataAvailableForStatistics" xml:space="preserve">
+    <value>Nejsou k dispozici žádná data pro statistiku.</value>
+  </data>
+  <data name="MaximumPoints" xml:space="preserve">
+    <value>Nejvyšší počet bodů:</value>
+  </data>
+  <data name="MinimumPoints" xml:space="preserve">
+    <value>Nejnižší počet bodů:</value>
+  </data>
+  <data name="Doctors" xml:space="preserve">
+    <value>Lékaři</value>
+  </data>
+  <data name="Diagnoses" xml:space="preserve">
+    <value>Diagnózy</value>
+  </data>
+  <data name="Facilities" xml:space="preserve">
+    <value>Zařízení</value>
+  </data>
 </root>

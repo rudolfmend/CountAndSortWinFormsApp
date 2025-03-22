@@ -464,4 +464,25 @@
   <data name="Save" xml:space="preserve">
     <value>зберегти</value>
   </data>
+  <data name="ExtendedStatistics" xml:space="preserve">
+    <value>Розширена статистика</value>
+  </data>
+  <data name="NoDataAvailableForStatistics" xml:space="preserve">
+    <value>Немає даних для статистики.</value>
+  </data>
+  <data name="MaximumPoints" xml:space="preserve">
+    <value>Найбільша кількість балів:</value>
+  </data>
+  <data name="MinimumPoints" xml:space="preserve">
+    <value>Мінімальна кількість балів:</value>
+  </data>
+  <data name="Doctors" xml:space="preserve">
+    <value>Лікарі </value>
+  </data>
+  <data name="Diagnoses" xml:space="preserve">
+    <value>Діагнози </value>
+  </data>
+  <data name="Facilities" xml:space="preserve">
+    <value>Заклади</value>
+  </data>
 </root>

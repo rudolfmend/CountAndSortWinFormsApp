@@ -81,9 +81,8 @@
             this.ExportButton.Name = "ExportButton";
             this.ExportButton.Size = new System.Drawing.Size(120, 30);
             this.ExportButton.TabIndex = 2;
-            this.ExportButton.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ExportButton; 
+            this.ExportButton.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ExportButton;
             this.ExportButton.UseVisualStyleBackColor = true;
-            this.ExportButton.Click += ExportButton_Click;
             // 
             // ButtonService
             // 
@@ -91,7 +90,7 @@
             this.ButtonService.Name = "ButtonService";
             this.ButtonService.Size = new System.Drawing.Size(120, 30);
             this.ButtonService.TabIndex = 1;
-            this.ButtonService.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ViewByServices; 
+            this.ButtonService.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ViewByServices;
             this.ButtonService.UseVisualStyleBackColor = true;
             // 
             // ValueButton
@@ -269,6 +268,7 @@
             this.Name = "ClientAnalysisForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " ";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ViewPanel.ResumeLayout(false);
             this.ChartPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PieChart)).EndInit();

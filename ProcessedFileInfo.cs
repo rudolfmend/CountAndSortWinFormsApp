@@ -5,9 +5,28 @@ using System.Linq;
 
 namespace CountAndSortWinFormsAppNetFr4
 {
+    // Pomocná trieda pre ukladanie údajov o lekárovi
+    public class DoctorCounts // DoctorData / DoctorCounts
+    {
+        public int TotalPoints { get; set; }
+        public int RecordCount { get; set; }
+        public decimal TotalValue { get; set; }
+        public Dictionary<string, int> DiagnosisCounts { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> ServiceCounts { get; set; } = new Dictionary<string, int>();
+    }
+
+    // Pomocná trieda pre ukladanie údajov o zariadení
+    public class FacilityData
+    {
+        public int TotalPoints { get; set; }
+        public int RecordCount { get; set; }
+        public decimal TotalValue { get; set; }
+        public Dictionary<string, int> DoctorCounts { get; set; } = new Dictionary<string, int>();
+    }
+
     public class ProcessedFileInfo
     {
-        // Základné vlastnosti pre identifikáciu
+        // Základné vlastnosti pre identifikáciu a spracovanie súboru 
         public string FileName { get; set; }
         public string FullPath { get; set; }
         public DateTime ProcessedTime { get; set; }
@@ -21,11 +40,13 @@ namespace CountAndSortWinFormsAppNetFr4
         public int RemovedDuplicates { get; set; }
         public int DuplicatesRemoved { get; set; }
 
-        // Nové vlastnosti pre rozšírenú štatistiku
+        // Vylepšené vlastnosti pre rozšírenú štatistiku
         public Dictionary<string, int> DiagnosisCounts { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, int> ServiceCounts { get; set; } = new Dictionary<string, int>();
-        public Dictionary<string, int> DoctorCounts { get; set; } = new Dictionary<string, int>();
-        public Dictionary<string, int> FacilityCounts { get; set; } = new Dictionary<string, int>();
+
+        // Nahradené pôvodné slovníky s počtami za komplexnejšie údaje
+        public Dictionary<string, DoctorCounts> DoctorCounts { get; set; } = new Dictionary<string, DoctorCounts>();
+        public Dictionary<string, FacilityData> FacilityData { get; set; } = new Dictionary<string, FacilityData>();
 
         // Hodnota v EUR (kalkulovaná z bodov)
         public decimal TotalValue { get; set; }
@@ -41,8 +62,8 @@ namespace CountAndSortWinFormsAppNetFr4
             // Inicializácia slovníkov
             DiagnosisCounts = new Dictionary<string, int>();
             ServiceCounts = new Dictionary<string, int>();
-            DoctorCounts = new Dictionary<string, int>();
-            FacilityCounts = new Dictionary<string, int>();
+            DoctorCounts = new Dictionary<string, DoctorCounts>();
+            FacilityData = new Dictionary<string, FacilityData>();
 
             try
             {
@@ -97,10 +118,34 @@ namespace CountAndSortWinFormsAppNetFr4
                         Math.Max(doctorColumnIndex, facilityColumnIndex)))))
                         continue;
 
+                    // Extrakcia bodov a ceny
+                    int points = 0;
+                    decimal pointPrice = 0;
+
+                    if (pointsColumnIndex >= 0 && parts.Length > pointsColumnIndex &&
+                        int.TryParse(parts[pointsColumnIndex].Trim(), out int p))
+                    {
+                        points = p;
+                    }
+
+                    if (pointPriceColumnIndex >= 0 && parts.Length > pointPriceColumnIndex &&
+                        decimal.TryParse(parts[pointPriceColumnIndex].Trim().Replace(',', '.'),
+                        System.Globalization.NumberStyles.Any,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out decimal price))
+                    {
+                        pointPrice = price;
+                    }
+
+                    // Výpočet hodnoty za záznam
+                    decimal recordValue = points * pointPrice;
+                    TotalValue += recordValue;
+
                     // Extrakcia diagnózy
+                    string diagnosis = "";
                     if (diagnosisColumnIndex >= 0 && parts.Length > diagnosisColumnIndex)
                     {
-                        string diagnosis = parts[diagnosisColumnIndex].Trim();
+                        diagnosis = parts[diagnosisColumnIndex].Trim();
                         if (!string.IsNullOrEmpty(diagnosis))
                         {
                             if (DiagnosisCounts.ContainsKey(diagnosis))
@@ -111,9 +156,10 @@ namespace CountAndSortWinFormsAppNetFr4
                     }
 
                     // Extrakcia kódu služby
+                    string service = "";
                     if (serviceColumnIndex >= 0 && parts.Length > serviceColumnIndex)
                     {
-                        string service = parts[serviceColumnIndex].Trim();
+                        service = parts[serviceColumnIndex].Trim();
                         if (!string.IsNullOrEmpty(service))
                         {
                             if (ServiceCounts.ContainsKey(service))
@@ -123,44 +169,83 @@ namespace CountAndSortWinFormsAppNetFr4
                         }
                     }
 
-                    // Extrakcia lekára
+                    // Extrakcia lekára s rozšírenými údajmi
                     if (doctorColumnIndex >= 0 && parts.Length > doctorColumnIndex)
                     {
                         string doctor = parts[doctorColumnIndex].Trim();
                         if (!string.IsNullOrEmpty(doctor))
                         {
-                            if (DoctorCounts.ContainsKey(doctor))
-                                DoctorCounts[doctor]++;
-                            else
-                                DoctorCounts[doctor] = 1;
+                            if (!DoctorCounts.ContainsKey(doctor))
+                            {
+                                DoctorCounts[doctor] = new DoctorCounts
+                                {
+                                    TotalPoints = 0,
+                                    RecordCount = 0,
+                                    TotalValue = 0,
+                                    DiagnosisCounts = new Dictionary<string, int>(),
+                                    ServiceCounts = new Dictionary<string, int>()
+                                };
+                            }
+
+                            // Aktualizácia údajov o lekárovi
+                            DoctorCounts[doctor].TotalPoints += points;
+                            DoctorCounts[doctor].RecordCount++;
+                            DoctorCounts[doctor].TotalValue += recordValue;
+
+                            // Pridanie diagnózy
+                            if (!string.IsNullOrEmpty(diagnosis))
+                            {
+                                if (DoctorCounts[doctor].DiagnosisCounts.ContainsKey(diagnosis))
+                                    DoctorCounts[doctor].DiagnosisCounts[diagnosis]++;
+                                else
+                                    DoctorCounts[doctor].DiagnosisCounts[diagnosis] = 1;
+                            }
+
+                            // Pridanie služby
+                            if (!string.IsNullOrEmpty(service))
+                            {
+                                if (DoctorCounts[doctor].ServiceCounts.ContainsKey(service))
+                                    DoctorCounts[doctor].ServiceCounts[service]++;
+                                else
+                                    DoctorCounts[doctor].ServiceCounts[service] = 1;
+                            }
                         }
                     }
 
-                    // Extrakcia zariadenia
+                    // Extrakcia zariadenia s rozšírenými údajmi
                     if (facilityColumnIndex >= 0 && parts.Length > facilityColumnIndex)
                     {
                         string facility = parts[facilityColumnIndex].Trim();
                         if (!string.IsNullOrEmpty(facility))
                         {
-                            if (FacilityCounts.ContainsKey(facility))
-                                FacilityCounts[facility]++;
-                            else
-                                FacilityCounts[facility] = 1;
-                        }
-                    }
+                            if (!FacilityData.ContainsKey(facility))
+                            {
+                                FacilityData[facility] = new FacilityData
+                                {
+                                    TotalPoints = 0,
+                                    RecordCount = 0,
+                                    TotalValue = 0,
+                                    DoctorCounts = new Dictionary<string, int>()
+                                };
+                            }
 
-                    // Výpočet hodnoty
-                    if (pointsColumnIndex >= 0 && pointPriceColumnIndex >= 0 &&
-                        parts.Length > Math.Max(pointsColumnIndex, pointPriceColumnIndex))
-                    {
-                        if (int.TryParse(parts[pointsColumnIndex].Trim(), out int points) &&
-                            decimal.TryParse(parts[pointPriceColumnIndex].Trim().Replace(',', '.'),
-                            System.Globalization.NumberStyles.Any,
-                            System.Globalization.CultureInfo.InvariantCulture,
-                            out decimal pointPrice))
-                        {
-                            // Pridanie hodnoty k celkovej sume
-                            TotalValue += points * pointPrice;
+                            // Aktualizácia údajov o zariadení
+                            FacilityData[facility].TotalPoints += points;
+                            FacilityData[facility].RecordCount++;
+                            FacilityData[facility].TotalValue += recordValue;
+
+                            // Pridanie lekára k zariadeniu
+                            if (doctorColumnIndex >= 0 && parts.Length > doctorColumnIndex)
+                            {
+                                string doctor = parts[doctorColumnIndex].Trim();
+                                if (!string.IsNullOrEmpty(doctor))
+                                {
+                                    if (FacilityData[facility].DoctorCounts.ContainsKey(doctor))
+                                        FacilityData[facility].DoctorCounts[doctor]++;
+                                    else
+                                        FacilityData[facility].DoctorCounts[doctor] = 1;
+                                }
+                            }
                         }
                     }
                 }
@@ -169,6 +254,17 @@ namespace CountAndSortWinFormsAppNetFr4
             {
                 System.Diagnostics.Debug.WriteLine($"Chyba pri analýze súboru {filePath}: {ex.Message}");
             }
+        }
+
+        // Metóda pre získanie slovníkov s počtami pre spätnú kompatibilitu
+        public Dictionary<string, int> GetDoctorCounts()
+        {
+            return DoctorCounts.ToDictionary(kv => kv.Key, kv => kv.Value.RecordCount);
+        }
+
+        public Dictionary<string, int> GetFacilityCounts()
+        {
+            return FacilityData.ToDictionary(kv => kv.Key, kv => kv.Value.RecordCount);
         }
     }
 }

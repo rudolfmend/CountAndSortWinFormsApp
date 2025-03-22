@@ -1298,6 +1298,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Name = "TableSettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " TabelSettingsForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownPointsColumn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownIdColumn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNameColumn)).EndInit();

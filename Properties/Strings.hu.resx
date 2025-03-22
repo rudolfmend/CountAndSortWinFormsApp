@@ -463,4 +463,25 @@ Pontok a feldolgozás után: {5}</value>
   <data name="Save" xml:space="preserve">
     <value>Megtakarítás</value>
   </data>
+  <data name="ExtendedStatistics" xml:space="preserve">
+    <value>Speciális statisztikák</value>
+  </data>
+  <data name="NoDataAvailableForStatistics" xml:space="preserve">
+    <value>Statisztikai adatok nem állnak rendelkezésre.</value>
+  </data>
+  <data name="MaximumPoints" xml:space="preserve">
+    <value>A legtöbb pont:</value>
+  </data>
+  <data name="MinimumPoints" xml:space="preserve">
+    <value>A legalacsonyabb pontok:</value>
+  </data>
+  <data name="Doctors" xml:space="preserve">
+    <value>Orvosok</value>
+  </data>
+  <data name="Diagnoses" xml:space="preserve">
+    <value>Diagnózisok</value>
+  </data>
+  <data name="Facilities" xml:space="preserve">
+    <value>Intézmények</value>
+  </data>
 </root>
