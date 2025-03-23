@@ -422,7 +422,7 @@
   <data name="ViewByServices" xml:space="preserve">
     <value>За послугами</value>
   </data>
-  <data name="ExportButton" xml:space="preserve">
+  <data name="ButtonExport" xml:space="preserve">
     <value>Експорт даних</value>
   </data>
   <data name="Identifier" xml:space="preserve">

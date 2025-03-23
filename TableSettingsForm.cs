@@ -30,6 +30,7 @@ namespace CountAndSortWinFormsAppNetFr4
             NumericUpDownDayColumn.Value = dayIndex + 1;
             NumericUpDownServiceCodeColumn.Value = serviceCodeIndex + 1;
             NumericUpDownDiagnosisColumn.Value = diagnosisIndex + 1;
+            NumericUpDownTotalLines.Value = Settings.Default.TotalLinesColumnIndex;
 
             // Inicializácia separátorov
             if (ComboBoxImportSeparatorType.Items.Count == 0)
@@ -116,6 +117,7 @@ namespace CountAndSortWinFormsAppNetFr4
             Settings.Default.ServiceCodeColumnIndex = (int)NumericUpDownServiceCodeColumn.Value;
             Settings.Default.DayColumnIndex = (int)NumericUpDownDayColumn.Value;
             Settings.Default.DiagnosisColumnIndex = (int)NumericUpDownDiagnosisColumn.Value;
+            Settings.Default.TotalLinesColumnIndex = (int)NumericUpDownTotalLines.Value;
             Settings.Default.Save();
 
             DialogResult = DialogResult.OK;

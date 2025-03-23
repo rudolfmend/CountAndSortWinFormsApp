@@ -74,7 +74,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.numericUpDown10 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown11 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
+            this.NumericUpDownTotalLines = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown14 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown15 = new System.Windows.Forms.NumericUpDown();
             this.label16 = new System.Windows.Forms.Label();
@@ -111,7 +111,7 @@ namespace CountAndSortWinFormsAppNetFr4
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownTotalLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).BeginInit();
@@ -803,27 +803,27 @@ namespace CountAndSortWinFormsAppNetFr4
             0,
             0});
             // 
-            // numericUpDown13
+            // NumericUpDownTotalLines
             // 
-            this.numericUpDown13.AutoSize = true;
-            this.numericUpDown13.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
-            this.numericUpDown13.Location = new System.Drawing.Point(904, 322);
-            this.numericUpDown13.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.numericUpDown13.Maximum = new decimal(new int[] {
+            this.NumericUpDownTotalLines.AutoSize = true;
+            this.NumericUpDownTotalLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            this.NumericUpDownTotalLines.Location = new System.Drawing.Point(904, 322);
+            this.NumericUpDownTotalLines.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.NumericUpDownTotalLines.Maximum = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.numericUpDown13.Minimum = new decimal(new int[] {
+            this.NumericUpDownTotalLines.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(68, 27);
-            this.numericUpDown13.TabIndex = 52;
-            this.numericUpDown13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown13.Value = new decimal(new int[] {
+            this.NumericUpDownTotalLines.Name = "NumericUpDownTotalLines";
+            this.NumericUpDownTotalLines.Size = new System.Drawing.Size(68, 27);
+            this.NumericUpDownTotalLines.TabIndex = 52;
+            this.NumericUpDownTotalLines.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.NumericUpDownTotalLines.Value = new decimal(new int[] {
             6,
             0,
             0,
@@ -1258,7 +1258,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.Controls.Add(this.numericUpDown10);
             this.Controls.Add(this.numericUpDown11);
             this.Controls.Add(this.numericUpDown12);
-            this.Controls.Add(this.numericUpDown13);
+            this.Controls.Add(this.NumericUpDownTotalLines);
             this.Controls.Add(this.numericUpDown14);
             this.Controls.Add(this.numericUpDown15);
             this.Controls.Add(this.label6);
@@ -1314,7 +1314,7 @@ namespace CountAndSortWinFormsAppNetFr4
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumericUpDownTotalLines)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown16)).EndInit();
@@ -1373,7 +1373,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private NumericUpDown numericUpDown10;
         private NumericUpDown numericUpDown11;
         private NumericUpDown numericUpDown12;
-        private NumericUpDown numericUpDown13;
+        private NumericUpDown NumericUpDownTotalLines;
         private NumericUpDown numericUpDown14;
         private NumericUpDown numericUpDown15;
         private Label label16;

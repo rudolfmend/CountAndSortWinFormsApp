@@ -423,7 +423,7 @@ Points after processing: {5}</value>
   <data name="ViewByServices" xml:space="preserve">
     <value>By Services</value>
   </data>
-  <data name="ExportButton" xml:space="preserve">
+  <data name="ButtonExport" xml:space="preserve">
     <value>Export data</value>
   </data>
   <data name="Identifier" xml:space="preserve">

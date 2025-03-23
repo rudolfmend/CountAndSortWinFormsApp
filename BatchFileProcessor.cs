@@ -25,6 +25,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private readonly bool sortByName;
         private readonly bool renumberRows;
         private readonly bool removeDuplicates;
+        private readonly int headerTotalLinesIndex; // Index pre počet záznamov v hlavičke
 
         // Výsledky spracovania
         public int DuplicatesRemoved { get; private set; }
@@ -44,6 +45,7 @@ namespace CountAndSortWinFormsAppNetFr4
             int serviceCodeColIndex,
             int nameColIndex = -1,
             int pointsColIndex = -1,
+            int totalLinesColIndex = 5, // Pridaný nový parameter s predvolenou hodnotou 5
             bool sortByName = true,
             bool renumberRows = true,
             bool removeDuplicates = true)
@@ -54,6 +56,7 @@ namespace CountAndSortWinFormsAppNetFr4
             serviceCodeColumnIndex = serviceCodeColIndex;
             nameColumnIndex = nameColIndex;
             pointsColumnIndex = pointsColIndex;
+            headerTotalLinesIndex = totalLinesColIndex; // Uloženie indexu
             this.sortByName = sortByName;
             this.renumberRows = renumberRows;
             this.removeDuplicates = removeDuplicates;
@@ -129,20 +132,22 @@ namespace CountAndSortWinFormsAppNetFr4
                 string headerLine = lines[0];
                 string[] headerParts = headerLine.Split(new[] { columnSeparator }, StringSplitOptions.None);
 
-                // Extrakcia počtu položiek v hlavičke (na 5. pozícii, index 4)
-                int recordCount = 0;
-                if (headerParts.Length > 4 && !string.IsNullOrEmpty(headerParts[4]))
+                // Extrakcia počtu položiek v hlavičke (na 6. pozícii, index 5)
+                int headerRecordCount = 0;
+                if (headerParts.Length > headerTotalLinesIndex && !string.IsNullOrEmpty(headerParts[headerTotalLinesIndex]))
                 {
-                    int.TryParse(headerParts[4], out recordCount);
+                    int.TryParse(headerParts[headerTotalLinesIndex], out headerRecordCount);
                 }
-                result.OriginalRecordCount = recordCount;
-                LogMessage($"Pôvodný počet záznamov v hlavičke: {recordCount}", result);
+                LogMessage($"Pôvodný počet záznamov v hlavičke: {headerRecordCount}", result);
+
+                // Nastavíme skutočný počet riadkov (bez hlavičky a info o dávke)
+                int actualDataRowCount = lines.Length - 2;
+                result.OriginalRecordCount = actualDataRowCount;
+                LogMessage($"Skutočný počet dátových riadkov: {actualDataRowCount}", result);
 
                 // Druhý riadok obsahuje údaje o dávke, necháme ho bez zmeny
                 string batchInfoLine = lines[1];
 
-                // Extrakcia skutočného počtu dátových riadkov
-                int actualDataRowCount = lines.Length - 2;
                 LogMessage($"Skutočný počet dátových riadkov: {actualDataRowCount}", result);
 
                 // Spracovanie riadkov s údajmi (od 3. riadku)
@@ -195,13 +200,14 @@ namespace CountAndSortWinFormsAppNetFr4
                 // Aktualizácia počtu záznamov v hlavičke
                 int newRecordCount = processedDataRows.Count;
                 result.ProcessedRecordCount = newRecordCount;
+                result.HeaderRecordCount = headerRecordCount;
 
-                if (headerParts.Length > 4)
+                if (headerParts.Length > headerTotalLinesIndex)
                 {
-                    headerParts[4] = newRecordCount.ToString();
+                    headerParts[headerTotalLinesIndex] = newRecordCount.ToString();
                     string newHeaderLine = string.Join(columnSeparator, headerParts);
                     processedLines[0] = newHeaderLine;
-                    LogMessage($"Aktualizovaný počet záznamov v hlavičke: {newRecordCount}", result);
+                    LogMessage($"Aktualizovaný počet záznamov v hlavičke na indexe {headerTotalLinesIndex}: {newRecordCount}", result);
                 }
 
                 // Konverzia spracovaných dátových riadkov späť na reťazce
@@ -392,5 +398,11 @@ namespace CountAndSortWinFormsAppNetFr4
         public int ProcessedPointsCount { get; set; }
         public string ErrorMessage { get; set; }
         public List<string> ProcessingLog { get; set; } = new List<string>();
+        public int HeaderRecordCount { get; set; }
+
+        public int GetRemovedRowsCount()
+        {
+            return Math.Max(0, OriginalRecordCount - ProcessedRecordCount);
+        }
     }
 }

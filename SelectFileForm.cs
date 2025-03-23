@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using CountAndSortWinFormsAppNetFr4.Properties;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Security.Cryptography.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 // Doplnenie referencií pre grafy
 // Aby grafy fungovali, je potrebné pridať referenciu na assembly System.Windows.Forms.DataVisualization v projekte.
@@ -757,6 +758,7 @@ namespace CountAndSortWinFormsAppNetFr4
                     serviceCodeColIndex: ColumnServiceCodeIndex,
                     nameColIndex: ColumnNameIndex,
                     pointsColIndex: ColumnPointsIndex,
+                    totalLinesColIndex: totalLinesIndex,
                     sortByName: CheckBoxSortByName.Checked,
                     renumberRows: CheckBoxRenumberTheOrder.Checked,
                     removeDuplicates: CheckBoxRemoveDuplicatesRows.Checked
@@ -913,7 +915,15 @@ namespace CountAndSortWinFormsAppNetFr4
             }
         }
 
+
         // Metóda na zobrazenie súhrnných výsledkov
+        /// <summary>
+        /// Zobrazenie súhrnných výsledkov spracovania
+        /// </summary>
+        /// <param name="results">- zoznam výsledkov spracovania súborov</param>
+        /// <param name="totalFilesProcessed">- celkový počet spracovaných súborov</param>
+        /// <param name="totalOriginalPoints">- celkový počet bodov pred spracovaním</param>
+        /// <param name="totalProcessedPoints">- celkový počet bodov po spracovaní</param>      
         private void ShowProcessingResults(List<ProcessingResult> results, int totalFilesProcessed,
     int totalOriginalPoints, int totalProcessedPoints)
         {
@@ -922,18 +932,20 @@ namespace CountAndSortWinFormsAppNetFr4
                 return;
             }
 
-            // Ak bol spracovaný len jeden súbor, použijeme pôvodnú správu
+            // Ak bol spracovaný len jeden súbor, použije pôvodnú správu
             if (results.Count == 1 && results[0].Success)
             {
                 var result = results[0];
+
+
                 MessageBox.Show(
                     string.Format(Strings.MessageProcessingResults,
                         result.OutputFilePath,
-                        result.OriginalRecordCount - result.ProcessedRecordCount, // RemovedRows
-                        result.OriginalRecordCount,
-                        result.ProcessedRecordCount,
-                        result.OriginalPointsCount,
-                        result.ProcessedPointsCount),
+                        result.GetRemovedRowsCount().ToString("N0"), // Formátované odstránené riadky
+                        result.OriginalRecordCount.ToString("N0"),   // Formátované pôvodné riadky
+                        result.ProcessedRecordCount.ToString("N0"),  // Formátované spracované riadky
+                        result.OriginalPointsCount.ToString("N0"),   // Formátované pôvodné body
+                        result.ProcessedPointsCount.ToString("N0")), // Formátované spracované body
                     Strings.MessageDone,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
@@ -944,10 +956,10 @@ namespace CountAndSortWinFormsAppNetFr4
             StringBuilder message = new StringBuilder();
             message.AppendLine(Strings.ProcessingComplete);
             message.AppendLine($"------------------------------------------");
-            message.AppendLine(Strings.ProcessedFilesCount);
-            message.AppendLine(Strings.TotalPointsBefore);
-            message.AppendLine(Strings.TotalPointsAfter);
-            message.AppendLine(Strings.PointsDifference);
+            message.AppendLine(string.Format(Strings.ProcessedFilesCount, totalFilesProcessed, results.Count));
+            message.AppendLine(string.Format(Strings.TotalPointsBefore, totalOriginalPoints.ToString("N0")));
+            message.AppendLine(string.Format(Strings.TotalPointsAfter, totalProcessedPoints.ToString("N0")));
+            message.AppendLine(string.Format(Strings.PointsDifference, (totalProcessedPoints - totalOriginalPoints).ToString("N0")));
             message.AppendLine($"------------------------------------------");
 
             // Zoznam súborov podľa statusu
@@ -1007,7 +1019,7 @@ namespace CountAndSortWinFormsAppNetFr4
 
             // Asking the user if they want to save the results to a file
             var dialogResult = MessageBox.Show(
-                message.ToString() + $"(\n\n {Strings.MessageDoYouWantSaveDetailedResult}",
+                message.ToString() + $"\n\n {Strings.MessageDoYouWantSaveDetailedResult}",
                 Strings.MessageDone,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Information);

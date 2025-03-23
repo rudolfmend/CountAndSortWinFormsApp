@@ -106,6 +106,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export data.
+        /// </summary>
+        internal static string ButtonExport {
+            get {
+                return ResourceManager.GetString("ButtonExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Process Data.
         /// </summary>
         internal static string ButtonProcessData {
@@ -309,15 +318,6 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         internal static string ErrorSavingResults {
             get {
                 return ResourceManager.GetString("ErrorSavingResults", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export data.
-        /// </summary>
-        internal static string ExportButton {
-            get {
-                return ResourceManager.GetString("ExportButton", resourceCulture);
             }
         }
         

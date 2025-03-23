@@ -314,7 +314,7 @@ namespace CountAndSortWinFormsAppNetFr4
             comparisonTab.Controls.Add(comparisonGrid);
         }
 
-        private void ExportButton_Click(object sender, EventArgs e)
+        private void ButtonExport_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveDialog = new SaveFileDialog())
             {

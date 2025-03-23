@@ -225,8 +225,8 @@ namespace CountAndSortWinFormsAppNetFr4
             }
         }
 
-        // Aktualizovaná metóda ExportButton_Click pre použitie s EPPlus
-        private void ExportButton_Click(object sender, EventArgs e)
+        // Aktualizovaná metóda ButtonExport_Click pre použitie s EPPlus
+        private void ButtonExport_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveDialog = new SaveFileDialog())
             {

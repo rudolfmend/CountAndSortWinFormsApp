@@ -422,7 +422,7 @@ Punkty po przetworzeniu: {5}</value>
   <data name="ViewByServices" xml:space="preserve">
     <value>Według usług</value>
   </data>
-  <data name="ExportButton" xml:space="preserve">
+  <data name="ButtonExport" xml:space="preserve">
     <value>Eksportuj dane</value>
   </data>
   <data name="Identifier" xml:space="preserve">

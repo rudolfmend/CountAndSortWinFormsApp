@@ -36,7 +36,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientAnalysisForm));
             this.ViewPanel = new System.Windows.Forms.Panel();
-            this.ExportButton = new System.Windows.Forms.Button();
+            this.ButtonExport = new System.Windows.Forms.Button();
             this.ButtonService = new System.Windows.Forms.Button();
             this.ValueButton = new System.Windows.Forms.Button();
             this.PointsButton = new System.Windows.Forms.Button();
@@ -66,7 +66,7 @@
             // ViewPanel
             // 
             this.ViewPanel.BackColor = System.Drawing.Color.LightGray;
-            this.ViewPanel.Controls.Add(this.ExportButton);
+            this.ViewPanel.Controls.Add(this.ButtonExport);
             this.ViewPanel.Controls.Add(this.ButtonService);
             this.ViewPanel.Controls.Add(this.ValueButton);
             this.ViewPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -75,14 +75,14 @@
             this.ViewPanel.Size = new System.Drawing.Size(1484, 50);
             this.ViewPanel.TabIndex = 0;
             // 
-            // ExportButton
+            // ButtonExport
             // 
-            this.ExportButton.Location = new System.Drawing.Point(894, 10);
-            this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(120, 30);
-            this.ExportButton.TabIndex = 2;
-            this.ExportButton.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ExportButton;
-            this.ExportButton.UseVisualStyleBackColor = true;
+            this.ButtonExport.Location = new System.Drawing.Point(894, 10);
+            this.ButtonExport.Name = "ButtonExport";
+            this.ButtonExport.Size = new System.Drawing.Size(120, 30);
+            this.ButtonExport.TabIndex = 2;
+            this.ButtonExport.Text = global::CountAndSortWinFormsAppNetFr4.Properties.Strings.ButtonExport;
+            this.ButtonExport.UseVisualStyleBackColor = true;
             // 
             // ButtonService
             // 
@@ -284,7 +284,7 @@
         private System.Windows.Forms.Button PointsButton;
         private System.Windows.Forms.Button ButtonService;
         private System.Windows.Forms.Button ValueButton;
-        private System.Windows.Forms.Button ExportButton;
+        private System.Windows.Forms.Button ButtonExport;
         private System.Windows.Forms.Panel ChartPanel;
         private System.Windows.Forms.DataVisualization.Charting.Chart BarChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart PieChart;

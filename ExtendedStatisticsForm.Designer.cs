@@ -12,7 +12,7 @@
         private System.Windows.Forms.TabPage comparisonTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart mainChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart trendChart;
-        private System.Windows.Forms.Button exportButton;
+        private System.Windows.Forms.Button ButtonExport;
         private System.Windows.Forms.TableLayoutPanel summaryPanel;
         private System.Windows.Forms.TabPage doctorsTab;
         private System.Windows.Forms.TabPage facilitiesTab;
@@ -37,89 +37,51 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtendedStatisticsForm));
-
             this.tabControl = new System.Windows.Forms.TabControl();
             this.summaryTab = new System.Windows.Forms.TabPage();
+            this.summaryPanel = new System.Windows.Forms.TableLayoutPanel();
             this.chartsTab = new System.Windows.Forms.TabPage();
+            this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.trendTab = new System.Windows.Forms.TabPage();
+            this.trendChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.comparisonTab = new System.Windows.Forms.TabPage();
             this.doctorsTab = new System.Windows.Forms.TabPage();
-            this.facilitiesTab = new System.Windows.Forms.TabPage();
-            this.diagnosisTab = new System.Windows.Forms.TabPage();
-
-            this.summaryPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.mainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.trendChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.doctorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.facilitiesChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.diagnosisChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-
             this.doctorsGrid = new System.Windows.Forms.DataGridView();
+            this.doctorsChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.facilitiesTab = new System.Windows.Forms.TabPage();
             this.facilitiesGrid = new System.Windows.Forms.DataGridView();
+            this.facilitiesChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.diagnosisTab = new System.Windows.Forms.TabPage();
             this.diagnosisGrid = new System.Windows.Forms.DataGridView();
-
-            this.exportButton = new System.Windows.Forms.Button();
-
-            // Inicializácia a suspend layout
-            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trendChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doctorsChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facilitiesChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.diagnosisChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doctorsGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facilitiesGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.diagnosisGrid)).BeginInit();
-
+            this.diagnosisChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ButtonExport = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.summaryTab.SuspendLayout();
             this.chartsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.trendTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trendChart)).BeginInit();
+            this.doctorsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.doctorsGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doctorsChart)).BeginInit();
+            this.facilitiesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.facilitiesGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.facilitiesChart)).BeginInit();
+            this.diagnosisTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.diagnosisGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.diagnosisChart)).BeginInit();
             this.SuspendLayout();
-
-            // Nastavenia komponentov...
-
-            // Pridanie záložiek do TabControl
-            this.tabControl.Controls.Add(this.summaryTab);
-            this.tabControl.Controls.Add(this.chartsTab);
-            this.tabControl.Controls.Add(this.trendTab);
-            this.tabControl.Controls.Add(this.comparisonTab);
+            // 
+            // tabControl
+            // 
             this.tabControl.Controls.Add(this.doctorsTab);
             this.tabControl.Controls.Add(this.facilitiesTab);
             this.tabControl.Controls.Add(this.diagnosisTab);
-
-            // Pridanie komponentov do záložiek
-            this.summaryTab.Controls.Add(this.summaryPanel);
-            this.chartsTab.Controls.Add(this.mainChart);
-            this.trendTab.Controls.Add(this.trendChart);
-            this.doctorsTab.Controls.Add(this.doctorsGrid);
-            this.doctorsTab.Controls.Add(this.doctorsChart);
-            this.facilitiesTab.Controls.Add(this.facilitiesGrid);
-            this.facilitiesTab.Controls.Add(this.facilitiesChart);
-            this.diagnosisTab.Controls.Add(this.diagnosisGrid);
-            this.diagnosisTab.Controls.Add(this.diagnosisChart);
-
-            // Koniec a resume layout
-            this.tabControl.ResumeLayout(false);
-            this.summaryTab.ResumeLayout(false);
-            this.chartsTab.ResumeLayout(false);
-            this.trendTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trendChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doctorsChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facilitiesChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.diagnosisChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.doctorsGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.facilitiesGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.diagnosisGrid)).EndInit();
-            this.ResumeLayout(false);
-            // 
-            // tabControl
-            //
             this.tabControl.Controls.Add(this.summaryTab);
             this.tabControl.Controls.Add(this.chartsTab);
             this.tabControl.Controls.Add(this.trendTab);
@@ -168,7 +130,7 @@
             this.chartsTab.Location = new System.Drawing.Point(4, 25);
             this.chartsTab.Name = "chartsTab";
             this.chartsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.chartsTab.Size = new System.Drawing.Size(792, 381);
+            this.chartsTab.Size = new System.Drawing.Size(1516, 711);
             this.chartsTab.TabIndex = 1;
             this.chartsTab.Text = "Grafy";
             this.chartsTab.UseVisualStyleBackColor = true;
@@ -176,14 +138,12 @@
             // mainChart
             // 
             this.mainChart.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea1.Name = "MainArea";
             this.mainChart.ChartAreas.Add(chartArea1);
             this.mainChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "MainLegend";
             this.mainChart.Legends.Add(legend1);
             this.mainChart.Location = new System.Drawing.Point(3, 3);
             this.mainChart.Name = "mainChart";
-            this.mainChart.Size = new System.Drawing.Size(786, 375);
+            this.mainChart.Size = new System.Drawing.Size(1510, 705);
             this.mainChart.TabIndex = 0;
             // 
             // trendTab
@@ -191,7 +151,7 @@
             this.trendTab.Controls.Add(this.trendChart);
             this.trendTab.Location = new System.Drawing.Point(4, 25);
             this.trendTab.Name = "trendTab";
-            this.trendTab.Size = new System.Drawing.Size(792, 381);
+            this.trendTab.Size = new System.Drawing.Size(1516, 711);
             this.trendTab.TabIndex = 2;
             this.trendTab.Text = "Trendy";
             this.trendTab.UseVisualStyleBackColor = true;
@@ -206,113 +166,121 @@
             this.trendChart.Legends.Add(legend2);
             this.trendChart.Location = new System.Drawing.Point(0, 0);
             this.trendChart.Name = "trendChart";
-            this.trendChart.Size = new System.Drawing.Size(792, 381);
+            this.trendChart.Size = new System.Drawing.Size(1516, 711);
             this.trendChart.TabIndex = 0;
             // 
             // comparisonTab
             // 
             this.comparisonTab.Location = new System.Drawing.Point(4, 25);
             this.comparisonTab.Name = "comparisonTab";
-            this.comparisonTab.Size = new System.Drawing.Size(792, 381);
+            this.comparisonTab.Size = new System.Drawing.Size(1516, 711);
             this.comparisonTab.TabIndex = 3;
             this.comparisonTab.Text = "Porovnanie";
             this.comparisonTab.UseVisualStyleBackColor = true;
-            //
+            // 
             // doctorsTab
-            //
+            // 
+            this.doctorsTab.Controls.Add(this.doctorsGrid);
+            this.doctorsTab.Controls.Add(this.doctorsChart);
             this.doctorsTab.Location = new System.Drawing.Point(4, 25);
             this.doctorsTab.Name = "doctorsTab";
-            this.doctorsTab.Size = new System.Drawing.Size(792, 381);
+            this.doctorsTab.Size = new System.Drawing.Size(1516, 711);
             this.doctorsTab.TabIndex = 4;
             this.doctorsTab.Text = "Lekári";
             this.doctorsTab.UseVisualStyleBackColor = true;
-            //
+            // 
+            // doctorsGrid
+            // 
+            this.doctorsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.doctorsGrid.Location = new System.Drawing.Point(0, 0);
+            this.doctorsGrid.Name = "doctorsGrid";
+            this.doctorsGrid.Size = new System.Drawing.Size(1516, 711);
+            this.doctorsGrid.TabIndex = 0;
+            // 
+            // doctorsChart
+            // 
+            this.doctorsChart.BackColor = System.Drawing.Color.WhiteSmoke;
+            chartArea1.Name = "MainArea";
+            this.doctorsChart.ChartAreas.Add(chartArea1);
+            this.doctorsChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "MainLegend";
+            this.doctorsChart.Legends.Add(legend1);
+            this.doctorsChart.Location = new System.Drawing.Point(0, 0);
+            this.doctorsChart.Name = "doctorsChart";
+            this.doctorsChart.Size = new System.Drawing.Size(1516, 711);
+            this.doctorsChart.TabIndex = 0;
+            // 
             // facilitiesTab
-            //
+            // 
+            this.facilitiesTab.Controls.Add(this.facilitiesGrid);
+            this.facilitiesTab.Controls.Add(this.facilitiesChart);
             this.facilitiesTab.Location = new System.Drawing.Point(4, 25);
             this.facilitiesTab.Name = "facilitiesTab";
-            this.facilitiesTab.Size = new System.Drawing.Size(792, 381);
+            this.facilitiesTab.Size = new System.Drawing.Size(1516, 711);
             this.facilitiesTab.TabIndex = 5;
             this.facilitiesTab.Text = "Zariadenia";
             this.facilitiesTab.UseVisualStyleBackColor = true;
-            //
-            // diagnosisTab
-            //
-            this.diagnosisTab.Location = new System.Drawing.Point(4, 25);
-            this.diagnosisTab.Name = "diagnosisTab";
-            this.diagnosisTab.Size = new System.Drawing.Size(792, 381);
-            this.diagnosisTab.TabIndex = 6;
-            this.diagnosisTab.Text = "Diagnózy";
-            this.diagnosisTab.UseVisualStyleBackColor = true;
-            //
-            // doctorsChart
-            //
-            this.doctorsChart.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.doctorsChart.ChartAreas.Add(chartArea1);
-            this.doctorsChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.doctorsChart.Legends.Add(legend1);
-            this.doctorsChart.Location = new System.Drawing.Point(3, 3);
-            this.doctorsChart.Name = "doctorsChart";
-            this.doctorsChart.Size = new System.Drawing.Size(786, 375);
-            this.doctorsChart.TabIndex = 0;
-            //
+            // 
+            // facilitiesGrid
+            // 
+            this.facilitiesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.facilitiesGrid.Location = new System.Drawing.Point(0, 0);
+            this.facilitiesGrid.Name = "facilitiesGrid";
+            this.facilitiesGrid.Size = new System.Drawing.Size(1516, 711);
+            this.facilitiesGrid.TabIndex = 0;
+            // 
             // facilitiesChart
-            //
+            // 
             this.facilitiesChart.BackColor = System.Drawing.Color.WhiteSmoke;
             this.facilitiesChart.ChartAreas.Add(chartArea1);
             this.facilitiesChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.facilitiesChart.Legends.Add(legend1);
-            this.facilitiesChart.Location = new System.Drawing.Point(3, 3);
+            this.facilitiesChart.Location = new System.Drawing.Point(0, 0);
             this.facilitiesChart.Name = "facilitiesChart";
-            this.facilitiesChart.Size = new System.Drawing.Size(786, 375);
+            this.facilitiesChart.Size = new System.Drawing.Size(1516, 711);
             this.facilitiesChart.TabIndex = 0;
-            //
+            // 
+            // diagnosisTab
+            // 
+            this.diagnosisTab.Controls.Add(this.diagnosisGrid);
+            this.diagnosisTab.Controls.Add(this.diagnosisChart);
+            this.diagnosisTab.Location = new System.Drawing.Point(4, 25);
+            this.diagnosisTab.Name = "diagnosisTab";
+            this.diagnosisTab.Size = new System.Drawing.Size(1516, 711);
+            this.diagnosisTab.TabIndex = 6;
+            this.diagnosisTab.Text = "Diagnózy";
+            this.diagnosisTab.UseVisualStyleBackColor = true;
+            // 
+            // diagnosisGrid
+            // 
+            this.diagnosisGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.diagnosisGrid.Location = new System.Drawing.Point(0, 0);
+            this.diagnosisGrid.Name = "diagnosisGrid";
+            this.diagnosisGrid.Size = new System.Drawing.Size(1516, 711);
+            this.diagnosisGrid.TabIndex = 0;
+            // 
             // diagnosisChart
-            //
+            // 
             this.diagnosisChart.BackColor = System.Drawing.Color.WhiteSmoke;
             this.diagnosisChart.ChartAreas.Add(chartArea1);
             this.diagnosisChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.diagnosisChart.Legends.Add(legend1);
-            this.diagnosisChart.Location = new System.Drawing.Point(3, 3);
+            this.diagnosisChart.Location = new System.Drawing.Point(0, 0);
             this.diagnosisChart.Name = "diagnosisChart";
-            this.diagnosisChart.Size = new System.Drawing.Size(786, 375);
+            this.diagnosisChart.Size = new System.Drawing.Size(1516, 711);
             this.diagnosisChart.TabIndex = 0;
-            //
-            // doctorsGrid
-            //
-            this.doctorsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.doctorsGrid.Location = new System.Drawing.Point(0, 0);
-            this.doctorsGrid.Name = "doctorsGrid";
-            this.doctorsGrid.Size = new System.Drawing.Size(792, 381);
-            this.doctorsGrid.TabIndex = 0;
-            //
-            // facilitiesGrid
-            //
-            this.facilitiesGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.facilitiesGrid.Location = new System.Drawing.Point(0, 0);
-            this.facilitiesGrid.Name = "facilitiesGrid";
-            this.facilitiesGrid.Size = new System.Drawing.Size(792, 381);
-            this.facilitiesGrid.TabIndex = 0;
-            //
-            // diagnosisGrid
-            //
-            this.diagnosisGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.diagnosisGrid.Location = new System.Drawing.Point(0, 0);
-            this.diagnosisGrid.Name = "diagnosisGrid";
-            this.diagnosisGrid.Size = new System.Drawing.Size(792, 381);
-            this.diagnosisGrid.TabIndex = 0;
             // 
-            // exportButton
+            // ButtonExport
             // 
-            this.exportButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.exportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.exportButton.Location = new System.Drawing.Point(0, 740);
-            this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(1524, 40);
-            this.exportButton.TabIndex = 1;
-            this.exportButton.Text = "Exportovať štatistiku";
-            this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            this.ButtonExport.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ButtonExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.ButtonExport.Location = new System.Drawing.Point(0, 740);
+            this.ButtonExport.Name = "ButtonExport";
+            this.ButtonExport.Size = new System.Drawing.Size(1524, 40);
+            this.ButtonExport.TabIndex = 1;
+            this.ButtonExport.Text = "Exportovať štatistiku";
+            this.ButtonExport.UseVisualStyleBackColor = true;
+            this.ButtonExport.Click += new System.EventHandler(this.ButtonExport_Click);
             // 
             // ExtendedStatisticsForm
             // 
@@ -320,11 +288,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1524, 780);
             this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.exportButton);
+            this.Controls.Add(this.ButtonExport);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ExtendedStatisticsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = Properties.Strings.ExtendedStatistics;
+            this.Text = "Extended Statistics";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tabControl.ResumeLayout(false);
             this.summaryTab.ResumeLayout(false);
@@ -332,6 +300,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.trendTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trendChart)).EndInit();
+            this.doctorsTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.doctorsGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.doctorsChart)).EndInit();
+            this.facilitiesTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.facilitiesGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.facilitiesChart)).EndInit();
+            this.diagnosisTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.diagnosisGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.diagnosisChart)).EndInit();
             this.ResumeLayout(false);
 
         }

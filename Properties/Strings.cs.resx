@@ -419,7 +419,7 @@ Body po zpracování: {5}</value>
   <data name="ViewByServices" xml:space="preserve">
     <value>Podle výkonů</value>
   </data>
-  <data name="ExportButton" xml:space="preserve">
+  <data name="ButtonExport" xml:space="preserve">
     <value>Exportovat data</value>
   </data>
   <data name="Identifier" xml:space="preserve">

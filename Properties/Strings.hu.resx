@@ -421,7 +421,7 @@ Pontok a feldolgozás után: {5}</value>
   <data name="ViewByServices" xml:space="preserve">
     <value>Szolgáltatások szerint</value>
   </data>
-  <data name="ExportButton" xml:space="preserve">
+  <data name="ButtonExport" xml:space="preserve">
     <value>Adatok exportálása</value>
   </data>
   <data name="Identifier" xml:space="preserve">
