@@ -484,4 +484,7 @@ Pontok a feldolgozás után: {5}</value>
   <data name="Facilities" xml:space="preserve">
     <value>Intézmények</value>
   </data>
+  <data name="ViewByMonths" xml:space="preserve">
+    <value>Hónapok szerint</value>
+  </data>
 </root>

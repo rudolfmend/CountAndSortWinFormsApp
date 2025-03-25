@@ -485,4 +485,7 @@
   <data name="Facilities" xml:space="preserve">
     <value>Заклади</value>
   </data>
+  <data name="ViewByMonths" xml:space="preserve">
+    <value>По місяцях</value>
+  </data>
 </root>

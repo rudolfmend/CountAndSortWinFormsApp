@@ -36,23 +36,44 @@ namespace CountAndSortWinFormsAppNetFr4
             // Generovanie štatistík
             statistics = statisticsModule.GenerateExtendedStatistics(files);
 
-            // Naplnenie súhrnnej záložky
-            AddLabelPair(summaryPanel, Strings.TotalFilesSelected, statistics["TotalFiles"].ToString(), 0);
-            int totalPoints = (int)statistics["TotalPoints"];
-            AddLabelPair(summaryPanel, Strings.HistoryTotalPoints, totalPoints.ToString("#,##0"), 1);
-            double averagePoints = (double)statistics["AveragePoints"];
-            AddLabelPair(summaryPanel, Strings.HistoryAveragePoints, averagePoints.ToString("#,##0.0"), 2);
-            int maxPoints = (int)statistics["MaxPoints"];
-            AddLabelPair(summaryPanel, Strings.MaximumPoints, maxPoints.ToString("#,##0"), 3);
-            int minPoints = (int)statistics["MinPoints"];
-            AddLabelPair(summaryPanel, Strings.MinimumPoints, minPoints.ToString("#,##0"), 4);
-            //nové volania po existujúcich funkciách
-            //FillDoctorsTab();
-            //FillFacilitiesTab();
-            //FillDiagnosisTab();
-            AddLabelPair(summaryPanel, Strings.Doctors, statistics["Doctors"].ToString(), 5);
-            AddLabelPair(summaryPanel, Strings.Facilities, statistics["Facilities"].ToString(), 6);
-            AddLabelPair(summaryPanel, Strings.Diagnoses, statistics["Diagnosis"].ToString(), 7);
+// Odolnosť voči chýbajúcim kľúčom v slovníku.
+// Ak nejaký kľúč bude chýbať, jednoducho sa preskočí príslušná časť kódu a program bude pokračovať ďalej.
+            if (statistics.TryGetValue("TotalFiles", out object totalFiles))    // TryGetValue() vráti true, ak kľúč existuje
+                AddLabelPair(summaryPanel, Strings.TotalFilesSelected, totalFiles.ToString(), 0);
+
+            if (statistics.TryGetValue("TotalPoints", out object totalPointsObj))
+            {
+                int totalPoints = (int)totalPointsObj;
+                AddLabelPair(summaryPanel, Strings.HistoryTotalPoints, totalPoints.ToString("#,##0"), 1);
+            }
+
+            if (statistics.TryGetValue("AveragePoints", out object averagePointsObj))
+            {
+                double averagePoints = (double)averagePointsObj;  // Použiť premennú z TryGetValue
+                AddLabelPair(summaryPanel, Strings.HistoryAveragePoints, averagePoints.ToString("#,##0.0"), 2);
+            }
+
+            if (statistics.TryGetValue("MaxPoints", out object maxPointsObj))
+            {
+                int maxPoints = (int)maxPointsObj;  // Použiť premennú z TryGetValue
+                AddLabelPair(summaryPanel, Strings.MaximumPoints, maxPoints.ToString("#,##0"), 3);
+            }
+
+            if (statistics.TryGetValue("MinPoints", out object minPointsObj))
+            {
+                int minPoints = (int)minPointsObj;  // Použiť premennú z TryGetValue
+                AddLabelPair(summaryPanel, Strings.MinimumPoints, minPoints.ToString("#,##0"), 4);
+            }
+
+            // Ďalšie labely
+            if (statistics.TryGetValue("Doctors", out object doctors))
+                AddLabelPair(summaryPanel, Strings.Doctors, doctors.ToString(), 5);
+
+            if (statistics.TryGetValue("Facilities", out object facilities))
+                AddLabelPair(summaryPanel, Strings.Facilities, facilities.ToString(), 6);
+
+            if (statistics.TryGetValue("Diagnosis", out object diagnosis))
+                AddLabelPair(summaryPanel, Strings.Diagnoses, diagnosis.ToString(), 7);
 
             // Naplnenie grafov
             FillMainChart();
@@ -126,7 +147,7 @@ namespace CountAndSortWinFormsAppNetFr4
             trendChart.Series.Clear();
 
             // Vytvorenie série pre trendový graf
-            Series trendSeries = new Series("Body podľa mesiacov")
+            Series trendSeries = new Series(Properties.Strings.ViewByMonths) // "Body podľa mesiacov"
             {
                 ChartType = SeriesChartType.Line,
                 MarkerStyle = MarkerStyle.Circle,

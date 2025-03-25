@@ -45,7 +45,7 @@ namespace CountAndSortWinFormsAppNetFr4
             int serviceCodeColIndex,
             int nameColIndex = -1,
             int pointsColIndex = -1,
-            int totalLinesColIndex = 5, // Pridaný nový parameter s predvolenou hodnotou 5
+            int totalLinesColIndex = 5,
             bool sortByName = true,
             bool renumberRows = true,
             bool removeDuplicates = true)
@@ -151,9 +151,11 @@ namespace CountAndSortWinFormsAppNetFr4
                 LogMessage($"Skutočný počet dátových riadkov: {actualDataRowCount}", result);
 
                 // Spracovanie riadkov s údajmi (od 3. riadku)
-                List<string> processedLines = new List<string>();
-                processedLines.Add(headerLine);  // Pridáme hlavičku (aktualizujeme ju neskôr)
-                processedLines.Add(batchInfoLine); // Pridáme informácie o dávke
+                List<string> processedLines = new List<string>
+                {
+                    headerLine,  // Pridáme hlavičku (aktualizujeme ju neskôr)
+                    batchInfoLine // Pridáme informácie o dávke
+                };
 
                 // Spracovanie dátových riadkov
                 List<string[]> dataRows = new List<string[]>();

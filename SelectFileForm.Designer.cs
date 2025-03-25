@@ -51,6 +51,8 @@ namespace CountAndSortWinFormsAppNetFr4
             this.LabelTotalPoints = new System.Windows.Forms.Label();
             this.LabelLanguagesChoice = new System.Windows.Forms.Label();
             this.ButtonShowExtendedStatistics = new System.Windows.Forms.Button();
+            this.ComboBoxOmitHeader = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridPreview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,7 +109,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // 
             // ButtonTableSettings
             // 
-            this.ButtonTableSettings.Location = new System.Drawing.Point(566, 68);
+            this.ButtonTableSettings.Location = new System.Drawing.Point(285, 149);
             this.ButtonTableSettings.Name = "ButtonTableSettings";
             this.ButtonTableSettings.Size = new System.Drawing.Size(173, 52);
             this.ButtonTableSettings.TabIndex = 34;
@@ -139,7 +141,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxRenumberTheOrder.AutoSize = true;
             this.CheckBoxRenumberTheOrder.Checked = true;
             this.CheckBoxRenumberTheOrder.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckBoxRenumberTheOrder.Location = new System.Drawing.Point(566, 143);
+            this.CheckBoxRenumberTheOrder.Location = new System.Drawing.Point(566, 115);
             this.CheckBoxRenumberTheOrder.Name = "CheckBoxRenumberTheOrder";
             this.CheckBoxRenumberTheOrder.Size = new System.Drawing.Size(181, 26);
             this.CheckBoxRenumberTheOrder.TabIndex = 4;
@@ -151,7 +153,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxSortByName.AutoSize = true;
             this.CheckBoxSortByName.Checked = true;
             this.CheckBoxSortByName.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckBoxSortByName.Location = new System.Drawing.Point(566, 175);
+            this.CheckBoxSortByName.Location = new System.Drawing.Point(566, 147);
             this.CheckBoxSortByName.Name = "CheckBoxSortByName";
             this.CheckBoxSortByName.Size = new System.Drawing.Size(183, 26);
             this.CheckBoxSortByName.TabIndex = 5;
@@ -163,7 +165,7 @@ namespace CountAndSortWinFormsAppNetFr4
             this.CheckBoxRemoveDuplicatesRows.AutoSize = true;
             this.CheckBoxRemoveDuplicatesRows.Checked = true;
             this.CheckBoxRemoveDuplicatesRows.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CheckBoxRemoveDuplicatesRows.Location = new System.Drawing.Point(566, 207);
+            this.CheckBoxRemoveDuplicatesRows.Location = new System.Drawing.Point(566, 179);
             this.CheckBoxRemoveDuplicatesRows.Name = "CheckBoxRemoveDuplicatesRows";
             this.CheckBoxRemoveDuplicatesRows.Size = new System.Drawing.Size(233, 26);
             this.CheckBoxRemoveDuplicatesRows.TabIndex = 7;
@@ -173,7 +175,7 @@ namespace CountAndSortWinFormsAppNetFr4
             // CheckBoxSelectAll
             // 
             this.CheckBoxSelectAll.AutoSize = true;
-            this.CheckBoxSelectAll.Location = new System.Drawing.Point(566, 239);
+            this.CheckBoxSelectAll.Location = new System.Drawing.Point(566, 211);
             this.CheckBoxSelectAll.Name = "CheckBoxSelectAll";
             this.CheckBoxSelectAll.Size = new System.Drawing.Size(195, 26);
             this.CheckBoxSelectAll.TabIndex = 17;
@@ -262,12 +264,40 @@ namespace CountAndSortWinFormsAppNetFr4
             this.ButtonShowExtendedStatistics.UseVisualStyleBackColor = true;
             this.ButtonShowExtendedStatistics.Click += new System.EventHandler(this.ButtonShowExtendedStatistics_Click);
             // 
+            // ComboBoxOmitHeader
+            // 
+            this.ComboBoxOmitHeader.FormattingEnabled = true;
+            this.ComboBoxOmitHeader.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"});
+            this.ComboBoxOmitHeader.Location = new System.Drawing.Point(835, 76);
+            this.ComboBoxOmitHeader.Name = "ComboBoxOmitHeader";
+            this.ComboBoxOmitHeader.Size = new System.Drawing.Size(121, 28);
+            this.ComboBoxOmitHeader.TabIndex = 37;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(562, 76);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(267, 22);
+            this.label1.TabIndex = 38;
+            this.label1.Text = "vynechať hlavičku (riadky zhora)";
+            // 
             // SelectFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1757, 906);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ComboBoxOmitHeader);
             this.Controls.Add(this.ButtonShowExtendedStatistics);
             this.Controls.Add(this.ButtonTableSettings);
             this.Controls.Add(this.ButtonShowAnalysis);
@@ -319,6 +349,8 @@ namespace CountAndSortWinFormsAppNetFr4
         private Label LabelLanguagesChoice;
         private ToolTip LanguageToolTip;
         private Button ButtonShowExtendedStatistics;
+        private ComboBox ComboBoxOmitHeader;
+        private Label label1;
     }
 }
 

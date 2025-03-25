@@ -30,6 +30,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private int _dayColumnIndex;
         private int _serviceCodeColumnIndex;
         private int _diagnosisColumnIndex;
+        private int _totalLinesColumnIndex;
 
         // Oddelenie stĺpcov
         private string _importSeparator = "|";
@@ -64,6 +65,7 @@ namespace CountAndSortWinFormsAppNetFr4
         public int ColumnDayIndex => _dayColumnIndex;
         public int ColumnServiceCodeIndex => _serviceCodeColumnIndex;
         public int ColumnDiagnosisIndex => _diagnosisColumnIndex;
+        public int ColumnTotalLinesIndex => _totalLinesColumnIndex;
         public string ColumnSeparator
         {
             get { return _importSeparator; }
@@ -754,11 +756,10 @@ namespace CountAndSortWinFormsAppNetFr4
                     separator: ColumnSeparator,
                     dayColIndex: ColumnDayIndex,
                     idColIndex: ColumnIdIndex,
-                  //serviceCodeColIndex: (int)NumericUpDownServiceCodeColumn.Value - 1,
                     serviceCodeColIndex: ColumnServiceCodeIndex,
                     nameColIndex: ColumnNameIndex,
                     pointsColIndex: ColumnPointsIndex,
-                    totalLinesColIndex: totalLinesIndex,
+                    totalLinesColIndex: ColumnTotalLinesIndex,
                     sortByName: CheckBoxSortByName.Checked,
                     renumberRows: CheckBoxRenumberTheOrder.Checked,
                     removeDuplicates: CheckBoxRemoveDuplicatesRows.Checked
@@ -1788,7 +1789,8 @@ namespace CountAndSortWinFormsAppNetFr4
                 _serviceCodeColumnIndex,
                 _diagnosisColumnIndex,
                 _importSeparator,
-                DataGridPreview.Columns.Count  // Predáva počet stĺpcov
+                DataGridPreview.Columns.Count,  // Predáva počet stĺpcov
+                _totalLinesColumnIndex
             );
             // Formulár si nastaví rozsah hodnôt na základe počtu stĺpcov
             // v DataGridPreview, ktorý sa predáva v konštruktore
@@ -1803,6 +1805,7 @@ namespace CountAndSortWinFormsAppNetFr4
                 _serviceCodeColumnIndex = Settings.Default.ServiceCodeColumnIndex - 1;
                 _dayColumnIndex = Settings.Default.DayColumnIndex - 1;
                 _diagnosisColumnIndex = Settings.Default.DiagnosisColumnIndex - 1;
+                _totalLinesColumnIndex = Settings.Default.TotalLinesColumnIndex - 1;
 
                 // Aktualizuje separátor
                 _importSeparator = settingsForm.GetSelectedSeparator();

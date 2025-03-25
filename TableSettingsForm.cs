@@ -11,7 +11,7 @@ namespace CountAndSortWinFormsAppNetFr4
         private string columnSeparator;
 
         public TableSettingsForm(SelectFileForm mainForm, int pointsIndex, int nameIndex, int idIndex,
-        int dayIndex, int serviceCodeIndex, int diagnosisIndex, string separator, int columnCount)
+        int dayIndex, int serviceCodeIndex, int diagnosisIndex, string separator, int columnCount, int totalLinesColumnIndex)
         {
             InitializeComponent();
             this.mainForm = mainForm;
@@ -30,7 +30,8 @@ namespace CountAndSortWinFormsAppNetFr4
             NumericUpDownDayColumn.Value = dayIndex + 1;
             NumericUpDownServiceCodeColumn.Value = serviceCodeIndex + 1;
             NumericUpDownDiagnosisColumn.Value = diagnosisIndex + 1;
-            NumericUpDownTotalLines.Value = Settings.Default.TotalLinesColumnIndex;
+            //NumericUpDownTotalLines.Value = Settings.Default.TotalLinesColumnIndex;
+            NumericUpDownTotalLines.Value = totalLinesColumnIndex + 1;
 
             // Inicializácia separátorov
             if (ComboBoxImportSeparatorType.Items.Count == 0)
@@ -154,7 +155,6 @@ namespace CountAndSortWinFormsAppNetFr4
             NumericUpDownPointsColumn.Minimum = 1;
             NumericUpDownPointsColumn.Maximum = columnCount - 1;
 
-            // To isté pre ostatné NumericUpDown prvky
             NumericUpDownNameColumn.Minimum = 1;
             NumericUpDownNameColumn.Maximum = columnCount - 1;
 
@@ -169,6 +169,10 @@ namespace CountAndSortWinFormsAppNetFr4
 
             NumericUpDownDiagnosisColumn.Minimum = 1;
             NumericUpDownDiagnosisColumn.Maximum = columnCount - 1;
+                        
+            NumericUpDownTotalLines.Minimum = 1; //TotalLinesColumnIndex
+            NumericUpDownTotalLines.Maximum = columnCount - 1;
+
         }
 
         public bool ValidatePointsColumn()

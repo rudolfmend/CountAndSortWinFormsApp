@@ -166,5 +166,17 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
                 this["ServicePriceColumnIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int TotalLinesColumnIndex {
+            get {
+                return ((int)(this["TotalLinesColumnIndex"]));
+            }
+            set {
+                this["TotalLinesColumnIndex"] = value;
+            }
+        }
     }
 }

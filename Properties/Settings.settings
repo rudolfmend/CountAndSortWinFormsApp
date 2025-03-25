@@ -38,5 +38,8 @@
     <Setting Name="ServicePriceColumnIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">34</Value>
     </Setting>
+    <Setting Name="TotalLinesColumnIndex" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

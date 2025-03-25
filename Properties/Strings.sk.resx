@@ -485,4 +485,7 @@ Body po spracovaní: {5}</value>
   <data name="Facilities" xml:space="preserve">
     <value>Zariadenia</value>
   </data>
+  <data name="ViewByMonths" xml:space="preserve">
+    <value>Body podľa mesiacov</value>
+  </data>
 </root>

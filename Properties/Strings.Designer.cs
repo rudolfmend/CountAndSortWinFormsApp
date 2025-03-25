@@ -1131,6 +1131,15 @@ namespace CountAndSortWinFormsAppNetFr4.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By Months.
+        /// </summary>
+        internal static string ViewByMonths {
+            get {
+                return ResourceManager.GetString("ViewByMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By Points.
         /// </summary>
         internal static string ViewByPoints {

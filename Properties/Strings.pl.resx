@@ -485,4 +485,7 @@ Punkty po przetworzeniu: {5}</value>
   <data name="Facilities" xml:space="preserve">
     <value>Placówki</value>
   </data>
+  <data name="ViewByMonths" xml:space="preserve">
+    <value>Według miesięcy</value>
+  </data>
 </root>

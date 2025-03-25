@@ -482,4 +482,7 @@ Body po zpracování: {5}</value>
   <data name="Facilities" xml:space="preserve">
     <value>Zařízení</value>
   </data>
+  <data name="ViewByMonths" xml:space="preserve">
+    <value>Podle měsíců</value>
+  </data>
 </root>

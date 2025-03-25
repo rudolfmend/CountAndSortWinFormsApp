@@ -487,4 +487,7 @@ Points after processing: {5}</value>
   <data name="Facilities" xml:space="preserve">
     <value>Facilities</value>
   </data>
+  <data name="ViewByMonths" xml:space="preserve">
+    <value>By Months</value>
+  </data>
 </root>
